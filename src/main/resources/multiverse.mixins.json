@@ -4,6 +4,7 @@
   "package": "com.ninni.multiverse.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CarvedPumpkinBlockMixin"
   ],
   "client": [
   ],
