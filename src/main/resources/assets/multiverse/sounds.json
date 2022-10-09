@@ -25,5 +25,146 @@
       "multiverse:entity/cobblestone_golem/death2"
     ],
     "subtitle": "subtitles.cobblestone_golem.death"
+  },
+  "block.stone_tiles.break": {
+    "sounds": [
+      "multiverse:block/stone_tiles/heavy1",
+      "multiverse:block/stone_tiles/heavy2",
+      "multiverse:block/stone_tiles/heavy3",
+      "multiverse:block/stone_tiles/heavy4",
+      "multiverse:block/stone_tiles/heavy5"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.stone_tiles.step": {
+    "sounds": [
+      "multiverse:block/stone_tiles/light1",
+      "multiverse:block/stone_tiles/light2",
+      "multiverse:block/stone_tiles/light3",
+      "multiverse:block/stone_tiles/light4",
+      "multiverse:block/stone_tiles/light5",
+      "multiverse:block/stone_tiles/light6"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.stone_tiles.hit": {
+    "sounds": [
+      {
+        "name": "multiverse:block.stone_tiles.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.stone_tiles.place": {
+    "sounds": [
+      {
+        "name": "multiverse:block.stone_tiles.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.stone_tiles.fall": {
+    "sounds": [
+      {
+        "name": "multiverse:block.stone_tiles.break",
+        "type": "event"
+      }
+    ]
+  },
+  "block.dirty_stone_tiles.break": {
+    "sounds": [
+      "multiverse:block/stone_tiles/dirty/heavy1",
+      "multiverse:block/stone_tiles/dirty/heavy2",
+      "multiverse:block/stone_tiles/dirty/heavy3",
+      "multiverse:block/stone_tiles/dirty/heavy4",
+      "multiverse:block/stone_tiles/dirty/heavy5"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.dirty_stone_tiles.step": {
+    "sounds": [
+      "multiverse:block/stone_tiles/dirty/light1",
+      "multiverse:block/stone_tiles/dirty/light2",
+      "multiverse:block/stone_tiles/dirty/light3",
+      "multiverse:block/stone_tiles/dirty/light4",
+      "multiverse:block/stone_tiles/dirty/light5",
+      "multiverse:block/stone_tiles/dirty/light6"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.dirty_stone_tiles.hit": {
+    "sounds": [
+      {
+        "name": "multiverse:block.dirty_stone_tiles.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.dirty_stone_tiles.place": {
+    "sounds": [
+      {
+        "name": "multiverse:block.dirty_stone_tiles.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.dirty_stone_tiles.fall": {
+    "sounds": [
+      {
+        "name": "multiverse:block.dirty_stone_tiles.break",
+        "type": "event"
+      }
+    ]
+  },
+  "block.sandy_stone_tiles.break": {
+    "sounds": [
+      "multiverse:block/stone_tiles/sandy/heavy1",
+      "multiverse:block/stone_tiles/sandy/heavy2",
+      "multiverse:block/stone_tiles/sandy/heavy3",
+      "multiverse:block/stone_tiles/sandy/heavy4",
+      "multiverse:block/stone_tiles/sandy/heavy5"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.sandy_stone_tiles.step": {
+    "sounds": [
+      "multiverse:block/stone_tiles/sandy/light1",
+      "multiverse:block/stone_tiles/sandy/light2",
+      "multiverse:block/stone_tiles/sandy/light3",
+      "multiverse:block/stone_tiles/sandy/light4",
+      "multiverse:block/stone_tiles/sandy/light5",
+      "multiverse:block/stone_tiles/sandy/light6"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.sandy_stone_tiles.hit": {
+    "sounds": [
+      {
+        "name": "multiverse:block.sandy_stone_tiles.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.sandy_stone_tiles.place": {
+    "sounds": [
+      {
+        "name": "multiverse:block.sandy_stone_tiles.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.sandy_stone_tiles.fall": {
+    "sounds": [
+      {
+        "name": "multiverse:block.sandy_stone_tiles.break",
+        "type": "event"
+      }
+    ]
   }
 }

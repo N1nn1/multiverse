@@ -8,10 +8,8 @@
     "multiverse:sandy_stone_tiles",
     "multiverse:sandy_stone_tile_stairs",
     "multiverse:sandy_stone_tile_slab",
-    "multiverse:sandy_stone_tile_wall",
     "multiverse:dirty_stone_tiles",
     "multiverse:dirty_stone_tile_stairs",
-    "multiverse:dirty_stone_tile_slab",
-    "multiverse:dirty_stone_tile_wall"
+    "multiverse:dirty_stone_tile_slab"
   ]
 }

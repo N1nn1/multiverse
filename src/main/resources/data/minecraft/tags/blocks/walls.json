@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "multiverse:stone_tile_wall",
-    "multiverse:sandy_stone_tile_wall",
-    "multiverse:dirty_stone_tile_wall"
+    "multiverse:stone_tile_wall"
   ]
 }
