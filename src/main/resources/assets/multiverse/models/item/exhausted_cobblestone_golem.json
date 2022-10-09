@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "multiverse:item/exhausted_cobblestone_golem"
+  }
+}
