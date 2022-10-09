@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "multiverse",
+  "version": "${version}",
+
+  "name": "Multiverse",
+  "description": "Simple Minecraft mod that adds features from other Minecraft games",
+  "authors": [
+    "Ninni",
+    "Orcinus"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/multiverse",
+    "sources": "https://github.com/N1nn1/multiverse",
+    "issues": "https://github.com/N1nn1/multiverse/issues"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "mod.multiverse.contact.discord": "https://discord.gg/fT4MKzUTZS"
+      }
+    }
+  },
+
+  "license": [
+    "All Rights Reserved"
+  ],
+
+  "icon": "assets/multiverse/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.ninni.multiverse.Multiverse"],
+    "client": ["com.ninni.multiverse.MultiverseClient"]
+  },
+  "mixins": ["multiverse.mixins.json"],
+
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": ">=1.19",
+    "java": ">=17"
+  }
+}
