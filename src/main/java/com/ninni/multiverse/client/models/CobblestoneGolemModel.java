@@ -96,7 +96,7 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
 
     @Override
     public void setupAnim(CobblestoneGolemEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        float speed = 2f;
+        float speed = 1.75f;
         float degree = 1f;
 
         this.body.zRot = Mth.cos(limbAngle * speed * 0.2F) * degree * 0.25F * limbDistance;
