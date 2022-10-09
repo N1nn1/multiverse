@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "multiverse:sandy_stone_tiles"
+  },
+  "result": "multiverse:sandy_stone_tile_stairs",
+  "count": 1
+}

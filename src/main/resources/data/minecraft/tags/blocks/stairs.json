@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "multiverse:stone_tile_stairs",
+    "multiverse:sandy_stone_tile_stairs",
+    "multiverse:dirty_stone_tile_stairs"
+  ]
+}

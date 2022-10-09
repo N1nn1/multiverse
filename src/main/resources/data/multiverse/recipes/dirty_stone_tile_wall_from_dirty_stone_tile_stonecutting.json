@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "multiverse:dirty_stone_tiles"
+  },
+  "result": "multiverse:dirty_stone_tile_wall",
+  "count": 1
+}

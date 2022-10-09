@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "multiverse:block/dirty_stone_tiles"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "multiverse:block/dirty_stone_tile_slab"
+    },
+    "type=double": {
+      "model": "multiverse:block/dirty_stone_tiles"
+    },
+    "type=top": {
+      "model": "multiverse:block/dirty_stone_tile_slab_top"
+    }
+  }
+}

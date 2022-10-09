@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "multiverse:block/sandy_stone_tile_slab"
+    },
+    "type=double": {
+      "model": "multiverse:block/sandy_stone_tiles"
+    },
+    "type=top": {
+      "model": "multiverse:block/sandy_stone_tile_slab_top"
+    }
+  }
+}

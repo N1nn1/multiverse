@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S",
+    "S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:sand"
+    },
+    "S": {
+      "item": "multiverse:stone_tiles"
+    }
+  },
+  "result": {
+    "item": "multiverse:sandy_stone_tiles",
+    "count": 4
+  }
+}
