@@ -16,6 +16,7 @@ public class CobblestoneGolemRenderer extends MobRenderer<CobblestoneGolemEntity
 
     public CobblestoneGolemRenderer(EntityRendererProvider.Context context) {
         super(context, new CobblestoneGolemModel(context.bakeLayer(MultiverseModelLayers.COBBLESTONE_GOLEM)), 0.5F);
+        this.addLayer(new CobblestoneGolemCrackinessLayer(this));
     }
 
     @Override
