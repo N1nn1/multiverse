@@ -11,6 +11,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
 public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEntity> {
@@ -29,12 +30,9 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
         this.rightArm = this.body.getChild("rightArm");
         this.leftLeg = this.body.getChild("leftLeg");
         this.rightLeg = this.body.getChild("rightLeg");
-
-        // TODO define your model parts here - 'this.body = root.getChild("body");' etc
     }
 
     public static LayerDefinition getLayerDefinition() {
-        // TODO replace 'undefined' with 'root'
 
         MeshDefinition data = new MeshDefinition();
         PartDefinition root = data.getRoot();
@@ -98,6 +96,20 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
 
     @Override
     public void setupAnim(CobblestoneGolemEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        float speed = 2f;
+        float degree = 1f;
+
+        this.body.zRot = Mth.cos(limbAngle * speed * 0.2F) * degree * 0.25F * limbDistance;
+        this.body.y = Mth.cos(limbAngle * speed * 0.6F + (float)Math.PI / 2) * degree * 1 * limbDistance + 18;
+        this.body.y += Mth.cos(animationProgress * speed * 0.025F + (float)Math.PI / 2) * degree * 0.75F * 0.25F;
+        this.rightLeg.xRot = Mth.cos(limbAngle * speed * 0.2F) * degree * 1.2F * limbDistance;
+        this.leftLeg.xRot = Mth.cos(limbAngle * speed * 0.2F + (float)Math.PI) * degree * 1.2F * limbDistance;
+        this.rightArm.xRot = Mth.cos(limbAngle * speed * 0.2F + (float)Math.PI) * degree * 1 * limbDistance;
+        this.rightArm.y = Mth.cos(limbAngle * speed * 0.4F + (float)Math.PI / 2) * degree * 1 * limbDistance - 6.5F;
+        this.rightArm.y += Mth.cos(animationProgress * speed * 0.025F) * degree * 0.75F * 0.25F;
+        this.leftArm.xRot = Mth.cos(limbAngle * speed * 0.2F) * degree * 1 * limbDistance;
+        this.leftArm.y = Mth.cos(limbAngle * speed * 0.4F - (float)Math.PI / 2) * degree * 1 * limbDistance - 6.5F;
+        this.leftArm.y += Mth.cos(animationProgress * speed * 0.025F) * degree * 0.75F * 0.25F;
     }
 
     @Override

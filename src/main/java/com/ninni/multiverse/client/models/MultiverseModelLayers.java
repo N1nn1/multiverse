@@ -1,4 +1,4 @@
-package com.ninni.multiverse.init;
+package com.ninni.multiverse.client.models;
 
 import com.ninni.multiverse.Multiverse;
 import net.minecraft.client.model.geom.ModelLayerLocation;

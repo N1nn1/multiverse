@@ -1,4 +1,4 @@
-package com.ninni.multiverse.init;
+package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
@@ -21,7 +21,7 @@ public class MultiverseEntityTypes {
                     .entityFactory(CobblestoneGolemEntity::new)
                     .defaultAttributes(CobblestoneGolemEntity::createCobblestoneGolemAttributes)
                     .spawnGroup(MobCategory.MISC)
-                    .dimensions(EntityDimensions.fixed(0.8F, 1F)),
+                    .dimensions(EntityDimensions.fixed(1.2F, 1.2F)),
             null
     );
 
