@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -31,47 +30,55 @@ import java.util.function.Predicate;
 public class CarvedPumpkinBlockMixin {
     @Nullable
     private BlockPattern cobblestoneGolemFull;
+    @Nullable
+    private BlockPattern cobblestoneGolemBase;
     private static final Predicate<BlockState> PUMPKINS_PREDICATE = blockState -> blockState != null && (blockState.is(Blocks.CARVED_PUMPKIN) || blockState.is(Blocks.JACK_O_LANTERN));
 
     @Inject(at = @At("HEAD"), method = "canSpawnGolem", cancellable = true)
     private void M$canSpawnGolem(LevelReader levelReader, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
-        if (this.getOrCreateCobblestoneGolemFull().find(levelReader, blockPos) != null) {
+        if (this.getOrCobblestoneGolemBase().find(levelReader, blockPos) != null ) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(at = @At("HEAD"), method = "trySpawnGolem", cancellable = true)
-    private void GE$trySpawnGolem(Level world, BlockPos pos, CallbackInfo ci) {
-        BlockPattern.BlockPatternMatch result = this.getOrCreateCobblestoneGolemFull().find(world, pos);
-        int i;
-        ServerPlayer serverPlayerEntity;
-        int j;
-        if (result != null) {
-            for (i = 0; i < this.getOrCreateCobblestoneGolemFull().getHeight(); ++i) {
-                BlockInWorld cachedBlockPosition = result.getBlock(0, i, 0);
-                world.setBlock(cachedBlockPosition.getPos(), Blocks.AIR.defaultBlockState(), 2);
-                world.levelEvent(2001, cachedBlockPosition.getPos(), Block.getId(cachedBlockPosition.getState()));
+    private void M$trySpawnGolem(Level world, BlockPos pos, CallbackInfo ci) {
+        BlockPattern.BlockPatternMatch pattern = this.getOrCreateCobblestoneGolemFull().find(world, pos);
+        ServerPlayer player;
+        if (pattern != null) {
+            for (int i = 0; i < this.getOrCreateCobblestoneGolemFull().getWidth(); ++i) {
+            for (int k = 0; k < this.getOrCreateCobblestoneGolemFull().getHeight(); ++k) {
+                BlockInWorld blockInWorld = pattern.getBlock(i, k, 0);
+                world.setBlock(blockInWorld.getPos(), Blocks.AIR.defaultBlockState(), 2);
+                world.levelEvent(2001, blockInWorld.getPos(), Block.getId(blockInWorld.getState()));
+            }
+        }
+            CobblestoneGolemEntity golem = MultiverseEntityTypes.COBBLESTONE_GOLEM.create(world);
+            BlockPos cachedBlockPosition = pattern.getBlock(1, 2, 0).getPos();
+            assert golem != null;
+            golem.moveTo((double) cachedBlockPosition.getX() + 0.5D, (double) cachedBlockPosition.getY() + 1.05D, (double) cachedBlockPosition.getZ() + 0.5D, 0.0F, 0.0F);
+            world.addFreshEntity(golem);
+
+            for (ServerPlayer serverPlayer : world.getEntitiesOfClass(ServerPlayer.class, golem.getBoundingBox().inflate(5.0D))) {
+                player = serverPlayer;
+                CriteriaTriggers.SUMMONED_ENTITY.trigger(player, golem);
             }
 
-            CobblestoneGolemEntity e = MultiverseEntityTypes.COBBLESTONE_GOLEM.create(world);
-            BlockPos cachedBlockPosition = result.getBlock(0, 2, 0).getPos();
-            assert e != null;
-            e.moveTo((double) cachedBlockPosition.getX() + 0.5D, (double) cachedBlockPosition.getY() + 0.05D, (double) cachedBlockPosition.getZ() + 0.5D, 0.0F, 0.0F);
-            world.addFreshEntity(e);
-
-            for (ServerPlayer serverPlayer : world.getEntitiesOfClass(ServerPlayer.class, e.getBoundingBox().inflate(5.0D))) {
-                serverPlayerEntity = serverPlayer;
-                CriteriaTriggers.SUMMONED_ENTITY.trigger(serverPlayerEntity, e);
-            }
-
-            for (int width = 0; width < this.getOrCreateCobblestoneGolemFull().getWidth(); width++) {
-                for (j = 0; j < this.getOrCreateCobblestoneGolemFull().getHeight(); ++j) {
-                    BlockInWorld position = result.getBlock(width, j, 0);
+            for (int j = 0; j < this.getOrCreateCobblestoneGolemFull().getWidth(); j++) {
+                for (int l = 0; l < this.getOrCreateCobblestoneGolemFull().getHeight(); ++l) {
+                    BlockInWorld position = pattern.getBlock(j, l, 0);
                     world.blockUpdated(position.getPos(), Blocks.AIR);
                 }
             }
             ci.cancel();
         }
+    }
+
+    private BlockPattern getOrCobblestoneGolemBase() {
+        if (this.cobblestoneGolemBase == null) {
+            this.cobblestoneGolemFull = BlockPatternBuilder.start().aisle("~ ~", "C#C").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE))).where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE_WALL))).where('~', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR))).build();
+        }
+        return this.cobblestoneGolemBase;
     }
 
     private BlockPattern getOrCreateCobblestoneGolemFull() {
