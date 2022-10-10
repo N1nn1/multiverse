@@ -16,7 +16,6 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 @Environment(EnvType.CLIENT)
 public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedCobblestoneGolemEntity> {
     private final ModelPart root;
-
     private final ModelPart body;
     private final ModelPart leftArm;
     private final ModelPart rightArm;

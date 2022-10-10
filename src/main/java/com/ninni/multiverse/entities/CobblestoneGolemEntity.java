@@ -2,11 +2,15 @@ package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.api.CrackableEntity;
 import com.ninni.multiverse.api.Crackiness;
+import com.ninni.multiverse.entities.ai.FindTargettedBlockGoal;
+import com.ninni.multiverse.entities.ai.MineTargettedBlockGoal;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -36,7 +40,9 @@ import org.jetbrains.annotations.Nullable;
 public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEntity {
     public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.INT);
     @Nullable
-    private Block miningBlock;
+    private BlockState miningBlock;
+    @Nullable
+    private BlockPos minePos;
 
     public CobblestoneGolemEntity(EntityType<? extends AbstractGolem> entityType, Level level) {
         super(entityType, level);
@@ -52,19 +58,33 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setCrackiness(Crackiness.BY_ID[compoundTag.getInt("crackiness")]);
+        if (compoundTag.contains("miningState")) {
+            this.setMiningBlock(NbtUtils.readBlockState(compoundTag.getCompound("miningState")));
+        }
+        if (compoundTag.contains("minePos")) {
+            this.setMinePos(NbtUtils.readBlockPos(compoundTag.getCompound("minePos")));
+        }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putInt("crackiness", this.getCrackiness().getId());
+        if (this.getMiningBlock() != null) {
+            compoundTag.put("miningState", NbtUtils.writeBlockState(this.getMiningBlock()));
+        }
+        if (this.getMinePos() != null) {
+            compoundTag.put("minePos", NbtUtils.writeBlockPos(this.getMinePos()));
+        }
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new RandomStrollGoal(this, 1));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 6.0f));
-        this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(0, new FindTargettedBlockGoal(this));
+        this.goalSelector.addGoal(1, new MineTargettedBlockGoal(this));
+        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0f));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
     }
 
     public static AttributeSupplier.Builder createCobblestoneGolemAttributes() {
@@ -119,23 +139,34 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
                 itemStack.shrink(1);
             }
         }
-        for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(BlockTags.NEEDS_STONE_TOOL)) {
-            Block block = holder.value();
-            Item item = block.asItem();
-            if (!itemStack.is(item)) continue;
-            this.setMiningBlock(block);
+        for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(BlockTags.MINEABLE_WITH_PICKAXE)) {
+            boolean flag = !itemStack.is(holder.value().asItem());
+            boolean flag1 = holder.is(BlockTags.NEEDS_IRON_TOOL) || holder.is(BlockTags.NEEDS_DIAMOND_TOOL);
+            if (flag) continue;
+            if (flag1) continue;
+            this.setMiningBlock(holder.value().defaultBlockState());
+            this.playSound(MultiverseSoundEvents.BLOCK_STONE_TILES_STEP, 1.0F, 1.0F);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.sidedSuccess(this.level.isClientSide);
     }
 
-    public void setMiningBlock(@Nullable Block block) {
+    public void setMiningBlock(@Nullable BlockState block) {
         this.miningBlock = block;
     }
 
     @Nullable
-    public Block getMiningBlock() {
+    public BlockState getMiningBlock() {
         return this.miningBlock;
+    }
+
+    public void setMinePos(@Nullable BlockPos blockPos) {
+        this.minePos = blockPos;
+    }
+
+    @Nullable
+    public BlockPos getMinePos() {
+        return this.minePos;
     }
 
     @Override

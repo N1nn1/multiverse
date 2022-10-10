@@ -36,7 +36,6 @@ public class LoreTabletScreen extends Screen {
     private int currentPage;
     private List<FormattedCharSequence> cachedPageComponents = Collections.emptyList();
     private int cachedPage = -1;
-    private Component pageMsg = CommonComponents.EMPTY;
     private PageButton forwardButton;
     private PageButton backButton;
     private final boolean playTurnSound;
@@ -98,11 +97,8 @@ public class LoreTabletScreen extends Screen {
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
             this.cachedPageComponents = this.font.split(formattedText, 114);
-            this.pageMsg = Component.translatable("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1));
         }
         this.cachedPage = this.currentPage;
-        int m = this.font.width(this.pageMsg);
-        this.font.draw(poseStack, this.pageMsg, (float)(k - m + 192 - 44), 18.0f, 0);
         int n = Math.min(128 / this.font.lineHeight, this.cachedPageComponents.size());
         for (int o = 0; o < n; ++o) {
             FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(o);
