@@ -14,6 +14,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -146,7 +149,7 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
         this.noPhysics = !this.hasPhysics();
         CompoundTag compoundTag2 = compoundTag.getCompound("Pose");
         this.readPose(compoundTag2);
-        this.setCrackiness(Crackiness.BY_ID[compoundTag.getInt("crackiness")]);
+        this.setCrackiness(compoundTag.getInt("crackiness"));
     }
 
     private void readPose(CompoundTag compoundTag) {
@@ -185,6 +188,20 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
             compoundTag.put("RightLeg", this.rightLegPose.save());
         }
         return compoundTag;
+    }
+
+    @Override
+    public InteractionResult interact(Player player, InteractionHand interactionHand) {
+        ItemStack itemStack = player.getItemInHand(interactionHand);
+
+        if (itemStack.is(Items.COBBLESTONE) && this.getCrackiness() != Crackiness.NONE) {
+            int crackiness = this.getCrackiness().getId();
+            this.setCrackiness(crackiness - 1);
+            this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0f, 1.0f + (this.random.nextFloat() - this.random.nextFloat()) * 0.2f);
+            if (!player.getAbilities().instabuild) itemStack.shrink(1);
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
+        }
+        return super.interact(player, interactionHand);
     }
 
     @Override
@@ -577,8 +594,8 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
     }
 
     @Override
-    public void setCrackiness(Crackiness crackiness) {
-        this.entityData.set(CRACKINESS, crackiness.getId());
+    public void setCrackiness(int crackiness) {
+        this.entityData.set(CRACKINESS, crackiness);
     }
 
     @Override

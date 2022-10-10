@@ -2,7 +2,7 @@ package com.ninni.multiverse.api;
 
 public interface CrackableEntity {
 
-    void setCrackiness(Crackiness crackiness);
+    void setCrackiness(int crackiness);
 
     Crackiness getCrackiness();
 

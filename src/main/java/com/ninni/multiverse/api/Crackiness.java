@@ -1,7 +1,5 @@
 package com.ninni.multiverse.api;
 
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
-
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -15,9 +13,9 @@ public enum Crackiness {
     private final int id;
     private final String name;
 
-    Crackiness(int j, String string2) {
-        this.id = j;
-        this.name = string2;
+    Crackiness(int id, String string) {
+        this.id = id;
+        this.name = string;
     }
 
     public int getId() {

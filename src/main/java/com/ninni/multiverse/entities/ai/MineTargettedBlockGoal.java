@@ -1,40 +1,49 @@
 package com.ninni.multiverse.entities.ai;
 
+import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
+import com.ninni.multiverse.entities.MultiverseEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
 
 public class MineTargettedBlockGoal extends Goal {
-    private final CobblestoneGolemEntity cobblestoneGolemEntity;
+    private final CobblestoneGolemEntity golem;
     private BlockPos pos;
 
-    public MineTargettedBlockGoal(CobblestoneGolemEntity cobblestoneGolemEntity) {
-        this.cobblestoneGolemEntity = cobblestoneGolemEntity;
+    public MineTargettedBlockGoal(CobblestoneGolemEntity golem) {
+        this.golem = golem;
     }
 
     @Override
     public boolean canUse() {
-        this.pos = this.cobblestoneGolemEntity.getMinePos();
-        return this.pos != null && !this.cobblestoneGolemEntity.level.getBlockState(this.pos).isAir();
+        this.pos = this.golem.getMinePos();
+        return this.pos != null && !this.golem.level.getBlockState(this.pos).isAir();
     }
 
     @Override
     public void tick() {
         Vec3 vec3 = Vec3.atCenterOf(this.pos);
-        if (this.pos.closerToCenterThan(this.cobblestoneGolemEntity.position(), 2)) {
-            this.cobblestoneGolemEntity.level.destroyBlock(this.pos, true);
-        } else {
-            if (this.pos.getY() > this.cobblestoneGolemEntity.getY()) {
-                this.cobblestoneGolemEntity.setJumping(true);
+        Crackiness crackiness = this.golem.getCrackiness();
+
+        if (this.pos.closerToCenterThan(this.golem.position(), 2)) {
+            this.golem.level.destroyBlock(this.pos, true);
+            if (crackiness.getId() == 3) {
+                if (golem.getRandom().nextInt(8) == 1) this.golem.becomeExhausted(MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM);
+            } else {
+                if (golem.getRandom().nextInt(8) == 1) this.golem.setCrackiness(crackiness.getId() + 1);
             }
-            this.cobblestoneGolemEntity.getNavigation().moveTo(vec3.x(), vec3.y(), vec3.z(), 1.4D);
+        } else {
+            if (this.pos.getY() > this.golem.getY()) {
+                this.golem.setJumping(true);
+            }
+            this.golem.getNavigation().moveTo(vec3.x(), vec3.y(), vec3.z(), 1.4D);
         }
     }
 
     @Override
     public void stop() {
-        this.cobblestoneGolemEntity.setMinePos(null);
+        this.golem.setMinePos(null);
     }
 
 }

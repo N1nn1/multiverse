@@ -5,6 +5,7 @@ import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.ai.FindTargettedBlockGoal;
 import com.ninni.multiverse.entities.ai.MineTargettedBlockGoal;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -19,6 +20,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -55,7 +57,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        this.setCrackiness(Crackiness.BY_ID[compoundTag.getInt("crackiness")]);
+        this.setCrackiness(compoundTag.getInt("crackiness"));
         if (compoundTag.contains("miningState")) {
             this.setMiningBlock(NbtUtils.readBlockState(compoundTag.getCompound("miningState")));
         }
@@ -125,28 +127,56 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        if (itemStack.is(Items.COBBLESTONE)) {
-            float f = this.getHealth();
-            this.heal(5.0f);
-            if (this.getHealth() == f) {
-                return InteractionResult.PASS;
-            }
-            float g = 1.0f + (this.random.nextFloat() - this.random.nextFloat()) * 0.2f;
-            this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0f, g);
-            if (!player.getAbilities().instabuild) {
-                itemStack.shrink(1);
+
+        if (itemStack.is(Items.COBBLESTONE) && this.getCrackiness() != Crackiness.NONE) {
+            int crackiness = this.getCrackiness().getId();
+            this.setCrackiness(crackiness - 1);
+            this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0f, 1.0f + (this.random.nextFloat() - this.random.nextFloat()) * 0.2f);
+            if (!player.getAbilities().instabuild) itemStack.shrink(1);
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
+        } else if (this.getMiningBlock() == null && !itemStack.isEmpty()) {
+            for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(BlockTags.MINEABLE_WITH_PICKAXE)) {
+                boolean flag = !itemStack.is(holder.value().asItem());
+                boolean flag1 = holder.is(BlockTags.NEEDS_IRON_TOOL) || holder.is(BlockTags.NEEDS_DIAMOND_TOOL);
+                if (flag) continue;
+                if (flag1) continue;
+                this.setMiningBlock(holder.value().defaultBlockState());
+                this.playSound(MultiverseSoundEvents.BLOCK_STONE_TILES_STEP, 1.0F, 1.0F);
+                if (!player.getAbilities().instabuild) itemStack.shrink(1);
+                return InteractionResult.SUCCESS;
             }
         }
-        for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(BlockTags.MINEABLE_WITH_PICKAXE)) {
-            boolean flag = !itemStack.is(holder.value().asItem());
-            boolean flag1 = holder.is(BlockTags.NEEDS_IRON_TOOL) || holder.is(BlockTags.NEEDS_DIAMOND_TOOL);
-            if (flag) continue;
-            if (flag1) continue;
-            this.setMiningBlock(holder.value().defaultBlockState());
-            this.playSound(MultiverseSoundEvents.BLOCK_STONE_TILES_STEP, 1.0F, 1.0F);
+        if (this.getMiningBlock() != null && itemStack.isEmpty()) {
+            this.playSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM, 1.0F, 1.0F);
+            this.spawnAtLocation(this.getMiningBlock().getBlock().asItem().getDefaultInstance(), 0.5f);
+            this.setMiningBlock(null);
             return InteractionResult.SUCCESS;
         }
-        return InteractionResult.sidedSuccess(this.level.isClientSide);
+        return InteractionResult.CONSUME;
+    }
+
+    public <T extends ExhaustedCobblestoneGolemEntity> void becomeExhausted(EntityType<T> entityType) {
+        if (!this.isRemoved()) {
+            T exhaustedGolem = entityType.create(this.level);
+            assert exhaustedGolem != null;
+            exhaustedGolem.copyPosition(this);
+            exhaustedGolem.lookAt(EntityAnchorArgument.Anchor.EYES, this.getLookAngle());
+            exhaustedGolem.setYBodyRot(this.getYRot());
+            exhaustedGolem.setYHeadRot(this.getYHeadRot());
+            exhaustedGolem.setInvulnerable(this.isInvulnerable());
+            exhaustedGolem.setCrackiness(this.getCrackiness().getId());
+            if (this.getMiningBlock() != null) this.spawnAtLocation(this.getMiningBlock().getBlock().asItem().getDefaultInstance(), 0.5f);
+
+            if (this.hasCustomName()) exhaustedGolem.setCustomName(this.getCustomName());
+            this.level.addFreshEntity(exhaustedGolem);
+            if (this.isPassenger()) {
+                Entity entity = this.getVehicle();
+                this.stopRiding();
+                if (entity != null) exhaustedGolem.startRiding(entity, true);
+            }
+
+            this.discard();
+        }
     }
 
     public void setMiningBlock(@Nullable BlockState block) {
@@ -168,8 +198,8 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     }
 
     @Override
-    public void setCrackiness(Crackiness crackiness) {
-        this.entityData.set(CRACKINESS, crackiness.getId());
+    public void setCrackiness(int crackiness) {
+        this.entityData.set(CRACKINESS, crackiness);
     }
 
     @Override

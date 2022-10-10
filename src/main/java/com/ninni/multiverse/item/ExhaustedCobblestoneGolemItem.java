@@ -61,7 +61,7 @@ public class ExhaustedCobblestoneGolemItem extends Item {
             golem.moveTo(golem.getX(), golem.getY(), golem.getZ(), f, 0.0f);
             this.randomizePose(golem, level.random);
             if (itemStack.getTag() != null) {
-                golem.setCrackiness(Crackiness.BY_ID[itemStack.getTag().getInt("crackiness")]);
+                golem.setCrackiness(itemStack.getTag().getInt("crackiness"));
             }
             if (itemStack.hasCustomHoverName()) {
                 golem.setCustomName(itemStack.getHoverName());
