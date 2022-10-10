@@ -1,0 +1,21 @@
+{
+	"textures": {
+		"front": "multiverse:block/lore_tablet_front",
+		"top": "multiverse:block/lore_tablet_top",
+		"particle": "#front"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 6.5],
+			"to": [14, 15, 9.5],
+			"faces": {
+				"north": {"uv": [0, 1, 12, 16], "texture": "#front"},
+				"east": {"uv": [13, 1, 16, 16], "texture": "#front"},
+				"south": {"uv": [0, 1, 12, 16], "texture": "#front"},
+				"west": {"uv": [13, 1, 16, 16], "texture": "#front"},
+				"up": {"uv": [0, 4, 12, 7], "texture": "#top"},
+				"down": {"uv": [0, 0, 12, 3], "texture": "#top"}
+			}
+		}
+	]
+}
