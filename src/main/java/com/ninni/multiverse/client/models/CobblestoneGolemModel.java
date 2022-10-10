@@ -117,5 +117,4 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
         return this.root;
     }
 
-
 }

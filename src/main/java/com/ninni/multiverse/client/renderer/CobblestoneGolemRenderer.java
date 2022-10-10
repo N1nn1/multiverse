@@ -2,8 +2,8 @@ package com.ninni.multiverse.client.renderer;
 
 import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.client.models.CobblestoneGolemModel;
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import com.ninni.multiverse.client.models.MultiverseModelLayers;
+import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
