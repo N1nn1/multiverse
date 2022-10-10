@@ -3,6 +3,7 @@ package com.ninni.multiverse.item;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.ExhaustedCobblestoneGolemEntity;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -67,7 +68,7 @@ public class ExhaustedCobblestoneGolemItem extends Item {
                 golem.setCustomName(itemStack.getHoverName());
             }
             serverLevel.addFreshEntityWithPassengers(golem);
-            level.playSound(null, golem.getX(), golem.getY(), golem.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundSource.BLOCKS, 0.75f, 0.8f);
+            level.playSound(null, golem.getX(), golem.getY(), golem.getZ(), MultiverseSoundEvents.BLOCK_STONE_TILES_FALL, SoundSource.BLOCKS, 0.75f, 0.8f);
             golem.gameEvent(GameEvent.ENTITY_PLACE, useOnContext.getPlayer());
         }
         itemStack.shrink(1);

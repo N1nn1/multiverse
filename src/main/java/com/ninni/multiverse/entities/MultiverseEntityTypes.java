@@ -22,7 +22,7 @@ public class MultiverseEntityTypes {
                     .entityFactory(CobblestoneGolemEntity::new)
                     .defaultAttributes(CobblestoneGolemEntity::createCobblestoneGolemAttributes)
                     .spawnGroup(MobCategory.MISC)
-                    .dimensions(EntityDimensions.fixed(1.0F, 1.0F)),
+                    .dimensions(EntityDimensions.fixed(0.9F, 0.9F)),
             null
     );
     public static final EntityType<ExhaustedCobblestoneGolemEntity> EXHAUSTED_COBBLESTONE_GOLEM = register(
@@ -31,7 +31,7 @@ public class MultiverseEntityTypes {
                     .<ExhaustedCobblestoneGolemEntity>entityFactory(ExhaustedCobblestoneGolemEntity::new)
                     .defaultAttributes(LivingEntity::createLivingAttributes)
                     .spawnGroup(MobCategory.MISC)
-                    .dimensions(EntityDimensions.fixed(1.0F, 1.0F)),
+                    .dimensions(EntityDimensions.fixed(0.9F, 0.9F)),
             null
     );
 

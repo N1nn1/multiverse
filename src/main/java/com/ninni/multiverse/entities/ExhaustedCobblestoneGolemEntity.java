@@ -3,6 +3,7 @@ package com.ninni.multiverse.entities;
 import com.ninni.multiverse.api.CrackableEntity;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.item.MultiverseItems;
+import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.core.Rotations;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,7 +14,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -199,8 +199,7 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
     @Override
     protected void pushEntities() {
         List<Entity> list = this.level.getEntities(this, this.getBoundingBox(), RIDABLE_MINECARTS);
-        for (int i = 0; i < list.size(); ++i) {
-            Entity entity = list.get(i);
+        for (Entity entity : list) {
             if (!(this.distanceToSqr(entity) <= 0.2)) continue;
             entity.push(this);
         }
@@ -271,7 +270,7 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
     public void handleEntityEvent(byte b) {
         if (b == 32) {
             if (this.level.isClientSide) {
-                this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3f, 1.0f, false);
+                this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), MultiverseSoundEvents.BLOCK_STONE_TILES_HIT, this.getSoundSource(), 0.3f, 1.0f, false);
                 this.lastHit = this.level.getGameTime();
             }
         } else {
@@ -333,7 +332,7 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
     }
 
     private void playBrokenSound() {
-        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_BREAK, this.getSoundSource(), 1.0f, 1.0f);
+        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), MultiverseSoundEvents.BLOCK_STONE_TILES_BREAK, this.getSoundSource(), 1.0f, 1.0f);
     }
 
     @Override
@@ -545,19 +544,19 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
 
     @Override
     public LivingEntity.Fallsounds getFallSounds() {
-        return new LivingEntity.Fallsounds(SoundEvents.ARMOR_STAND_FALL, SoundEvents.ARMOR_STAND_FALL);
+        return new LivingEntity.Fallsounds(MultiverseSoundEvents.BLOCK_STONE_TILES_FALL, MultiverseSoundEvents.BLOCK_STONE_TILES_FALL);
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundEvents.ARMOR_STAND_HIT;
+        return MultiverseSoundEvents.BLOCK_STONE_TILES_HIT;
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ARMOR_STAND_BREAK;
+        return MultiverseSoundEvents.BLOCK_STONE_TILES_BREAK;
     }
 
     @Override
