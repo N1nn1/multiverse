@@ -136,7 +136,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
             if (!player.getAbilities().instabuild) itemStack.shrink(1);
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else if (this.getMiningBlock() == null && !itemStack.isEmpty()) {
-            for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(BlockTags.MINEABLE_WITH_PICKAXE)) {
+            for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(MultiverseTags.COBBLESTONE_GOLEM_BREAKABLES)) {
                 boolean flag = !itemStack.is(holder.value().asItem());
                 boolean flag1 = holder.is(BlockTags.NEEDS_IRON_TOOL) || holder.is(BlockTags.NEEDS_DIAMOND_TOOL);
                 if (flag) continue;
@@ -151,15 +151,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
             this.playSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM, 1.0F, 1.0F);
             this.spawnAtLocation(this.getMiningBlock().getBlock().asItem().getDefaultInstance(), 0.5f);
             this.setMiningBlock(null);
-            for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(MultiverseTags.COBBLESTONE_GOLEM_BREAKABLES)) {
-                boolean flag = !itemStack.is(holder.value().asItem());
-                boolean flag1 = holder.is(BlockTags.NEEDS_IRON_TOOL) || holder.is(BlockTags.NEEDS_DIAMOND_TOOL);
-                if (flag) continue;
-                if (flag1) continue;
-                this.setMiningBlock(holder.value().defaultBlockState());
-                this.playSound(MultiverseSoundEvents.BLOCK_STONE_TILES_STEP, 1.0F, 1.0F);
-                return InteractionResult.SUCCESS;
-            }
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.CONSUME;
     }
