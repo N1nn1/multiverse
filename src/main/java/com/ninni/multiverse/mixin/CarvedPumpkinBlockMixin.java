@@ -36,7 +36,7 @@ public class CarvedPumpkinBlockMixin {
 
     @Inject(at = @At("HEAD"), method = "canSpawnGolem", cancellable = true)
     private void M$canSpawnGolem(LevelReader levelReader, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
-        if (this.getOrCobblestoneGolemBase().find(levelReader, blockPos) != null ) {
+        if (this.getOrCobblestoneGolemBase().find(levelReader, blockPos) != null) {
             cir.setReturnValue(true);
         }
     }
@@ -76,7 +76,7 @@ public class CarvedPumpkinBlockMixin {
 
     private BlockPattern getOrCobblestoneGolemBase() {
         if (this.cobblestoneGolemBase == null) {
-            this.cobblestoneGolemFull = BlockPatternBuilder.start().aisle("~ ~", "C#C").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE))).where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE_WALL))).where('~', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR))).build();
+            this.cobblestoneGolemBase = BlockPatternBuilder.start().aisle("~ ~", "C#C").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE))).where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE_WALL))).where('~', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR))).build();
         }
         return this.cobblestoneGolemBase;
     }
