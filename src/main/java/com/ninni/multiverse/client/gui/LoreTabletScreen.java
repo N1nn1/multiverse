@@ -57,13 +57,13 @@ public class LoreTabletScreen extends Screen {
     }
 
     protected void createMenuControls() {
-        this.addRenderableWidget(new Button(this.width / 2 - 100, 196, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)));
+        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 2 + 35, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)));
     }
 
     protected void createPageControlButtons() {
         int i = (this.width - 192) / 2;
-        this.forwardButton = this.addRenderableWidget(new PageButton(i + 116, 159, true, button -> this.pageForward(), this.playTurnSound));
-        this.backButton = this.addRenderableWidget(new PageButton(i + 43, 159, false, button -> this.pageBack(), this.playTurnSound));
+        this.forwardButton = this.addRenderableWidget(new PageButton(i + 116, 240, true, button -> this.pageForward(), this.playTurnSound));
+        this.backButton = this.addRenderableWidget(new PageButton(i + 43, 240, false, button -> this.pageBack(), this.playTurnSound));
         this.updateButtonVisibility();
     }
 
@@ -93,16 +93,17 @@ public class LoreTabletScreen extends Screen {
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, BOOK_LOCATION);
         int k = (this.width - 192) / 2;
-        this.blit(poseStack, k, 2, 0, 0, 192, 192);
+        int h = (this.height - 300) / 2;
+        this.blit(poseStack, k, h, 0, 0, 192, 192);
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
             this.cachedPageComponents = this.font.split(formattedText, 114);
         }
         this.cachedPage = this.currentPage;
-        int n = Math.min(128 / this.font.lineHeight, this.cachedPageComponents.size());
+        int n = Math.min(148 / this.font.lineHeight, this.cachedPageComponents.size());
         for (int o = 0; o < n; ++o) {
             FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(o);
-            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(32 + o * this.font.lineHeight), 0);
+            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(100 + o * this.font.lineHeight), 0);
         }
         Style style = this.getClickedComponentStyleAt(i, j);
         if (style != null) {
@@ -121,12 +122,12 @@ public class LoreTabletScreen extends Screen {
             return null;
         }
         int i = Mth.floor(d - (double)((this.width - 192) / 2) - 36.0);
-        int j = Mth.floor(e - 2.0 - 30.0);
+        int j = Mth.floor(e - (double)((this.height - 300) / 2) - 30.0);
         if (i < 0 || j < 0) {
             return null;
         }
         int k = Math.min(128 / this.font.lineHeight, this.cachedPageComponents.size());
-        if (i <= 114 && j < this.minecraft.font.lineHeight * k + k) {
+        if (this.minecraft != null && i <= 114 && j < this.minecraft.font.lineHeight * k + k) {
             int l = j / this.minecraft.font.lineHeight;
             if (l < this.cachedPageComponents.size()) {
                 FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(l);
@@ -156,7 +157,9 @@ public class LoreTabletScreen extends Screen {
             if (WrittenBookItem.makeSureTagIsValid(compoundTag)) {
                 return LoreTabletScreen.loadPages(compoundTag);
             }
-            return ImmutableList.of(Component.Serializer.toJson(Component.translatable("item.lore_tablet.message.cobblestone_golem").withStyle(ChatFormatting.BLACK)));
+            return ImmutableList.of(
+                Component.Serializer.toJson(Component.translatable("item.lore_tablet.message.cobblestone_golem").withStyle(ChatFormatting.DARK_GRAY))
+            );
         }
 
         @Override

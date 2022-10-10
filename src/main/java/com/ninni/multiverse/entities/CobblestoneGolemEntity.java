@@ -45,6 +45,12 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     @Nullable
     private BlockPos minePos;
 
+    //TODO Sounds
+    // -Placing/getting back block sounds
+    // -fixing/cracking sounds
+    // -footsteps
+    // -ambient when it has a mining block
+
     public CobblestoneGolemEntity(EntityType<? extends AbstractGolem> entityType, Level level) {
         super(entityType, level);
     }

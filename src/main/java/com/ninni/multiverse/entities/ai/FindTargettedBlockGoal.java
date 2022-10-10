@@ -23,6 +23,7 @@ public class FindTargettedBlockGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (this.golemEntity.isPathFinding()) return false;
         this.targetPos = this.getMiningPos();
         return this.golemEntity.getMinePos() == null && this.targetPos != null;
     }

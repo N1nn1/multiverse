@@ -56,7 +56,7 @@ public class CarvedPumpkinBlockMixin {
             CobblestoneGolemEntity golem = MultiverseEntityTypes.COBBLESTONE_GOLEM.create(world);
             BlockPos cachedBlockPosition = pattern.getBlock(1, 2, 0).getPos();
             assert golem != null;
-            golem.moveTo((double) cachedBlockPosition.getX() + 0.5D, (double) cachedBlockPosition.getY() + 1.05D, (double) cachedBlockPosition.getZ() + 0.5D, 0.0F, 0.0F);
+            golem.moveTo((double) cachedBlockPosition.getX() + 0.5D, (double) cachedBlockPosition.getY() + 1D, (double) cachedBlockPosition.getZ() + 0.5D, 0.0F, 0.0F);
             world.addFreshEntity(golem);
 
             for (ServerPlayer serverPlayer : world.getEntitiesOfClass(ServerPlayer.class, golem.getBoundingBox().inflate(5.0D))) {
