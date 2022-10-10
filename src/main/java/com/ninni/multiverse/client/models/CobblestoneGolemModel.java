@@ -25,7 +25,7 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
 
     public CobblestoneGolemModel(ModelPart root) {
         this.root = root;
-        this.body = root.getChild("body");
+        this.body = root.getChild("getBody");
         this.leftArm = this.body.getChild("leftArm");
         this.rightArm = this.body.getChild("rightArm");
         this.leftLeg = this.body.getChild("leftLeg");
@@ -38,7 +38,7 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
         PartDefinition root = data.getRoot();
 
         PartDefinition body = root.addOrReplaceChild(
-                "body",
+                "getBody",
                 CubeListBuilder.create()
                         .texOffs(0, 0)
                         .mirror(false)
@@ -115,6 +115,10 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
     @Override
     public ModelPart root() {
         return this.root;
+    }
+
+    public ModelPart getBody() {
+        return this.body;
     }
 
 }
