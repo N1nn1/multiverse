@@ -57,7 +57,7 @@ public class LoreTabletScreen extends Screen {
     }
 
     protected void createMenuControls() {
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 2 + 35, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)));
+        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 2 + 90, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)));
     }
 
     protected void createPageControlButtons() {
@@ -93,7 +93,7 @@ public class LoreTabletScreen extends Screen {
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, BOOK_LOCATION);
         int k = (this.width - 192) / 2;
-        int h = (this.height - 300) / 2;
+        int h = (this.height - 220) / 2;
         this.blit(poseStack, k, h, 0, 0, 192, 192);
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
@@ -103,7 +103,7 @@ public class LoreTabletScreen extends Screen {
         int n = Math.min(148 / this.font.lineHeight, this.cachedPageComponents.size());
         for (int o = 0; o < n; ++o) {
             FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(o);
-            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(100 + o * this.font.lineHeight), 0);
+            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(78 + o * this.font.lineHeight), 0);
         }
         Style style = this.getClickedComponentStyleAt(i, j);
         if (style != null) {
