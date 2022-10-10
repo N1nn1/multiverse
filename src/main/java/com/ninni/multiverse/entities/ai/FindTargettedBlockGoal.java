@@ -3,8 +3,12 @@ package com.ninni.multiverse.entities.ai;
 import com.google.common.collect.Lists;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
@@ -25,7 +29,8 @@ public class FindTargettedBlockGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return !this.golemEntity.getNavigation().isDone() && !this.targetPos.closerToCenterThan(this.golemEntity.position(), 1.2D) && super.canContinueToUse();
+        boolean flag = !this.golemEntity.getNavigation().isDone() && !this.targetPos.closerToCenterThan(this.golemEntity.position(), 1.2D);
+        return flag && super.canContinueToUse();
     }
 
     @Override
@@ -53,14 +58,19 @@ public class FindTargettedBlockGoal extends Goal {
                     BlockPos pos = new BlockPos(this.golemEntity.getX() + x, this.golemEntity.getY() + y, this.golemEntity.getZ() + z);
                     BlockState blockState = this.golemEntity.level.getBlockState(pos);
                     boolean flag = this.golemEntity.getMiningBlock() != null && blockState.getBlock() == this.golemEntity.getMiningBlock().getBlock();
-                    if (!flag) continue;
-                    list.add(pos);
+                    if (!(flag)) continue;
+                    for (Direction direction : Direction.values()) {
+                        if (!this.golemEntity.level.getBlockState(pos.relative(direction)).isAir()) {
+                            continue;
+                        }
+                        list.add(pos);
+                    }
                 }
             }
         }
         if (list.isEmpty()) return null;
 
-        return list.stream().findFirst().get();
+        return list.get(this.golemEntity.level.getRandom().nextInt(list.size()));
     }
 
 

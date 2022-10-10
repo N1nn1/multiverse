@@ -156,7 +156,7 @@ public class LoreTabletScreen extends Screen {
             if (WrittenBookItem.makeSureTagIsValid(compoundTag)) {
                 return LoreTabletScreen.loadPages(compoundTag);
             }
-            return ImmutableList.of(Component.Serializer.toJson(Component.translatable("item.lore_tablet.invalid.tag").withStyle(ChatFormatting.BLACK)));
+            return ImmutableList.of(Component.Serializer.toJson(Component.translatable("item.lore_tablet.message.cobblestone_golem").withStyle(ChatFormatting.BLACK)));
         }
 
         @Override
