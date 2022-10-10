@@ -4,12 +4,15 @@ import com.ninni.multiverse.api.CrackableEntity;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,14 +25,18 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEntity {
     public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.INT);
+    @Nullable
+    private Block miningBlock;
 
     public CobblestoneGolemEntity(EntityType<? extends AbstractGolem> entityType, Level level) {
         super(entityType, level);
@@ -112,7 +119,23 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
                 itemStack.shrink(1);
             }
         }
+        for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(BlockTags.NEEDS_STONE_TOOL)) {
+            Block block = holder.value();
+            Item item = block.asItem();
+            if (!itemStack.is(item)) continue;
+            this.setMiningBlock(block);
+            return InteractionResult.SUCCESS;
+        }
         return InteractionResult.sidedSuccess(this.level.isClientSide);
+    }
+
+    public void setMiningBlock(@Nullable Block block) {
+        this.miningBlock = block;
+    }
+
+    @Nullable
+    public Block getMiningBlock() {
+        return this.miningBlock;
     }
 
     @Override

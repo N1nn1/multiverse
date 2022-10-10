@@ -48,8 +48,8 @@ public class ExhaustedCobblestoneGolemItem extends Item {
         BlockPos blockPos = blockPlaceContext.getClickedPos();
         ItemStack itemStack = useOnContext.getItemInHand();
         Vec3 vec3 = Vec3.atBottomCenterOf(blockPos);
-        AABB aABB = MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM.getDimensions().makeBoundingBox(vec3.x(), vec3.y(), vec3.z());
-        if (!level.noCollision(null, aABB) || !level.getEntities(null, aABB).isEmpty()) {
+        AABB aabb = MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM.getDimensions().makeBoundingBox(vec3.x(), vec3.y(), vec3.z());
+        if (!level.noCollision(null, aabb) || !level.getEntities(null, aabb).isEmpty()) {
             return InteractionResult.FAIL;
         }
         if (level instanceof ServerLevel serverLevel) {

@@ -5,6 +5,7 @@ import com.mojang.math.Vector3f;
 import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.client.models.ExhaustedCobblestoneGolemModel;
 import com.ninni.multiverse.client.models.MultiverseModelLayers;
+import com.ninni.multiverse.client.renderer.layer.CobblestoneGolemCrackinessLayer;
 import com.ninni.multiverse.entities.ExhaustedCobblestoneGolemEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,9 +13,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.decoration.ArmorStand;
 
 @Environment(EnvType.CLIENT)
 public class ExhaustedCobblestoneGolemRenderer extends LivingEntityRenderer<ExhaustedCobblestoneGolemEntity, ExhaustedCobblestoneGolemModel> {
@@ -22,7 +20,7 @@ public class ExhaustedCobblestoneGolemRenderer extends LivingEntityRenderer<Exha
 
     public ExhaustedCobblestoneGolemRenderer(EntityRendererProvider.Context context) {
         super(context, new ExhaustedCobblestoneGolemModel(context.bakeLayer(MultiverseModelLayers.EXHAUSTED_COBBLESTONE_GOLEM)), 0.5F);
-        this.addLayer(new ExhaustedCobblestoneGolemCrackinessLayer(this));
+        this.addLayer(new CobblestoneGolemCrackinessLayer<>(this));
     }
 
     @Override

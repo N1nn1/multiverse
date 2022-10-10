@@ -28,6 +28,8 @@ public class MultiverseItems {
 
     public static final Item EXHAUSTED_COBBLESTONE_GOLEM = register("exhausted_cobblestone_golem", new ExhaustedCobblestoneGolemItem(new Item.Properties().stacksTo(1).tab(TAB)));
 
+    public static final Item LORE_TABLET = register("lore_tablet", new LoreTabletItem(new Item.Properties().stacksTo(1).tab(TAB)));
+
     private static Item register(String id, Item item) {
         return Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, id), item);
     }

@@ -7,6 +7,10 @@
   "item.multiverse.exhausted_cobblestone_golem.medium": "Damaged",
   "item.multiverse.exhausted_cobblestone_golem.high": "Shattered",
 
+  "item.multiverse.lore_tablet": "Lore Tablet",
+
+  "item.lore_tablet.invalid.tag": "Kid named finger",
+
   "block.multiverse.stone_tiles": "Stone Tiles",
   "block.multiverse.stone_tile_wall": "Stone Tile Wall",
   "block.multiverse.stone_tile_slab": "Stone Tile Slab",

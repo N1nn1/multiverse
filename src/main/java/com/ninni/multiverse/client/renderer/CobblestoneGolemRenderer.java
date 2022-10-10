@@ -3,6 +3,7 @@ package com.ninni.multiverse.client.renderer;
 import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.client.models.CobblestoneGolemModel;
 import com.ninni.multiverse.client.models.MultiverseModelLayers;
+import com.ninni.multiverse.client.renderer.layer.CobblestoneGolemCrackinessLayer;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,7 +17,7 @@ public class CobblestoneGolemRenderer extends MobRenderer<CobblestoneGolemEntity
 
     public CobblestoneGolemRenderer(EntityRendererProvider.Context context) {
         super(context, new CobblestoneGolemModel(context.bakeLayer(MultiverseModelLayers.COBBLESTONE_GOLEM)), 0.5F);
-        this.addLayer(new CobblestoneGolemCrackinessLayer(this));
+        this.addLayer(new CobblestoneGolemCrackinessLayer<>(this));
     }
 
     @Override
