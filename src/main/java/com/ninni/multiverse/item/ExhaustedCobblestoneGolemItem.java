@@ -11,7 +11,6 @@ import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -77,7 +76,7 @@ public class ExhaustedCobblestoneGolemItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
-        Optional.ofNullable(itemStack.getTag()).filter(this::hasCrackiness).ifPresent(tag -> list.add(Component.empty().append(String.valueOf(Crackiness.BY_ID[tag.getInt("crackiness")]).toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY)));
+        Optional.ofNullable(itemStack.getTag()).filter(this::hasCrackiness).ifPresent(tag -> list.add(Component.translatable("item.multiverse.exhausted_cobblestone_golem." + String.valueOf(Crackiness.BY_ID[tag.getInt("crackiness")]).toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY)));
     }
 
     private boolean hasCrackiness(CompoundTag tag) {

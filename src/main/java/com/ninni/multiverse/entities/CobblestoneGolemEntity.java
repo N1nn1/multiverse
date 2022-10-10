@@ -93,6 +93,11 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     }
 
     @Override
+    public boolean hurt(DamageSource damageSource, float f) {
+        return super.hurt(damageSource, f);
+    }
+
+    @Override
     protected InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (itemStack.is(Items.COBBLESTONE)) {
