@@ -32,6 +32,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -271,15 +272,19 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
             return bl2;
         }
         long l = this.level.getGameTime();
-        if (l - this.lastHit <= 5L || bl) {
-            this.brokenByPlayer(damageSource);
-            this.showBreakingParticles();
-            this.kill();
-        } else {
-            this.level.broadcastEntityEvent(this, (byte)32);
-            this.gameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getEntity());
-            this.lastHit = l;
-        }
+
+            if (l - this.lastHit <= 5L || bl) {
+                if (damageSource.getEntity() instanceof Player player && player.getMainHandItem().getItem() instanceof PickaxeItem) {
+                    this.brokenByPlayer(damageSource);
+                    this.showBreakingParticles();
+                    this.kill();
+                }
+            } else {
+                this.level.broadcastEntityEvent(this, (byte) 32);
+                this.gameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getEntity());
+                this.lastHit = l;
+            }
+
         return true;
     }
 
