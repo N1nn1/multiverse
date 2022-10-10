@@ -3,13 +3,8 @@ package com.ninni.multiverse.entities.ai;
 import com.google.common.collect.Lists;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.ClipBlockStateContext;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;

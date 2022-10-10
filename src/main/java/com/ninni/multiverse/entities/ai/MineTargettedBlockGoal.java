@@ -1,13 +1,8 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
-import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
-import net.fabricmc.loader.impl.lib.sat4j.core.Vec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class MineTargettedBlockGoal extends Goal {
@@ -41,11 +36,5 @@ public class MineTargettedBlockGoal extends Goal {
     public void stop() {
         this.cobblestoneGolemEntity.setMinePos(null);
     }
-
-    public BlockState getState() {
-        BlockPos pos = this.cobblestoneGolemEntity.getMinePos();
-        return this.cobblestoneGolemEntity.level.getBlockState(pos);
-    }
-
 
 }

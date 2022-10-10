@@ -511,22 +511,6 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
         return this.bodyPose;
     }
 
-    public Rotations getLeftArmPose() {
-        return this.leftArmPose;
-    }
-
-    public Rotations getRightArmPose() {
-        return this.rightArmPose;
-    }
-
-    public Rotations getLeftLegPose() {
-        return this.leftLegPose;
-    }
-
-    public Rotations getRightLegPose() {
-        return this.rightLegPose;
-    }
-
     @Override
     public boolean isPickable() {
         return super.isPickable() && !this.isMarker();
