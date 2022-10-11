@@ -103,7 +103,7 @@ public class MineTargettedBlockGoal extends Goal {
     @Override
     public void stop() {
         this.golem.setMinePos(null);
-        this.golem.setMiningCooldown(Mth.nextInt(this.golem.getRandom(), 200, 400));
+        this.golem.setMiningCooldown(Mth.nextInt(this.golem.getRandom(), 100, 200));
         this.idlingTicks = 0;
     }
 

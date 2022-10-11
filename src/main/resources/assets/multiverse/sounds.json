@@ -8,7 +8,7 @@
       "multiverse:entity/cobblestone_golem/idle5",
       "multiverse:entity/cobblestone_golem/idle6"
     ],
-    "subtitle": "subtitles.cobblestone_golem.ambient"
+    "subtitle": "subtitles.entity.cobblestone_golem.ambient"
   },
   "entity.cobblestone_golem.hurt": {
     "sounds": [
@@ -17,14 +17,14 @@
       "multiverse:entity/cobblestone_golem/hurt3",
       "multiverse:entity/cobblestone_golem/hurt4"
     ],
-    "subtitle": "subtitles.cobblestone_golem.hurt"
+    "subtitle": "subtitles.entity.cobblestone_golem.hurt"
   },
   "entity.cobblestone_golem.death": {
     "sounds": [
       "multiverse:entity/cobblestone_golem/death1",
       "multiverse:entity/cobblestone_golem/death2"
     ],
-    "subtitle": "subtitles.cobblestone_golem.death"
+    "subtitle": "subtitles.entity.cobblestone_golem.death"
   },
   "block.stone_tiles.break": {
     "sounds": [

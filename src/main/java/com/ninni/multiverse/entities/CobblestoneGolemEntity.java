@@ -37,6 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -135,6 +136,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
             if (this.getMiningCooldown() > 0) {
                 this.setMiningCooldown(this.getMiningCooldown() - 1);
             }
+            Optional.ofNullable(this.getMinePos()).flatMap(blockPos -> this.getMiningBlock().map(BlockBehaviour.BlockStateBase::getBlock).filter(block -> !this.level.getBlockState(blockPos).is(block))).ifPresent(block -> this.setMinePos(null));
         }
     }
 
@@ -201,6 +203,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
             this.playSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM, 1.0F, 1.0F);
             this.spawnAtLocation(this.getMiningBlock().get().getBlock().asItem().getDefaultInstance(), 0.5f);
             this.setMiningBlock(null);
+            if (!player.getAbilities().instabuild) itemStack.shrink(1);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.CONSUME;

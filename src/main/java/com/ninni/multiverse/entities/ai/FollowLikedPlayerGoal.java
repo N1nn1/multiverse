@@ -22,7 +22,7 @@ public class FollowLikedPlayerGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.cobblestoneGolemEntity.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.cobblestoneGolemEntity.getMinePos() == null;
+        return this.cobblestoneGolemEntity.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.cobblestoneGolemEntity.getMinePos() == null && this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 7;
     }
 
     @Override

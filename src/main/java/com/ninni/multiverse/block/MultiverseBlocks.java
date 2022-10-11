@@ -9,6 +9,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 
 import static com.ninni.multiverse.Multiverse.*;
 
@@ -27,6 +30,7 @@ public class MultiverseBlocks {
     public static final Block SANDY_STONE_TILE_STAIRS = register("sandy_stone_tile_stairs", new StairBlock(SANDY_STONE_TILES.defaultBlockState(), FabricBlockSettings.copyOf(SANDY_STONE_TILES)));
     public static final Block SANDY_STONE_TILE_SLAB = register("sandy_stone_tile_slab", new SlabBlock(FabricBlockSettings.copyOf(SANDY_STONE_TILES)));
 
+    public static final Block LORE_TABLET = register("lore_tablet", new LoreTabletBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F).noOcclusion()));
 
     private static Block register(String id, Block block) {
         return Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, id), block);
