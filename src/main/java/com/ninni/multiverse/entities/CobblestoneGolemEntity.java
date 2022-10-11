@@ -4,6 +4,7 @@ import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.api.CrackableEntity;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.ai.FindTargettedBlockGoal;
+import com.ninni.multiverse.entities.ai.FollowLikedPlayerGoal;
 import com.ninni.multiverse.entities.ai.MineTargettedBlockGoal;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
@@ -36,16 +38,20 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEntity {
     public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Optional<BlockState>> DATA_CARRY_STATE = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.BLOCK_STATE);
+    private static final EntityDataAccessor<Optional<BlockState>> MINING_STATE = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.BLOCK_STATE);
+    private static final EntityDataAccessor<Optional<UUID>> LIKED_PLAYER = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     @Nullable
     private BlockPos minePos;
+    private int miningCooldown;
 
     //TODO Sounds
     // -Placing/getting back block sounds
@@ -61,7 +67,8 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(CRACKINESS, 0);
-        this.entityData.define(DATA_CARRY_STATE, Optional.empty());
+        this.entityData.define(MINING_STATE, Optional.empty());
+        this.entityData.define(LIKED_PLAYER, Optional.empty());
     }
 
     @Override
@@ -74,27 +81,61 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
         if (compoundTag.contains("minePos")) {
             this.setMinePos(NbtUtils.readBlockPos(compoundTag.getCompound("minePos")));
         }
+        UUID uUID;
+        if (compoundTag.hasUUID("LikedPlayer")) {
+            uUID = compoundTag.getUUID("LikedPlayer");
+        } else {
+            String string = compoundTag.getString("LikedPlayer");
+            uUID = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), string);
+        }
+        if (uUID != null) {
+            this.setLikedPlayer(uUID);
+        }
+        this.miningCooldown = compoundTag.getInt("MiningCooldown");
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putInt("crackiness", this.getCrackiness().getId());
+        compoundTag.putInt("MiningCooldown", this.getMiningCooldown());
         if (this.getMiningBlock().isPresent()) {
             compoundTag.put("miningState", NbtUtils.writeBlockState(this.getMiningBlock().get()));
         }
         if (this.getMinePos() != null) {
             compoundTag.put("minePos", NbtUtils.writeBlockPos(this.getMinePos()));
         }
+        if (this.getLikedPlayer() != null) {
+            compoundTag.putUUID("LikedPlayer", this.getLikedPlayer());
+        }
+    }
+
+    public void setMiningCooldown(int miningCooldown) {
+        this.miningCooldown = miningCooldown;
+    }
+
+    public int getMiningCooldown() {
+        return this.miningCooldown;
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FindTargettedBlockGoal(this));
         this.goalSelector.addGoal(1, new MineTargettedBlockGoal(this));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
-        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0f));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(2, new FollowLikedPlayerGoal(this));
+        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.level.isClientSide) {
+            if (this.getMiningCooldown() > 0) {
+                this.setMiningCooldown(this.getMiningCooldown() - 1);
+            }
+        }
     }
 
     public static AttributeSupplier.Builder createCobblestoneGolemAttributes() {
@@ -150,6 +191,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
                 if (flag) continue;
                 if (flag1) continue;
                 this.setMiningBlock(holder.value().defaultBlockState());
+                this.setLikedPlayer(player.getUUID());
                 this.playSound(MultiverseSoundEvents.BLOCK_STONE_TILES_STEP, 1.0F, 1.0F);
                 if (!player.getAbilities().instabuild) itemStack.shrink(1);
                 return InteractionResult.SUCCESS;
@@ -190,11 +232,11 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     }
 
     public void setMiningBlock(@Nullable BlockState block) {
-        this.entityData.set(DATA_CARRY_STATE, Optional.ofNullable(block));
+        this.entityData.set(MINING_STATE, Optional.ofNullable(block));
     }
 
     public Optional<BlockState> getMiningBlock() {
-        return this.entityData.get(DATA_CARRY_STATE);
+        return this.entityData.get(MINING_STATE);
     }
 
     public void setMinePos(@Nullable BlockPos blockPos) {
@@ -214,5 +256,18 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     @Override
     public Crackiness getCrackiness() {
         return Crackiness.BY_ID[this.entityData.get(CRACKINESS)];
+    }
+
+    @Nullable
+    public UUID getLikedPlayer() {
+        return getOptionalUUID().orElse(null);
+    }
+
+    public Optional<UUID> getOptionalUUID() {
+        return this.entityData.get(LIKED_PLAYER);
+    }
+
+    public void setLikedPlayer(@Nullable UUID uUID) {
+        this.entityData.set(LIKED_PLAYER, Optional.ofNullable(uUID));
     }
 }

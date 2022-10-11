@@ -4,6 +4,7 @@ import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.pathfinder.Path;
@@ -26,7 +27,7 @@ public class MineTargettedBlockGoal extends Goal {
     @Override
     public boolean canUse() {
         this.pos = this.golem.getMinePos();
-        return this.pos != null && !this.golem.level.getBlockState(this.pos).isAir();
+        return this.golem.getMiningCooldown() == 0 && this.pos != null && !this.golem.level.getBlockState(this.pos).isAir();
     }
 
     @Override
@@ -50,7 +51,8 @@ public class MineTargettedBlockGoal extends Goal {
     public void start() {
         if (this.pos != null) {
             float speed = this.golem.level.getBlockState(this.pos).getDestroySpeed(this.golem.level, this.pos);
-            this.miningTicks = (int) speed * 10;
+            float adjustedValue = speed < 1 ? 1 : speed;
+            this.miningTicks = (int) adjustedValue * 10;
         }
     }
 
@@ -59,9 +61,9 @@ public class MineTargettedBlockGoal extends Goal {
         Vec3 vec3 = Vec3.atCenterOf(this.pos);
         Crackiness crackiness = this.golem.getCrackiness();
         if (this.pos.closerToCenterThan(this.golem.position(), 2.5)) {
-            if (this.miningTicks >= 0) {
-                this.miningTicks--;
-            }
+            this.golem.getNavigation().stop();
+            this.golem.getLookControl().setLookAt(vec3);
+            this.miningTicks--;
             if (this.miningTicks > 2) {
                 int var3 = (30 / (this.miningTicks - 2));
                 int var4 = Math.min(var3, 9);
@@ -101,6 +103,7 @@ public class MineTargettedBlockGoal extends Goal {
     @Override
     public void stop() {
         this.golem.setMinePos(null);
+        this.golem.setMiningCooldown(Mth.nextInt(this.golem.getRandom(), 200, 400));
         this.idlingTicks = 0;
     }
 

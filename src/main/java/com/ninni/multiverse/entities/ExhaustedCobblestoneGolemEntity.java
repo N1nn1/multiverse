@@ -61,7 +61,7 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
     public static final EntityDataAccessor<Rotations> DATA_LEFT_LEG_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
     public static final EntityDataAccessor<Rotations> DATA_RIGHT_LEG_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
     public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.INT);
-    private static final Predicate<Entity> RIDABLE_MINECARTS = entity -> entity instanceof AbstractMinecart && ((AbstractMinecart)entity).getMinecartType() == AbstractMinecart.Type.RIDEABLE;
+    private static final Predicate<Entity> RIDABLE_MINECARTS = entity -> entity instanceof AbstractMinecart abstractMinecart && abstractMinecart.getMinecartType() == AbstractMinecart.Type.RIDEABLE;
     private boolean invisible;
     public long lastHit;
     private int disabledSlots;

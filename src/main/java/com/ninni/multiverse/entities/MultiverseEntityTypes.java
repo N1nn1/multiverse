@@ -1,7 +1,6 @@
 package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.Multiverse;
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;

@@ -33,8 +33,7 @@ public class FindTargettedBlockGoal extends Goal {
             Vec3 vec3 = Vec3.atCenterOf(this.targetPos);
             this.golemEntity.getNavigation().moveTo(vec3.x(), vec3.y(), vec3.z(), 1.2);
             this.golemEntity.getLookControl().setLookAt(vec3);
-            boolean b = !this.targetPos.closerToCenterThan(this.golemEntity.position(), 2) && super.canContinueToUse();
-            return b;
+            return !this.golemEntity.blockPosition().closerToCenterThan(vec3, 2) && super.canContinueToUse();
         } else {
             return false;
         }
@@ -52,6 +51,11 @@ public class FindTargettedBlockGoal extends Goal {
 
     @Override
     public void tick() {
+        if (this.targetPos != null) {
+            Vec3 vec3 = Vec3.atCenterOf(this.targetPos);
+            this.golemEntity.getNavigation().moveTo(vec3.x, vec3.y, vec3.z, 1.4D);
+            this.golemEntity.getLookControl().setLookAt(vec3);
+        }
     }
 
     @Override
