@@ -6,9 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.DripstoneUtils;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
@@ -30,14 +29,25 @@ public class FindTargettedBlockGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        boolean flag = !this.golemEntity.getNavigation().isDone() && !this.targetPos.closerToCenterThan(this.golemEntity.position(), 1.2D);
-        return flag && super.canContinueToUse();
+        if (this.targetPos != null) {
+            Vec3 vec3 = Vec3.atCenterOf(this.targetPos);
+            this.golemEntity.getNavigation().moveTo(vec3.x(), vec3.y(), vec3.z(), 1.2);
+            this.golemEntity.getLookControl().setLookAt(vec3);
+            boolean b = !this.targetPos.closerToCenterThan(this.golemEntity.position(), 2) && super.canContinueToUse();
+            return b;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void start() {
         Vec3 vec3 = Vec3.atCenterOf(this.targetPos);
         this.golemEntity.getNavigation().moveTo(vec3.x, vec3.y, vec3.z, 1.4D);
+        this.golemEntity.getLookControl().setLookAt(vec3);
+        if (this.targetPos != null && this.golemEntity.blockPosition().closerThan(this.targetPos, 2)) {
+            this.golemEntity.setMinePos(this.targetPos);
+        }
     }
 
     @Override
@@ -52,26 +62,36 @@ public class FindTargettedBlockGoal extends Goal {
 
     public BlockPos getMiningPos() {
         List<BlockPos> list = Lists.newArrayList();
+        BlockPos mobPos = this.golemEntity.blockPosition();
         int range = 4;
-        for (int x = -range; x <= range; x++) {
-            for (int z = -range; z <= range; z++) {
-                for (int y = -1; y <= 1; y++) {
-                    BlockPos pos = new BlockPos(this.golemEntity.getX() + x, this.golemEntity.getY() + y, this.golemEntity.getZ() + z);
-                    BlockState blockState = this.golemEntity.level.getBlockState(pos);
-                    boolean flag = this.golemEntity.getMiningBlock() != null && blockState.getBlock() == this.golemEntity.getMiningBlock().getBlock();
-                    if (!(flag)) continue;
-                    for (Direction direction : Direction.values()) {
-                        if (!this.golemEntity.level.getBlockState(pos.relative(direction)).isAir()) {
-                            continue;
-                        }
-                        list.add(pos);
-                    }
-                }
+        int yLevel = 1;
+        for (BlockPos blockPos : BlockPos.betweenClosedStream(mobPos.offset(-range, -yLevel, -range), mobPos.offset(range, yLevel, range)).map(BlockPos::immutable).toList()) {
+            if (this.golemEntity.getMiningBlock().isPresent() && this.golemEntity.level.getBlockState(blockPos).is(this.golemEntity.getMiningBlock().get().getBlock()) && this.isAirOrWater(blockPos)) {
+                list.add(blockPos);
             }
         }
-        if (list.isEmpty()) return null;
 
-        return list.get(this.golemEntity.level.getRandom().nextInt(list.size()));
+        if (!list.isEmpty()) {
+            list.sort(new DistanceComparator(this.golemEntity.blockPosition()));
+            for (BlockPos blockPos : list) {
+                Vec3 vec3 = new Vec3(this.golemEntity.getX(), this.golemEntity.getEyeY(), this.golemEntity.getZ());
+                Vec3 vec31 = Vec3.atCenterOf(blockPos);
+                BlockHitResult blockHitResult = this.golemEntity.level.clip(new ClipContext(vec3, vec31, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this.golemEntity));
+                if (!blockHitResult.getBlockPos().equals(blockPos)) continue;
+                return blockPos;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean isAirOrWater(BlockPos blockPos) {
+        for (Direction direction : Direction.values()) {
+            if (this.golemEntity.level.isStateAtPosition(blockPos.relative(direction), DripstoneUtils::isEmptyOrWater)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
