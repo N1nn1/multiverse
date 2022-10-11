@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 public class MultiverseTags {
 
     public static final TagKey<Item> STONE_TILES_ITEM = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "stone_tiles"));
+    public static final TagKey<Item> LORE_TABLETS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "lore_tablets"));
 
     public static final TagKey<Block> STONE_TILES_BLOCK = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Multiverse.MOD_ID,"stone_tiles"));
     public static final TagKey<Block> COBBLESTONE_GOLEM_BREAKABLES = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Multiverse.MOD_ID,"cobblestone_golem_breakables"));

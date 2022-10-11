@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.ninni.multiverse.Multiverse;
+import com.ninni.multiverse.item.LoreTabletItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -158,7 +159,7 @@ public class LoreTabletScreen extends Screen {
                 return LoreTabletScreen.loadPages(compoundTag);
             }
             return ImmutableList.of(
-                Component.Serializer.toJson(Component.translatable("item.lore_tablet.message.cobblestone_golem").withStyle(ChatFormatting.DARK_GRAY))
+                Component.Serializer.toJson(Component.translatable("item.lore_tablet.message." + ((LoreTabletItem)itemStack.getItem()).getName()).withStyle(ChatFormatting.DARK_GRAY))
             );
         }
 

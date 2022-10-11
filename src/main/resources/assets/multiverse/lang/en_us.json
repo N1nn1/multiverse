@@ -2,6 +2,8 @@
   "mod.multiverse.contact.discord": "Discord",
   "itemGroup.multiverse.multiverse": "Multiverse",
 
+  "entity.multiverse.cobblestone_golem": "Cobblestone Golem",
+
   "item.multiverse.exhausted_cobblestone_golem": "Exhausted Cobblestone Golem",
   "item.multiverse.exhausted_cobblestone_golem.low": "Chipped",
   "item.multiverse.exhausted_cobblestone_golem.medium": "Damaged",

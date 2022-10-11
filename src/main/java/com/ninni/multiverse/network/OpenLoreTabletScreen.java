@@ -1,5 +1,6 @@
 package com.ninni.multiverse.network;
 
+import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.client.gui.LoreTabletScreen;
 import com.ninni.multiverse.item.MultiverseItems;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -20,7 +21,7 @@ public class OpenLoreTabletScreen implements ClientPlayNetworking.PlayChannelHan
         Optional.ofNullable(client.player).ifPresent(localPlayer -> {
             client.execute(() -> {
                 ItemStack itemStack = client.player.getItemInHand(hand);
-                if (itemStack.is(MultiverseItems.LORE_TABLET)) {
+                if (itemStack.is(MultiverseTags.LORE_TABLETS)) {
                     client.setScreen(new LoreTabletScreen(new LoreTabletScreen.LoreInfoAccess(itemStack)));
                 }
             });
