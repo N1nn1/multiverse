@@ -1,9 +1,11 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
+import com.ninni.multiverse.entities.MultiversePoses;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -30,7 +32,13 @@ public class FollowLikedPlayerGoal extends Goal {
         this.cobblestoneGolemEntity.getOptionalUUID().map(this.cobblestoneGolemEntity.level::getPlayerByUUID).ifPresent(this::followPlayer);
     }
 
+    @Override
+    public void stop() {
+        this.cobblestoneGolemEntity.setPose(Pose.STANDING);
+    }
+
     private void followPlayer(Player player) {
+        this.cobblestoneGolemEntity.setPose(MultiversePoses.RUN.get());
         this.cobblestoneGolemEntity.getNavigation().moveTo(player, 1.4D);
         this.cobblestoneGolemEntity.getLookControl().setLookAt(player);
     }

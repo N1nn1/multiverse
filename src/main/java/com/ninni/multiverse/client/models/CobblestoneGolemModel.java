@@ -1,8 +1,10 @@
 package com.ninni.multiverse.client.models;
 
+import com.ninni.multiverse.client.entity.CobblestoneGolemAnimations;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.animation.definitions.FrogAnimation;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,6 +14,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.animal.frog.Frog;
 
 @Environment(EnvType.CLIENT)
 public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEntity> {
@@ -25,7 +28,7 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
 
     public CobblestoneGolemModel(ModelPart root) {
         this.root = root;
-        this.body = root.getChild("getBody");
+        this.body = root.getChild("body");
         this.leftArm = this.body.getChild("leftArm");
         this.rightArm = this.body.getChild("rightArm");
         this.leftLeg = this.body.getChild("leftLeg");
@@ -38,7 +41,7 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
         PartDefinition root = data.getRoot();
 
         PartDefinition body = root.addOrReplaceChild(
-                "getBody",
+                "body",
                 CubeListBuilder.create()
                         .texOffs(0, 0)
                         .mirror(false)
@@ -96,6 +99,12 @@ public class CobblestoneGolemModel extends HierarchicalModel<CobblestoneGolemEnt
 
     @Override
     public void setupAnim(CobblestoneGolemEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        this.root().getAllParts().forEach(ModelPart::resetPose);
+        this.animate(entity.walkAnimationState, CobblestoneGolemAnimations.WALK, animationProgress);
+        this.animate(entity.runAnimationState, CobblestoneGolemAnimations.RUN, animationProgress);
+        this.animate(entity.forwardsMiningAnimationState, CobblestoneGolemAnimations.MINE_FORWARDS, animationProgress);
+        this.animate(entity.downwardsMiningAnimationState, CobblestoneGolemAnimations.MINE_DOWNWARDS, animationProgress);
+        this.animate(entity.upwardsMiningwalkAnimationState, CobblestoneGolemAnimations.MINE_UPWARDS, animationProgress);
     }
 
     @Override

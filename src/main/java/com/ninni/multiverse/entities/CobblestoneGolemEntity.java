@@ -23,9 +23,11 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -53,6 +55,11 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     @Nullable
     private BlockPos minePos;
     private int miningCooldown;
+    public final AnimationState walkAnimationState = new AnimationState();
+    public final AnimationState runAnimationState = new AnimationState();
+    public final AnimationState forwardsMiningAnimationState = new AnimationState();
+    public final AnimationState downwardsMiningAnimationState = new AnimationState();
+    public final AnimationState upwardsMiningwalkAnimationState = new AnimationState();
 
     //TODO Sounds
     // -Placing/getting back block sounds
@@ -127,6 +134,49 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
+        if (DATA_POSE.equals(entityDataAccessor)) {
+            if (this.getPose() == MultiversePoses.RUN.get()) {
+                this.runAnimationState.start(this.tickCount);
+            } else {
+                this.runAnimationState.stop();
+            }
+            if (this.getPose() == MultiversePoses.MINING_FORWARDS.get()) {
+                this.forwardsMiningAnimationState.start(this.tickCount);
+            } else {
+                this.forwardsMiningAnimationState.stop();
+            }
+            if (this.getPose() == MultiversePoses.MINING_UPWARDS.get()) {
+                this.upwardsMiningwalkAnimationState.start(this.tickCount);
+            } else {
+                this.upwardsMiningwalkAnimationState.stop();
+            }
+            if (this.getPose() == MultiversePoses.MINING_DOWNWARDS.get()) {
+                this.downwardsMiningAnimationState.start(this.tickCount);
+            } else {
+                this.downwardsMiningAnimationState.stop();
+            }
+        }
+        super.onSyncedDataUpdated(entityDataAccessor);
+    }
+
+    @Override
+    public void tick() {
+        if (this.level.isClientSide()) {
+            if (this.isMovingOnLand()) {
+                this.walkAnimationState.startIfStopped(this.tickCount);
+            } else {
+                this.walkAnimationState.stop();
+            }
+        }
+        super.tick();
+    }
+
+    private boolean isMovingOnLand() {
+        return this.onGround && this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && !this.isInWaterOrBubble();
     }
 
     @Override

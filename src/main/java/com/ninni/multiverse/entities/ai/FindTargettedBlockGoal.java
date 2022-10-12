@@ -66,6 +66,8 @@ public class FindTargettedBlockGoal extends Goal {
 
     public BlockPos getMiningPos() {
         List<BlockPos> list = Lists.newArrayList();
+        List<BlockPos> priorityList = Lists.newArrayList();
+        List<BlockPos> unpreferredPositions = Lists.newArrayList();
         BlockPos mobPos = this.golemEntity.blockPosition();
         int range = 4;
         int yLevel = 1;
@@ -82,6 +84,20 @@ public class FindTargettedBlockGoal extends Goal {
                 Vec3 vec31 = Vec3.atCenterOf(blockPos);
                 BlockHitResult blockHitResult = this.golemEntity.level.clip(new ClipContext(vec3, vec31, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this.golemEntity));
                 if (!blockHitResult.getBlockPos().equals(blockPos)) continue;
+                if (this.golemEntity.getY() > blockHitResult.getBlockPos().getY()) {
+                    unpreferredPositions.add(blockPos);
+                } else {
+                    priorityList.add(blockPos);
+                }
+            }
+        }
+
+        if (!priorityList.isEmpty()) {
+            for (BlockPos blockPos : priorityList) {
+                return blockPos;
+            }
+        } else {
+            for (BlockPos blockPos : unpreferredPositions) {
                 return blockPos;
             }
         }

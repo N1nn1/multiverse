@@ -3,8 +3,10 @@ package com.ninni.multiverse.entities.ai;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.entities.MultiversePoses;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.pathfinder.Path;
@@ -60,9 +62,18 @@ public class MineTargettedBlockGoal extends Goal {
     public void tick() {
         Vec3 vec3 = Vec3.atCenterOf(this.pos);
         Crackiness crackiness = this.golem.getCrackiness();
-        if (this.pos.closerToCenterThan(this.golem.position(), 2.5)) {
+        if (this.pos.closerToCenterThan(this.golem.position(), 2)) {
             this.golem.getNavigation().stop();
             this.golem.getLookControl().setLookAt(vec3);
+            Pose pose;
+            if (this.pos.getY() > this.golem.getY()) {
+                pose = MultiversePoses.MINING_UPWARDS.get();
+            } else if (this.pos.getY() < this.golem.getY()) {
+                pose = MultiversePoses.MINING_DOWNWARDS.get();
+            } else {
+                pose = MultiversePoses.MINING_FORWARDS.get();
+            }
+            this.golem.setPose(pose);
             this.miningTicks--;
             if (this.miningTicks > 2) {
                 int var3 = (30 / (this.miningTicks - 2));
@@ -102,6 +113,7 @@ public class MineTargettedBlockGoal extends Goal {
 
     @Override
     public void stop() {
+        this.golem.setPose(Pose.STANDING);
         this.golem.setMinePos(null);
         this.golem.setMiningCooldown(Mth.nextInt(this.golem.getRandom(), 100, 200));
         this.idlingTicks = 0;
