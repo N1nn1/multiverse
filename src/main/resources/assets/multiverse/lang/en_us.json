@@ -3,6 +3,9 @@
   "itemGroup.multiverse.multiverse": "Multiverse",
 
   "entity.multiverse.cobblestone_golem": "Cobblestone Golem",
+  "entity.multiverse.sprinkler": "Sprinkler",
+  "entity.multiverse.grindstone_golem": "Grindstone Golem",
+  "entity.multiverse.plank_golem": "Plank Golem",
 
   "item.multiverse.exhausted_cobblestone_golem": "Exhausted Cobblestone Golem",
   "item.multiverse.exhausted_cobblestone_golem.low": "Chipped",
