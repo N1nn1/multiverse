@@ -104,7 +104,7 @@ public class LoreTabletScreen extends Screen {
         int n = Math.min(148 / this.font.lineHeight, this.cachedPageComponents.size());
         for (int o = 0; o < n; ++o) {
             FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(o);
-            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(78 + o * this.font.lineHeight), 0);
+            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(140 + o * this.font.lineHeight), 0);
         }
         Style style = this.getClickedComponentStyleAt(i, j);
         if (style != null) {
