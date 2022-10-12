@@ -77,9 +77,8 @@ public class MineTargettedBlockGoal extends Goal {
             }
             this.golem.setPose(pose);
             this.miningTicks--;
-            if (this.miningTicks > 2) {
-                int var3 = (30 / (this.miningTicks - 2));
-                int var4 = Math.min(var3, 9);
+            if (this.miningTicks >= 1) {
+                int var4 = Math.min(30 / this.miningTicks, 9);
                 this.golem.level.destroyBlockProgress(this.golem.getId(), this.pos, var4);
                 this.soundDelayTicks--;
                 if (this.soundDelayTicks == 0) {
@@ -102,9 +101,7 @@ public class MineTargettedBlockGoal extends Goal {
                 }
             }
         } else {
-            if (this.pos.getY() > this.golem.getY()) {
-                this.golem.setJumping(true);
-            }
+            this.golem.setPose(Pose.STANDING);
             BlockHitResult result = this.golem.level.clip(new ClipContext(this.golem.position(), vec3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this.golem));
             BlockPos walkPos = new BlockPos(vec3.relative(result.getDirection(), 0.51F));
             vec3 = new Vec3(walkPos.getX(), walkPos.getY(), walkPos.getZ());

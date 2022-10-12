@@ -24,7 +24,8 @@ public class FollowLikedPlayerGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.cobblestoneGolemEntity.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.cobblestoneGolemEntity.getMinePos() == null && this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 5;
+        boolean flag = this.cobblestoneGolemEntity.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.cobblestoneGolemEntity.getMinePos() == null && this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 10;
+        return flag;
     }
 
     @Override
@@ -45,14 +46,12 @@ public class FollowLikedPlayerGoal extends Goal {
 
     public Optional<ServerPlayer> getLikedPlayer() {
         Level level = this.cobblestoneGolemEntity.getLevel();
-        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
+        if (!level.isClientSide() && level instanceof ServerLevel) {
             Optional<UUID> optional = this.cobblestoneGolemEntity.getOptionalUUID();
             if (optional.isPresent()) {
-                Entity entity = serverLevel.getEntity(optional.get());
-                if (entity instanceof ServerPlayer serverPlayer) {
-                    if ((serverPlayer.gameMode.isSurvival() || serverPlayer.gameMode.isCreative()) && serverPlayer.closerThan(this.cobblestoneGolemEntity, 64.0)) {
-                        return Optional.of(serverPlayer);
-                    }
+                Player player = this.cobblestoneGolemEntity.level.getPlayerByUUID(optional.get());
+                if (player instanceof ServerPlayer serverPlayer && (serverPlayer.gameMode.isSurvival() || serverPlayer.gameMode.isCreative()) && serverPlayer.closerThan(this.cobblestoneGolemEntity, 64.0)) {
+                    return Optional.of(serverPlayer);
                 }
                 return Optional.empty();
             }
