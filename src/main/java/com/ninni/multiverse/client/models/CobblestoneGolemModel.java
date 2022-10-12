@@ -1,6 +1,6 @@
 package com.ninni.multiverse.client.models;
 
-import com.ninni.multiverse.client.entity.CobblestoneGolemAnimations;
+import com.ninni.multiverse.client.animation.CobblestoneGolemAnimations;
 import com.ninni.multiverse.entities.CobblestoneGolem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

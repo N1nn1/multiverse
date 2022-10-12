@@ -3,7 +3,7 @@ package com.ninni.multiverse.entities.ai;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.CobblestoneGolem;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
-import com.ninni.multiverse.entities.MultiversePoses;
+import com.ninni.multiverse.entities.MultiversePose;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Pose;
@@ -69,11 +69,11 @@ public class MineTargettedBlockGoal extends Goal {
             this.golem.getLookControl().setLookAt(vec3);
             Pose pose;
             if (this.pos.getY() > this.golem.getY()) {
-                pose = MultiversePoses.MINING_UPWARDS.get();
+                pose = MultiversePose.MINING_UPWARDS.get();
             } else if (this.pos.getY() < this.golem.getY()) {
-                pose = MultiversePoses.MINING_DOWNWARDS.get();
+                pose = MultiversePose.MINING_DOWNWARDS.get();
             } else {
-                pose = MultiversePoses.MINING_FORWARDS.get();
+                pose = MultiversePose.MINING_FORWARDS.get();
             }
             this.golem.setPose(pose);
             this.miningTicks--;

@@ -17,6 +17,8 @@ import static com.ninni.multiverse.Multiverse.*;
 
 public class MultiverseBlocks {
 
+    public static final Block RAINBOW_WOOL = register("rainbow_wool", new Block(FabricBlockSettings.copyOf(Blocks.RED_WOOL)));
+
     public static final Block STONE_TILES = register("stone_tiles", new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).sounds(MultiverseSoundTypes.STONE_TILES)));
     public static final Block STONE_TILE_STAIRS = register("stone_tile_stairs", new StairBlock(STONE_TILES.defaultBlockState(), FabricBlockSettings.copyOf(STONE_TILES)));
     public static final Block STONE_TILE_SLAB = register("stone_tile_slab", new SlabBlock(FabricBlockSettings.copyOf(STONE_TILES)));

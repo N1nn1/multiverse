@@ -42,7 +42,7 @@ public class MultiverseEntityTypes {
         "rainbow_sheep",
         FabricEntityTypeBuilder.createMob()
                                .entityFactory(RainbowSheep::new)
-                               .defaultAttributes(Sheep::createAttributes)
+                               .defaultAttributes(RainbowSheep::createAttributes)
                                .spawnGroup(MobCategory.CREATURE)
                                .dimensions(EntityDimensions.fixed(0.9F, 1.3F))
                                .trackRangeChunks(10),

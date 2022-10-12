@@ -14,6 +14,8 @@ import static com.ninni.multiverse.Multiverse.*;
 @SuppressWarnings("unused")
 public class MultiverseItems {
 
+    public static final Item RAINBOW_WOOL = register("rainbow_wool", new BlockItem(MultiverseBlocks.RAINBOW_WOOL, new FabricItemSettings().group(TAB)));
+
     public static final Item STONE_TILES = register("stone_tiles", new BlockItem(MultiverseBlocks.STONE_TILES, new FabricItemSettings().group(TAB)));
     public static final Item STONE_TILE_STAIRS = register("stone_tile_stairs", new BlockItem(MultiverseBlocks.STONE_TILE_STAIRS, new FabricItemSettings().group(TAB)));
     public static final Item STONE_TILE_SLAB = register("stone_tile_slab", new BlockItem(MultiverseBlocks.STONE_TILE_SLAB, new FabricItemSettings().group(TAB)));

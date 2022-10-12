@@ -1,6 +1,6 @@
 package com.ninni.multiverse.mixin;
 
-import com.ninni.multiverse.entities.MultiversePoses;
+import com.ninni.multiverse.entities.MultiversePose;
 import net.minecraft.world.entity.Pose;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +32,7 @@ public class PoseMixin {
         List<Pose> poses = new ArrayList<>(Arrays.asList($VALUES));
         Pose last = poses.get(poses.size() - 1);
         int i = 1;
-        for (MultiversePoses pose : MultiversePoses.values()) {
+        for (MultiversePose pose : MultiversePose.values()) {
             poses.add(newPose(pose.name(), last.ordinal() + i));
             i++;
         }

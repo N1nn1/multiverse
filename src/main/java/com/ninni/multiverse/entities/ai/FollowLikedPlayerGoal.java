@@ -1,7 +1,7 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.entities.CobblestoneGolem;
-import com.ninni.multiverse.entities.MultiversePoses;
+import com.ninni.multiverse.entities.MultiversePose;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Pose;
@@ -14,22 +14,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class FollowLikedPlayerGoal extends Goal {
-    private final CobblestoneGolem cobblestoneGolemEntity;
+    private final CobblestoneGolem golem;
 
-    public FollowLikedPlayerGoal(CobblestoneGolem cobblestoneGolemEntity) {
-        this.cobblestoneGolemEntity = cobblestoneGolemEntity;
+    public FollowLikedPlayerGoal(CobblestoneGolem golem) {
+        this.golem = golem;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
     public boolean canUse() {
-        return this.cobblestoneGolemEntity.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.cobblestoneGolemEntity.getMinePos() == null && this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 10;
+        return this.golem.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.golem.getMinePos() == null && this.golem.distanceTo(this.getLikedPlayer().get()) > 10;
     }
 
     @Override
     public boolean canContinueToUse() {
         if (this.getLikedPlayer().isPresent()) {
-            if (this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 2) {
+            if (this.golem.distanceTo(this.getLikedPlayer().get()) > 2) {
                 return true;
             }
         }
@@ -38,27 +38,27 @@ public class FollowLikedPlayerGoal extends Goal {
 
     @Override
     public void tick() {
-        this.cobblestoneGolemEntity.getOptionalUUID().map(this.cobblestoneGolemEntity.level::getPlayerByUUID).ifPresent(this::followPlayer);
+        this.golem.getOptionalUUID().map(this.golem.level::getPlayerByUUID).ifPresent(this::followPlayer);
     }
 
     @Override
     public void stop() {
-        this.cobblestoneGolemEntity.setPose(Pose.STANDING);
+        this.golem.setPose(Pose.STANDING);
     }
 
     private void followPlayer(Player player) {
-        this.cobblestoneGolemEntity.setPose(MultiversePoses.RUN.get());
-        this.cobblestoneGolemEntity.getNavigation().moveTo(player, 1.8D);
-        this.cobblestoneGolemEntity.getLookControl().setLookAt(player);
+        this.golem.setPose(MultiversePose.RUN.get());
+        this.golem.getNavigation().moveTo(player, 1.8D);
+        this.golem.getLookControl().setLookAt(player);
     }
 
     public Optional<ServerPlayer> getLikedPlayer() {
-        Level level = this.cobblestoneGolemEntity.getLevel();
+        Level level = this.golem.getLevel();
         if (!level.isClientSide() && level instanceof ServerLevel) {
-            Optional<UUID> optional = this.cobblestoneGolemEntity.getOptionalUUID();
+            Optional<UUID> optional = this.golem.getOptionalUUID();
             if (optional.isPresent()) {
-                Player player = this.cobblestoneGolemEntity.level.getPlayerByUUID(optional.get());
-                if (player instanceof ServerPlayer serverPlayer && (serverPlayer.gameMode.isSurvival() || serverPlayer.gameMode.isCreative()) && serverPlayer.closerThan(this.cobblestoneGolemEntity, 16)) {
+                Player player = this.golem.level.getPlayerByUUID(optional.get());
+                if (player instanceof ServerPlayer serverPlayer && (serverPlayer.gameMode.isSurvival() || serverPlayer.gameMode.isCreative()) && serverPlayer.closerThan(this.golem, 16)) {
                     return Optional.of(serverPlayer);
                 }
                 return Optional.empty();

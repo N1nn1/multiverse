@@ -1,4 +1,4 @@
-package com.ninni.multiverse.client.entity;
+package com.ninni.multiverse.client.animation;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

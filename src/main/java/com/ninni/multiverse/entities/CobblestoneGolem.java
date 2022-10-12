@@ -136,22 +136,22 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         if (DATA_POSE.equals(entityDataAccessor)) {
-            if (this.getPose() == MultiversePoses.RUN.get() && this.isMovingOnLand()) {
+            if (this.getPose() == MultiversePose.RUN.get() && this.isMovingOnLand()) {
                 this.runAnimationState.start(this.tickCount);
             } else {
                 this.runAnimationState.stop();
             }
-            if (this.getPose() == MultiversePoses.MINING_FORWARDS.get()) {
+            if (this.getPose() == MultiversePose.MINING_FORWARDS.get()) {
                 this.forwardsMiningAnimationState.start(this.tickCount);
             } else {
                 this.forwardsMiningAnimationState.stop();
             }
-            if (this.getPose() == MultiversePoses.MINING_UPWARDS.get()) {
+            if (this.getPose() == MultiversePose.MINING_UPWARDS.get()) {
                 this.upwardsMiningwalkAnimationState.start(this.tickCount);
             } else {
                 this.upwardsMiningwalkAnimationState.stop();
             }
-            if (this.getPose() == MultiversePoses.MINING_DOWNWARDS.get()) {
+            if (this.getPose() == MultiversePose.MINING_DOWNWARDS.get()) {
                 this.downwardsMiningAnimationState.start(this.tickCount);
             } else {
                 this.downwardsMiningAnimationState.stop();

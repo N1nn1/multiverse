@@ -1,6 +1,7 @@
 package com.ninni.multiverse.client.models;
 
 import com.google.common.collect.ImmutableList;
+import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,6 +12,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+
 
 public class RainbowSheepModel<T extends RainbowSheep> extends QuadrupedModel<T> {
     private float headXRot;
@@ -178,14 +180,39 @@ public class RainbowSheepModel<T extends RainbowSheep> extends QuadrupedModel<T>
     }
 
     @Override
-    public void setupAnim(T sheep, float f, float g, float h, float i, float j) {
+    public void setupAnim(T sheep, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        float pi = (float)Math.PI;
         this.head.xRot = this.headXRot;
-        this.head.yRot = i * ((float)Math.PI / 180);
-        this.rightHindLeg.xRot = Mth.cos(f * 0.6662f) * 1.4f * g;
-        this.leftHindLeg.xRot = Mth.cos(f * 0.6662f + (float)Math.PI) * 1.4f * g;
-        this.rightFrontLeg.xRot = Mth.cos(f * 0.6662f + (float)Math.PI) * 1.4f * g;
-        this.leftFrontLeg.xRot = Mth.cos(f * 0.6662f) * 1.4f * g;
-        
+        this.head.yRot = headPitch * ((float)Math.PI / 180);
+
+        if (sheep.getPose().equals(MultiversePose.HOP.get())) {
+            float hopSpeed = 1.25F;
+            float hopDegree = 0.4F;
+
+            this.head.xRot += Mth.cos(limbAngle * 0.6f * hopSpeed + 0.7f) * 0.25F * limbDistance * hopDegree;
+            this.body.xRot = Mth.cos(limbAngle * 0.6f * hopSpeed) * 0.25F * limbDistance * hopDegree + pi/2;
+            this.body.y = Mth.cos(limbAngle * 0.6f * hopSpeed + pi/2) * 3 * limbDistance * hopDegree + 5.0F;
+            this.leftFrontLeg.xRot = Mth.cos(limbAngle * 0.6f * hopSpeed) * 3 * limbDistance * hopDegree - pi/6;
+            this.leftFrontLeg.y = Mth.cos(limbAngle * 0.6f * hopSpeed + pi/2) * 1.5F * limbDistance * hopDegree + 11.5F;
+            this.rightFrontLeg.xRot = Mth.cos(limbAngle * 0.6f * hopSpeed + 0.7f) * 3 * limbDistance * hopDegree - pi/6;
+            this.rightFrontLeg.y = Mth.cos(limbAngle * 0.6f * hopSpeed + pi/2 + 0.7f) * 1.5F * limbDistance * hopDegree + 11.5F;
+            this.rightHindLeg.xRot = Mth.cos(limbAngle * 0.6f * hopSpeed + pi) * 3 * limbDistance * hopDegree + pi/6;
+            this.rightHindLeg.y = Mth.cos(limbAngle * 0.6f * hopSpeed - pi/2) * 1.5F * limbDistance * hopDegree + 11.5F;
+            this.leftHindLeg.xRot = Mth.cos(limbAngle * 0.6f * hopSpeed + 0.7f + pi) * 3 * limbDistance * hopDegree + pi/6;
+            this.leftHindLeg.y = Mth.cos(limbAngle * 0.6f * hopSpeed - pi/2 + 0.7f) * 1.5F * limbDistance * hopDegree + 11.5F;
+        } else {
+            this.body.xRot = pi/2;
+            this.body.y = 5.0F;
+            this.rightHindLeg.xRot = Mth.cos(limbAngle * 0.6662f) * 1.4f * limbDistance;
+            this.rightHindLeg.y = 12F;
+            this.leftHindLeg.xRot = Mth.cos(limbAngle * 0.6662f + pi) * 1.4f * limbDistance;
+            this.leftHindLeg.y = 12F;
+            this.rightFrontLeg.xRot = Mth.cos(limbAngle * 0.6662f + pi) * 1.4f * limbDistance;
+            this.rightFrontLeg.y = 12F;
+            this.leftFrontLeg.xRot = Mth.cos(limbAngle * 0.6662f) * 1.4f * limbDistance;
+            this.leftFrontLeg.y = 12F;
+        }
+
         if (sheep.isSheared()) {
             this.bodyWool.visible = false;
             this.headWool.visible = false;
@@ -201,6 +228,5 @@ public class RainbowSheepModel<T extends RainbowSheep> extends QuadrupedModel<T>
             this.rightFrontLegWool.visible = true;
             this.leftFrontLegWool.visible = true;
         }
-        
     }
 }
