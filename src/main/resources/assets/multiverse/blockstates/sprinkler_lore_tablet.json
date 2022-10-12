@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "multiverse:block/lore_tablet",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "multiverse:block/lore_tablet",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "multiverse:block/lore_tablet"
+    },
+    "facing=west": {
+      "model": "multiverse:block/lore_tablet",
+      "y": 90
+    }
+  }
+}

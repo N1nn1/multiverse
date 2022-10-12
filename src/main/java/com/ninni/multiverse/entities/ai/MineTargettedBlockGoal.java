@@ -64,7 +64,7 @@ public class MineTargettedBlockGoal extends Goal {
     public void tick() {
         Vec3 vec3 = Vec3.atCenterOf(this.pos);
         Crackiness crackiness = this.golem.getCrackiness();
-        if (this.pos.closerToCenterThan(this.golem.position(), 2)) {
+        if ((this.pos.getY() > this.golem.getY() && this.pos.closerToCenterThan(this.golem.position(), 3)) || this.pos.closerToCenterThan(this.golem.position(), 2)) {
             this.golem.getNavigation().stop();
             this.golem.getLookControl().setLookAt(vec3);
             Pose pose;

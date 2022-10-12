@@ -136,7 +136,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         if (DATA_POSE.equals(entityDataAccessor)) {
-            if (this.getPose() == MultiversePoses.RUN.get()) {
+            if (this.getPose() == MultiversePoses.RUN.get() && this.isMovingOnLand()) {
                 this.runAnimationState.start(this.tickCount);
             } else {
                 this.runAnimationState.stop();

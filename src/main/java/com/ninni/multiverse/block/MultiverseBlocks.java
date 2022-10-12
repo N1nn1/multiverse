@@ -30,7 +30,10 @@ public class MultiverseBlocks {
     public static final Block SANDY_STONE_TILE_STAIRS = register("sandy_stone_tile_stairs", new StairBlock(SANDY_STONE_TILES.defaultBlockState(), FabricBlockSettings.copyOf(SANDY_STONE_TILES)));
     public static final Block SANDY_STONE_TILE_SLAB = register("sandy_stone_tile_slab", new SlabBlock(FabricBlockSettings.copyOf(SANDY_STONE_TILES)));
 
-    public static final Block LORE_TABLET = register("lore_tablet", new LoreTabletBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F).noOcclusion()));
+    public static final Block COBBLESTONE_GOLEM_LORE_TABLET = register("cobblestone_golem_lore_tablet", new LoreTabletBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F).noOcclusion()));
+    public static final Block SPRINKLER_LORE_TABLET = register("sprinkler_lore_tablet", new LoreTabletBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F).noOcclusion()));
+    public static final Block GRINDSTONE_GOLEM_LORE_TABLET = register("grindstone_golem_lore_tablet", new LoreTabletBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F).noOcclusion()));
+    public static final Block PLANK_GOLEM_LORE_TABLET = register("plank_golem_lore_tablet", new LoreTabletBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F).noOcclusion()));
 
     private static Block register(String id, Block block) {
         return Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, id), block);

@@ -24,7 +24,12 @@ public class MultiverseClient implements ClientModInitializer {
 		EntityRendererRegistry.register(MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM, ExhaustedCobblestoneGolemRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(MultiverseModelLayers.EXHAUSTED_COBBLESTONE_GOLEM, ExhaustedCobblestoneGolemModel::getLayerDefinition);
 
-		BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), MultiverseBlocks.LORE_TABLET);
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
+				MultiverseBlocks.COBBLESTONE_GOLEM_LORE_TABLET,
+				MultiverseBlocks.SPRINKLER_LORE_TABLET,
+				MultiverseBlocks.GRINDSTONE_GOLEM_LORE_TABLET,
+				MultiverseBlocks.PLANK_GOLEM_LORE_TABLET
+		);
 
 		MultiverseNetwork.init();
 
