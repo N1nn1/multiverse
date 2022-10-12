@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,12 +31,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class LoreTabletBlock extends Block implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape X_AXIS_SHAPE = Block.box(6.5D, 0.0D, 2.0D, 9.5D, 15.0D, 14.0D);
     private static final VoxelShape Z_AXIS_SHAPE = Block.box(2.0D, 0.0D, 6.5D, 14.0D, 15.0D, 9.5D);
-    private static final Component CONTAINER_TITLE = Component.translatable("container.lore_tablet");
 
     public LoreTabletBlock(Properties properties) {
         super(properties);
@@ -50,9 +49,8 @@ public class LoreTabletBlock extends Block implements SimpleWaterloggedBlock {
             FriendlyByteBuf buf = PacketByteBufs.create();
             buf.writeBlockPos(blockPos);
             ServerPlayNetworking.send((ServerPlayer) player, MultiverseNetwork.OPEN_LORE_TABLET_BLOCK_SCREEN, buf);
-            return InteractionResult.PASS;
         }
-        return super.use(blockState, level, blockPos, player, interactionHand, blockHitResult);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

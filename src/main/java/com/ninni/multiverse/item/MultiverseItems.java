@@ -7,6 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 
 import static com.ninni.multiverse.Multiverse.*;
 
@@ -28,10 +29,10 @@ public class MultiverseItems {
 
     public static final Item EXHAUSTED_COBBLESTONE_GOLEM = register("exhausted_cobblestone_golem", new ExhaustedCobblestoneGolemItem(new Item.Properties().stacksTo(1).tab(TAB)));
 
-    public static final Item COBBLESTONE_GOLEM_LORE_TABLET = register("cobblestone_golem_lore_tablet", new LoreTabletItem("cobblestone_golem", MultiverseBlocks.COBBLESTONE_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).tab(TAB)));
-    public static final Item SPRINKLER_LORE_TABLET = register("sprinkler_lore_tablet", new LoreTabletItem("sprinkler", MultiverseBlocks.SPRINKLER_LORE_TABLET, new Item.Properties().stacksTo(1).tab(TAB)));
-    public static final Item GRINDSTONE_GOLEM_LORE_TABLET = register("grindstone_golem_lore_tablet", new LoreTabletItem("grindstone_golem", MultiverseBlocks.GRINDSTONE_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).tab(TAB)));
-    public static final Item PLANK_GOLEM_LORE_TABLET = register("plank_golem_lore_tablet", new LoreTabletItem("plank_golem", MultiverseBlocks.PLANK_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).tab(TAB)));
+    public static final Item COBBLESTONE_GOLEM_LORE_TABLET = register("cobblestone_golem_lore_tablet", new LoreTabletItem("cobblestone_golem", MultiverseBlocks.COBBLESTONE_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).tab(TAB)));
+    public static final Item SPRINKLER_LORE_TABLET = register("sprinkler_lore_tablet", new LoreTabletItem("sprinkler", MultiverseBlocks.SPRINKLER_LORE_TABLET, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).tab(TAB)));
+    public static final Item GRINDSTONE_GOLEM_LORE_TABLET = register("grindstone_golem_lore_tablet", new LoreTabletItem("grindstone_golem", MultiverseBlocks.GRINDSTONE_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).tab(TAB)));
+    public static final Item PLANK_GOLEM_LORE_TABLET = register("plank_golem_lore_tablet", new LoreTabletItem("plank_golem", MultiverseBlocks.PLANK_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).tab(TAB)));
 
     private static Item register(String id, Item item) {
         return Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, id), item);

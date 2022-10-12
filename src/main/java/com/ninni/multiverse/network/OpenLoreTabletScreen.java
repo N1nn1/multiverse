@@ -20,7 +20,7 @@ public class OpenLoreTabletScreen implements ClientPlayNetworking.PlayChannelHan
         Optional.ofNullable(client.player).ifPresent(localPlayer -> {
             client.execute(() -> {
                 ItemStack itemStack = client.player.getItemInHand(hand);
-                if (itemStack.is(MultiverseTags.LORE_TABLETS)) {
+                if (itemStack.is(MultiverseTags.LORE_TABLETS_ITEM)) {
                     client.setScreen(new LoreTabletScreen(new LoreTabletScreen.LoreInfoAccess(itemStack)));
                 }
             });

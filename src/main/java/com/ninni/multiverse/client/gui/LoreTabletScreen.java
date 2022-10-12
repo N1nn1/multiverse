@@ -158,7 +158,7 @@ public class LoreTabletScreen extends Screen {
                 return LoreTabletScreen.loadPages(compoundTag);
             }
             return ImmutableList.of(
-                Component.Serializer.toJson(Component.translatable("item.lore_tablet.message." + ((LoreTabletItem)itemStack.getItem()).getName()).withStyle(ChatFormatting.DARK_GRAY))
+                Component.Serializer.toJson(Component.translatable("lore_tablet.message." + ((LoreTabletItem)itemStack.getItem()).getName()).withStyle(ChatFormatting.DARK_GRAY))
             );
         }
 

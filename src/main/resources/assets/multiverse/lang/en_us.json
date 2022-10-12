@@ -3,6 +3,7 @@
   "itemGroup.multiverse.multiverse": "Multiverse",
 
   "entity.multiverse.cobblestone_golem": "Cobblestone Golem",
+  "entity.multiverse.exhausted_cobblestone_golem": "Exhausted Cobblestone Golem",
   "entity.multiverse.sprinkler": "Sprinkler",
   "entity.multiverse.grindstone_golem": "Grindstone Golem",
   "entity.multiverse.plank_golem": "Plank Golem",
@@ -18,7 +19,10 @@
 
   "item.multiverse.lore_tablet": "Lore Tablet",
 
-  "item.lore_tablet.message.cobblestone_golem": "Old tales claim that a creature made of stone assisted a great hero in a battle against the ℸ ̣ ⍑ᒷ ⚍リ↸ᒷ∷∴o∷ꖎ↸... After the foes were confined in their own dimension, the once combative ⊣oꖎᒷᒲ started taking its energy out on the world around him, striking at blocks and clearing the way to ⍑ᒷꖎ!¡ ℸ ̣ ⍑oᓭᒷ ╎リ リᒷᒷ↸.",
+  "lore_tablet.message.cobblestone_golem": "Old tales claim that a creature made of stone assisted a great hero in a battle against the ℸ ̣ ⍑ᒷ ⚍リ↸ᒷ∷∴o∷ꖎ↸... After the foes were confined in their own dimension, the once combative ⊣oꖎᒷᒲ started taking its energy out on the world around him, striking at blocks and clearing the way to ⍑ᒷꖎ!¡ ℸ ̣ ⍑oᓭᒷ ╎リ リᒷᒷ↸.",
+  "lore_tablet.message.grindstone_golem": "Coming soon...",
+  "lore_tablet.message.plank_golem": "Coming soon...",
+  "lore_tablet.message.sprinkler": "Coming soon...",
 
   "block.multiverse.stone_tiles": "Stone Tiles",
   "block.multiverse.stone_tile_wall": "Stone Tile Wall",

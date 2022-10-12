@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "multiverse:cobblestone_golem_lore_tablet",
+    "multiverse:grindstone_golem_lore_tablet",
+    "multiverse:plank_golem_lore_tablet",
+    "multiverse:sprinkler_lore_tablet"
+  ]
+}

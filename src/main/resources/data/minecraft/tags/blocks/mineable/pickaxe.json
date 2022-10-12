@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#multiverse:stone_tiles"
+    "#multiverse:stone_tiles",
+    "#multiverse:lore_tablets"
   ]
 }
