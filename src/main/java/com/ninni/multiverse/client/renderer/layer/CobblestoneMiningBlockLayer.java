@@ -31,6 +31,8 @@ public class CobblestoneMiningBlockLayer<T extends CobblestoneGolemEntity, M ext
             poseStack.translate(((CobblestoneGolemModel) this.getParentModel()).getBody().x / 16f, ((CobblestoneGolemModel) this.getParentModel()).getBody().y / 16f, ((CobblestoneGolemModel) this.getParentModel()).getBody().z / 16f);
             poseStack.scale(1.5f, 1.5f, 1.5f);
             poseStack.mulPose(Vector3f.ZP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().zRot));
+            poseStack.mulPose(Vector3f.XP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().xRot));
+            poseStack.mulPose(Vector3f.YP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().yRot));
             poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
             poseStack.translate(0f, 0.125f, 0.3f);
             this.itemRenderer.renderItem(golem, stack, ItemTransforms.TransformType.GROUND, false, poseStack, multiBufferSource, i);

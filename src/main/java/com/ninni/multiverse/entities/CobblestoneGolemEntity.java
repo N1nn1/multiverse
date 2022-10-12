@@ -27,7 +27,6 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -41,10 +40,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -286,6 +283,14 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
 
     public void setMiningBlock(@Nullable BlockState block) {
         this.entityData.set(MINING_STATE, Optional.ofNullable(block));
+    }
+
+    @Override
+    protected void dropEquipment() {
+        if (this.getMiningBlock().isPresent()) {
+            this.spawnAtLocation(this.getMiningBlock().get().getBlock());
+        }
+        super.dropEquipment();
     }
 
     public Optional<BlockState> getMiningBlock() {

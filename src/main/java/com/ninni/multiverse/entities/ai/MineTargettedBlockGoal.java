@@ -20,6 +20,7 @@ public class MineTargettedBlockGoal extends Goal {
     private int miningTicks;
     private BlockPos pos;
     private int idlingTicks;
+    private int soundDelayTicks;
 
     public MineTargettedBlockGoal(CobblestoneGolemEntity golem) {
         this.golem = golem;
@@ -51,6 +52,7 @@ public class MineTargettedBlockGoal extends Goal {
 
     @Override
     public void start() {
+        this.soundDelayTicks = 5;
         if (this.pos != null) {
             float speed = this.golem.level.getBlockState(this.pos).getDestroySpeed(this.golem.level, this.pos);
             float adjustedValue = speed < 1 ? 1 : speed;
@@ -79,10 +81,16 @@ public class MineTargettedBlockGoal extends Goal {
                 int var3 = (30 / (this.miningTicks - 2));
                 int var4 = Math.min(var3, 9);
                 this.golem.level.destroyBlockProgress(this.golem.getId(), this.pos, var4);
+                this.soundDelayTicks--;
+                if (this.soundDelayTicks == 0) {
+                    this.golem.playSound(this.golem.getMiningBlock().get().getSoundType().getHitSound());
+                    this.soundDelayTicks = 5;
+                }
             }
             if (this.miningTicks == 0) {
                 this.golem.level.destroyBlock(this.pos, true);
                 this.golem.level.destroyBlockProgress(this.golem.getId(), this.pos, -1);
+
                 if (crackiness.getId() == 3) {
                     if (golem.getRandom().nextInt(8) == 0) {
                         this.golem.becomeExhausted(MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM);
