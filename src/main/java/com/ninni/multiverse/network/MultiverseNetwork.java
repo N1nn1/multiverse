@@ -8,10 +8,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MultiverseNetwork {
     public static final ResourceLocation OPEN_LORE_TABLET_SCREEN = new ResourceLocation(Multiverse.MOD_ID, "open_lore_tablet_screen");
+    public static final ResourceLocation OPEN_LORE_TABLET_BLOCK_SCREEN = new ResourceLocation(Multiverse.MOD_ID, "open_lore_tablet_block_screen");
 
     @Environment(EnvType.CLIENT)
     public static void init() {
         ClientPlayNetworking.registerGlobalReceiver(OPEN_LORE_TABLET_SCREEN, new OpenLoreTabletScreen());
+        ClientPlayNetworking.registerGlobalReceiver(OPEN_LORE_TABLET_BLOCK_SCREEN, new OpenLoreTabletBlockScreen());
     }
 
 }
