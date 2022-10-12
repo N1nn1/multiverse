@@ -1,7 +1,9 @@
 package com.ninni.multiverse.entities.ai;
 
+import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -12,7 +14,7 @@ import java.util.function.Predicate;
 
 public class RainbowSheepHopAwayGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
     private final RainbowSheep sheep;
-    protected final Class<T>  avoidedClass;
+    protected final Class<T> avoidedClass;
 
     public RainbowSheepHopAwayGoal(RainbowSheep sheep, Class<T> class_, float f, double d, double e, Predicate<LivingEntity> predicate) {
         super(sheep, class_, f, d, e, predicate);
