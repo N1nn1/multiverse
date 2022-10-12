@@ -27,7 +27,7 @@ public class MineTargettedBlockGoal extends Goal {
     @Override
     public boolean canUse() {
         this.pos = this.golem.getMinePos();
-        return this.golem.getMiningCooldown() == 0 && this.pos != null && !this.golem.level.getBlockState(this.pos).isAir();
+        return this.golem.getMiningBlock().isPresent() && this.golem.getMiningCooldown() == 0 && this.pos != null && !this.golem.level.getBlockState(this.pos).isAir();
     }
 
     @Override
