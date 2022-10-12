@@ -1,7 +1,7 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.google.common.collect.Lists;
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
+import com.ninni.multiverse.entities.CobblestoneGolem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -13,10 +13,10 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class FindTargettedBlockGoal extends Goal {
-    private final CobblestoneGolemEntity golemEntity;
+    private final CobblestoneGolem golemEntity;
     private BlockPos targetPos;
 
-    public FindTargettedBlockGoal(CobblestoneGolemEntity golemEntity) {
+    public FindTargettedBlockGoal(CobblestoneGolem golemEntity) {
         this.golemEntity = golemEntity;
     }
 

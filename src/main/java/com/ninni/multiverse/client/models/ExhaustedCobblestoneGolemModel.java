@@ -1,6 +1,6 @@
 package com.ninni.multiverse.client.models;
 
-import com.ninni.multiverse.entities.ExhaustedCobblestoneGolemEntity;
+import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HierarchicalModel;
@@ -10,11 +10,9 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.decoration.ArmorStand;
 
 @Environment(EnvType.CLIENT)
-public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedCobblestoneGolemEntity> {
+public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedCobblestoneGolem> {
     private final ModelPart root;
     private final ModelPart body;
     private final ModelPart leftArm;
@@ -88,7 +86,7 @@ public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedC
     }
 
     @Override
-    public void setupAnim(ExhaustedCobblestoneGolemEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setupAnim(ExhaustedCobblestoneGolem entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
     }
 
     @Override

@@ -45,7 +45,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements CrackableEntity {
+public class ExhaustedCobblestoneGolem extends LivingEntity implements CrackableEntity {
     private static final List<ItemStack> EMPTY_LIST = Collections.emptyList();
     private static final Rotations DEFAULT_HEAD_POSE = new Rotations(0.0f, 0.0f, 0.0f);
     private static final Rotations DEFAULT_BODY_POSE = new Rotations(0.0f, 0.0f, 0.0f);
@@ -53,14 +53,14 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
     private static final Rotations DEFAULT_RIGHT_ARM_POSE = new Rotations(0.0f, 0.0f, 0.0f);
     private static final Rotations DEFAULT_LEFT_LEG_POSE = new Rotations(0.0f, 0.0f, 0.0f);
     private static final Rotations DEFAULT_RIGHT_LEG_POSE = new Rotations(0.0f, 0.0f, 0.0f);
-    public static final EntityDataAccessor<Byte> DATA_CLIENT_FLAGS = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.BYTE);
-    public static final EntityDataAccessor<Rotations> DATA_HEAD_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
-    public static final EntityDataAccessor<Rotations> DATA_BODY_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
-    public static final EntityDataAccessor<Rotations> DATA_LEFT_ARM_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
-    public static final EntityDataAccessor<Rotations> DATA_RIGHT_ARM_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
-    public static final EntityDataAccessor<Rotations> DATA_LEFT_LEG_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
-    public static final EntityDataAccessor<Rotations> DATA_RIGHT_LEG_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.ROTATIONS);
-    public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(ExhaustedCobblestoneGolemEntity.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Byte> DATA_CLIENT_FLAGS = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.BYTE);
+    public static final EntityDataAccessor<Rotations> DATA_HEAD_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.ROTATIONS);
+    public static final EntityDataAccessor<Rotations> DATA_BODY_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.ROTATIONS);
+    public static final EntityDataAccessor<Rotations> DATA_LEFT_ARM_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.ROTATIONS);
+    public static final EntityDataAccessor<Rotations> DATA_RIGHT_ARM_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.ROTATIONS);
+    public static final EntityDataAccessor<Rotations> DATA_LEFT_LEG_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.ROTATIONS);
+    public static final EntityDataAccessor<Rotations> DATA_RIGHT_LEG_POSE = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.ROTATIONS);
+    public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(ExhaustedCobblestoneGolem.class, EntityDataSerializers.INT);
     private static final Predicate<Entity> RIDABLE_MINECARTS = entity -> entity instanceof AbstractMinecart abstractMinecart && abstractMinecart.getMinecartType() == AbstractMinecart.Type.RIDEABLE;
     private boolean invisible;
     public long lastHit;
@@ -72,12 +72,12 @@ public class ExhaustedCobblestoneGolemEntity extends LivingEntity implements Cra
     private Rotations leftLegPose = DEFAULT_LEFT_LEG_POSE;
     private Rotations rightLegPose = DEFAULT_RIGHT_LEG_POSE;
 
-    public ExhaustedCobblestoneGolemEntity(EntityType<? extends ExhaustedCobblestoneGolemEntity> entityType, Level level) {
+    public ExhaustedCobblestoneGolem(EntityType<? extends ExhaustedCobblestoneGolem> entityType, Level level) {
         super(entityType, level);
         this.maxUpStep = 0.0f;
     }
 
-    public ExhaustedCobblestoneGolemEntity(Level level, double d, double e, double f) {
+    public ExhaustedCobblestoneGolem(Level level, double d, double e, double f) {
         this(MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM, level);
         this.setPos(d, e, f);
     }

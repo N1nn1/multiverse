@@ -6,7 +6,7 @@ import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.client.models.ExhaustedCobblestoneGolemModel;
 import com.ninni.multiverse.client.models.MultiverseModelLayers;
 import com.ninni.multiverse.client.renderer.layer.CobblestoneGolemCrackinessLayer;
-import com.ninni.multiverse.entities.ExhaustedCobblestoneGolemEntity;
+import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class ExhaustedCobblestoneGolemRenderer extends LivingEntityRenderer<ExhaustedCobblestoneGolemEntity, ExhaustedCobblestoneGolemModel> {
+public class ExhaustedCobblestoneGolemRenderer extends LivingEntityRenderer<ExhaustedCobblestoneGolem, ExhaustedCobblestoneGolemModel> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Multiverse.MOD_ID, "textures/entity/cobblestone_golem/exhausted_cobblestone_golem.png");
 
     public ExhaustedCobblestoneGolemRenderer(EntityRendererProvider.Context context) {
@@ -24,12 +24,12 @@ public class ExhaustedCobblestoneGolemRenderer extends LivingEntityRenderer<Exha
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ExhaustedCobblestoneGolemEntity entity) {
+    public ResourceLocation getTextureLocation(ExhaustedCobblestoneGolem entity) {
         return TEXTURE;
     }
 
     @Override
-    protected void setupRotations(ExhaustedCobblestoneGolemEntity entity, PoseStack poseStack, float f, float g, float h) {
+    protected void setupRotations(ExhaustedCobblestoneGolem entity, PoseStack poseStack, float f, float g, float h) {
         poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0f - g));
         float i = (float)(entity.level.getGameTime() - entity.lastHit) + h;
         if (i < 5.0f) {
@@ -38,7 +38,7 @@ public class ExhaustedCobblestoneGolemRenderer extends LivingEntityRenderer<Exha
     }
 
     @Override
-    protected boolean shouldShowName(ExhaustedCobblestoneGolemEntity entity) {
+    protected boolean shouldShowName(ExhaustedCobblestoneGolem entity) {
         float f = entity.isCrouching() ? 32.0f : 64.0f;
         double d = this.entityRenderDispatcher.distanceToSqr(entity);
         if (d >= (double)(f * f)) {

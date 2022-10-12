@@ -1,7 +1,7 @@
 package com.ninni.multiverse.item;
 
 import com.ninni.multiverse.api.Crackiness;
-import com.ninni.multiverse.entities.ExhaustedCobblestoneGolemEntity;
+import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.ChatFormatting;
@@ -53,7 +53,7 @@ public class ExhaustedCobblestoneGolemItem extends Item {
             return InteractionResult.FAIL;
         }
         if (level instanceof ServerLevel serverLevel) {
-            ExhaustedCobblestoneGolemEntity golem = MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM.create(serverLevel, itemStack.getTag(), null, useOnContext.getPlayer(), blockPos, MobSpawnType.SPAWN_EGG, true, true);
+            ExhaustedCobblestoneGolem golem = MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM.create(serverLevel, itemStack.getTag(), null, useOnContext.getPlayer(), blockPos, MobSpawnType.SPAWN_EGG, true, true);
             if (golem == null) {
                 return InteractionResult.FAIL;
             }
@@ -83,7 +83,7 @@ public class ExhaustedCobblestoneGolemItem extends Item {
         return tag.getInt("crackiness") > 0;
     }
 
-    private void randomizePose(ExhaustedCobblestoneGolemEntity golem, RandomSource randomSource) {
+    private void randomizePose(ExhaustedCobblestoneGolem golem, RandomSource randomSource) {
         Rotations rotations = golem.getHeadPose();
         float f = randomSource.nextFloat() * 5.0f;
         float g = randomSource.nextFloat() * 20.0f - 10.0f;

@@ -1,38 +1,72 @@
 package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.Multiverse;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 
 public class MultiverseEntityTypes {
 
-    public static final EntityType<CobblestoneGolemEntity> COBBLESTONE_GOLEM = register(
+    public static final EntityType<CobblestoneGolem> COBBLESTONE_GOLEM = register(
             "cobblestone_golem",
             FabricEntityTypeBuilder.createMob()
-                    .entityFactory(CobblestoneGolemEntity::new)
-                    .defaultAttributes(CobblestoneGolemEntity::createCobblestoneGolemAttributes)
+                    .entityFactory(CobblestoneGolem::new)
+                    .defaultAttributes(CobblestoneGolem::createCobblestoneGolemAttributes)
                     .spawnGroup(MobCategory.MISC)
                     .dimensions(EntityDimensions.fixed(0.9F, 0.9F)),
             null
     );
-    public static final EntityType<ExhaustedCobblestoneGolemEntity> EXHAUSTED_COBBLESTONE_GOLEM = register(
+
+    public static final EntityType<ExhaustedCobblestoneGolem> EXHAUSTED_COBBLESTONE_GOLEM = register(
             "exhausted_cobblestone_golem",
             FabricEntityTypeBuilder.createLiving()
-                    .<ExhaustedCobblestoneGolemEntity>entityFactory(ExhaustedCobblestoneGolemEntity::new)
+                    .<ExhaustedCobblestoneGolem>entityFactory(ExhaustedCobblestoneGolem::new)
                     .defaultAttributes(LivingEntity::createLivingAttributes)
                     .spawnGroup(MobCategory.MISC)
                     .dimensions(EntityDimensions.fixed(0.9F, 0.9F)),
             null
     );
+
+    public static final EntityType<RainbowSheep> RAINBOW_SHEEP = registerMob(
+        "rainbow_sheep",
+        FabricEntityTypeBuilder.createMob()
+                               .entityFactory(RainbowSheep::new)
+                               .defaultAttributes(Sheep::createAttributes)
+                               .spawnGroup(MobCategory.CREATURE)
+                               .dimensions(EntityDimensions.fixed(0.9F, 1.3F))
+                               .trackRangeChunks(10),
+        new Tuple<>(0xFFFFFF, 0xFFFFFF)
+    );
+
+
+    @SuppressWarnings("unchecked")
+    private static <T extends Entity> EntityType<T> registerMob(String id, FabricEntityTypeBuilder<T> entityType, Tuple<Integer, Integer> spawnEggColors) {
+        EntityType<T> builtEntityType = entityType.build();
+
+        if (spawnEggColors != null) {
+            Registry.register(
+                Registry.ITEM, new ResourceLocation(Multiverse.MOD_ID, id + "_spawn_egg"),
+                new SpawnEggItem(
+                    (EntityType<? extends Mob>) builtEntityType,
+                    spawnEggColors.getA(), spawnEggColors.getB(),
+                    new FabricItemSettings().maxCount(64).group(Multiverse.TAB)
+                )
+            );
+        }
+
+        return Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Multiverse.MOD_ID, id), builtEntityType);
+    }
 
     @SuppressWarnings("unchecked")
     private static <T extends Entity> EntityType<T> register(String id, EntityType<T> entityType, int[] spawnEggColors) {

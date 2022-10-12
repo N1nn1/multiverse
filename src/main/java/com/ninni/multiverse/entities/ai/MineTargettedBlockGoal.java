@@ -1,7 +1,7 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.api.Crackiness;
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
+import com.ninni.multiverse.entities.CobblestoneGolem;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
 import com.ninni.multiverse.entities.MultiversePoses;
 import net.minecraft.core.BlockPos;
@@ -16,13 +16,13 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 
 public class MineTargettedBlockGoal extends Goal {
-    private final CobblestoneGolemEntity golem;
+    private final CobblestoneGolem golem;
     private int miningTicks;
     private BlockPos pos;
     private int idlingTicks;
     private int soundDelayTicks;
 
-    public MineTargettedBlockGoal(CobblestoneGolemEntity golem) {
+    public MineTargettedBlockGoal(CobblestoneGolem golem) {
         this.golem = golem;
         this.setFlags(EnumSet.of(Flag.LOOK, Flag.MOVE, Flag.JUMP));
     }

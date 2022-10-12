@@ -3,7 +3,7 @@ package com.ninni.multiverse.client.renderer.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import com.ninni.multiverse.client.models.CobblestoneGolemModel;
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
+import com.ninni.multiverse.entities.CobblestoneGolem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
 @Environment(value= EnvType.CLIENT)
-public class CobblestoneMiningBlockLayer<T extends CobblestoneGolemEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class CobblestoneMiningBlockLayer<T extends CobblestoneGolem, M extends EntityModel<T>> extends RenderLayer<T, M> {
     private final ItemInHandRenderer itemRenderer;
 
     public CobblestoneMiningBlockLayer(RenderLayerParent<T, M> renderLayerParent, ItemInHandRenderer itemInHandRenderer) {

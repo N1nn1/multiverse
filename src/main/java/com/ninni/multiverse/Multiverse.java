@@ -2,7 +2,7 @@ package com.ninni.multiverse;
 
 import com.google.common.reflect.Reflection;
 import com.ninni.multiverse.block.MultiverseBlocks;
-import com.ninni.multiverse.entities.ExhaustedCobblestoneGolemEntity;
+import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
@@ -12,14 +12,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.DispenserBlock;
 
 public class Multiverse implements ModInitializer {
@@ -41,7 +38,7 @@ public class Multiverse implements ModInitializer {
 				Direction direction = blockSource.getBlockState().getValue(DispenserBlock.FACING);
 				BlockPos blockPos = blockSource.getPos().relative(direction);
 				ServerLevel level = blockSource.getLevel();
-				ExhaustedCobblestoneGolemEntity golem = new ExhaustedCobblestoneGolemEntity(level, (double)blockPos.getX() + 0.5, blockPos.getY(), (double)blockPos.getZ() + 0.5);
+				ExhaustedCobblestoneGolem golem = new ExhaustedCobblestoneGolem(level, (double)blockPos.getX() + 0.5, blockPos.getY(), (double)blockPos.getZ() + 0.5);
 				EntityType.updateCustomEntityTag(level, null, golem, itemStack.getTag());
 				golem.setYRot(direction.toYRot());
 				level.addFreshEntity(golem);

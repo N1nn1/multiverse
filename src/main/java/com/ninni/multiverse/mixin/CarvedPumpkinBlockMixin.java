@@ -1,6 +1,6 @@
 package com.ninni.multiverse.mixin;
 
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
+import com.ninni.multiverse.entities.CobblestoneGolem;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -53,7 +53,7 @@ public class CarvedPumpkinBlockMixin {
                 world.levelEvent(2001, blockInWorld.getPos(), Block.getId(blockInWorld.getState()));
             }
         }
-            CobblestoneGolemEntity golem = MultiverseEntityTypes.COBBLESTONE_GOLEM.create(world);
+            CobblestoneGolem golem = MultiverseEntityTypes.COBBLESTONE_GOLEM.create(world);
             BlockPos cachedBlockPosition = pattern.getBlock(1, 2, 0).getPos();
             assert golem != null;
             golem.moveTo((double) cachedBlockPosition.getX() + 0.5D, (double) cachedBlockPosition.getY() + 1D, (double) cachedBlockPosition.getZ() + 0.5D, 0.0F, 0.0F);

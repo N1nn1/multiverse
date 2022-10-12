@@ -45,10 +45,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEntity {
-    public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Optional<BlockState>> MINING_STATE = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.BLOCK_STATE);
-    private static final EntityDataAccessor<Optional<UUID>> LIKED_PLAYER = SynchedEntityData.defineId(CobblestoneGolemEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
+    public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Optional<BlockState>> MINING_STATE = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.BLOCK_STATE);
+    private static final EntityDataAccessor<Optional<UUID>> LIKED_PLAYER = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.OPTIONAL_UUID);
     @Nullable
     private BlockPos minePos;
     private int miningCooldown;
@@ -64,7 +64,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
     // -footsteps
     // -ambient when it has a mining block
 
-    public CobblestoneGolemEntity(EntityType<? extends AbstractGolem> entityType, Level level) {
+    public CobblestoneGolem(EntityType<? extends AbstractGolem> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -256,7 +256,7 @@ public class CobblestoneGolemEntity extends AbstractGolem implements CrackableEn
         return InteractionResult.CONSUME;
     }
 
-    public <T extends ExhaustedCobblestoneGolemEntity> void becomeExhausted(EntityType<T> entityType) {
+    public <T extends ExhaustedCobblestoneGolem> void becomeExhausted(EntityType<T> entityType) {
         if (!this.isRemoved()) {
             T exhaustedGolem = entityType.create(this.level);
             assert exhaustedGolem != null;

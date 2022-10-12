@@ -1,6 +1,6 @@
 package com.ninni.multiverse.entities.ai;
 
-import com.ninni.multiverse.entities.CobblestoneGolemEntity;
+import com.ninni.multiverse.entities.CobblestoneGolem;
 import com.ninni.multiverse.entities.MultiversePoses;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,9 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class FollowLikedPlayerGoal extends Goal {
-    private final CobblestoneGolemEntity cobblestoneGolemEntity;
+    private final CobblestoneGolem cobblestoneGolemEntity;
 
-    public FollowLikedPlayerGoal(CobblestoneGolemEntity cobblestoneGolemEntity) {
+    public FollowLikedPlayerGoal(CobblestoneGolem cobblestoneGolemEntity) {
         this.cobblestoneGolemEntity = cobblestoneGolemEntity;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
