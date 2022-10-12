@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:piglin_loved",
+    "minecraft:diamond",
+    "minecraft:amethyst_block",
+    "minecraft:budding_amethyst_block",
+    "minecraft:amethyst_shard",
+    "minecraft:small_amethyst_bud",
+    "minecraft:medium_amethyst_bud",
+    "minecraft:large_amethyst_bud",
+    "minecraft:amethyst_cluster",
+    "minecraft:emerald",
+    "minecraft:gold_nugget",
+    "minecraft:glowstone_dust",
+    "minecraft:glowstone",
+    "minecraft:glow_ink_sac"
+  ]
+}

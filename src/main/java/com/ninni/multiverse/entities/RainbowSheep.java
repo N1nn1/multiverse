@@ -1,5 +1,6 @@
 package com.ninni.multiverse.entities;
 
+import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.entities.ai.RainbowSheepHopAwayGoal;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.loot.MultiverseBuiltInLootTables;
@@ -18,7 +19,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
@@ -36,6 +39,8 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -44,8 +49,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Predicate;
+
 public class RainbowSheep extends Animal implements Shearable {
     private static final EntityDataAccessor<Boolean> DATA_SHEARING_ID = SynchedEntityData.defineId(RainbowSheep.class, EntityDataSerializers.BOOLEAN);
+    private static final Predicate<Entity> AVOID_PLAYERS = entity -> !entity.isDiscrete() && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity);
     private int eatAnimationTick;
     private EatBlockGoal eatBlockGoal;
 
@@ -57,7 +65,7 @@ public class RainbowSheep extends Animal implements Shearable {
     protected void registerGoals() {
         this.eatBlockGoal = new EatBlockGoal(this);
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RainbowSheepHopAwayGoal(this, 1.3));
+        this.goalSelector.addGoal(1, new RainbowSheepHopAwayGoal<>(this, Player.class, 16.0f, 1.6, 1.4, AVOID_PLAYERS::test));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(Items.WHEAT), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
@@ -72,18 +80,18 @@ public class RainbowSheep extends Animal implements Shearable {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player2, InteractionHand interactionHand) {
-        ItemStack itemStack = player2.getItemInHand(interactionHand);
-        if (itemStack.is(Items.SHEARS)) {
+    public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
+        ItemStack itemStack = player.getItemInHand(interactionHand);
+        if (itemStack.is(Items.SHEARS) && this.isTrustedPlayer(player)) {
             if (!this.level.isClientSide && this.readyForShearing()) {
                 this.shear(SoundSource.PLAYERS);
-                this.gameEvent(GameEvent.SHEAR, player2);
-                itemStack.hurtAndBreak(1, player2, player -> player.broadcastBreakEvent(interactionHand));
+                this.gameEvent(GameEvent.SHEAR, player);
+                itemStack.hurtAndBreak(1, player, player2 -> player2.broadcastBreakEvent(interactionHand));
                 return InteractionResult.SUCCESS;
             }
             return InteractionResult.CONSUME;
         }
-        return super.mobInteract(player2, interactionHand);
+        return super.mobInteract(player, interactionHand);
     }
 
     @Override
@@ -96,6 +104,10 @@ public class RainbowSheep extends Animal implements Shearable {
             if (itemEntity == null) continue;
             itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1f, this.random.nextFloat() * 0.05f, (this.random.nextFloat() - this.random.nextFloat()) * 0.1f));
         }
+    }
+
+    public boolean isTrustedPlayer(Player player) {
+        return (player.getInventory().getArmor(1).getItem() instanceof ArmorItem armor && armor.getMaterial() == ArmorMaterials.GOLD) || player.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED);
     }
 
     @Override
@@ -221,4 +233,5 @@ public class RainbowSheep extends Animal implements Shearable {
     protected void playStepSound(BlockPos blockPos, BlockState blockState) {
         this.playSound(SoundEvents.SHEEP_STEP, 0.15f, 1.0f);
     }
+
 }

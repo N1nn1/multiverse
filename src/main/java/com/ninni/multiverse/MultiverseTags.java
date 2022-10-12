@@ -11,6 +11,7 @@ public class MultiverseTags {
 
     public static final TagKey<Item> STONE_TILES_ITEM = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "stone_tiles"));
     public static final TagKey<Item> LORE_TABLETS_ITEM = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "lore_tablets"));
+    public static final TagKey<Item> RAINBOW_SHEEP_LOVED = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "rainbow_sheep_loved"));
 
     public static final TagKey<Block> STONE_TILES_BLOCK = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Multiverse.MOD_ID,"stone_tiles"));
     public static final TagKey<Block> LORE_TABLETS_BLOCK = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "lore_tablets"));
