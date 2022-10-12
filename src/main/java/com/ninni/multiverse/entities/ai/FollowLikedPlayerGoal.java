@@ -4,7 +4,6 @@ import com.ninni.multiverse.entities.CobblestoneGolemEntity;
 import com.ninni.multiverse.entities.MultiversePoses;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
@@ -24,8 +23,17 @@ public class FollowLikedPlayerGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        boolean flag = this.cobblestoneGolemEntity.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.cobblestoneGolemEntity.getMinePos() == null && this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 10;
-        return flag;
+        return this.cobblestoneGolemEntity.getMiningBlock().isPresent() && this.getLikedPlayer().isPresent() && this.cobblestoneGolemEntity.getMinePos() == null && this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 10;
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+        if (this.getLikedPlayer().isPresent()) {
+            if (this.cobblestoneGolemEntity.distanceTo(this.getLikedPlayer().get()) > 2) {
+                return true;
+            }
+        }
+        return super.canContinueToUse();
     }
 
     @Override
@@ -40,7 +48,7 @@ public class FollowLikedPlayerGoal extends Goal {
 
     private void followPlayer(Player player) {
         this.cobblestoneGolemEntity.setPose(MultiversePoses.RUN.get());
-        this.cobblestoneGolemEntity.getNavigation().moveTo(player, 1.4D);
+        this.cobblestoneGolemEntity.getNavigation().moveTo(player, 1.8D);
         this.cobblestoneGolemEntity.getLookControl().setLookAt(player);
     }
 
@@ -50,7 +58,7 @@ public class FollowLikedPlayerGoal extends Goal {
             Optional<UUID> optional = this.cobblestoneGolemEntity.getOptionalUUID();
             if (optional.isPresent()) {
                 Player player = this.cobblestoneGolemEntity.level.getPlayerByUUID(optional.get());
-                if (player instanceof ServerPlayer serverPlayer && (serverPlayer.gameMode.isSurvival() || serverPlayer.gameMode.isCreative()) && serverPlayer.closerThan(this.cobblestoneGolemEntity, 64.0)) {
+                if (player instanceof ServerPlayer serverPlayer && (serverPlayer.gameMode.isSurvival() || serverPlayer.gameMode.isCreative()) && serverPlayer.closerThan(this.cobblestoneGolemEntity, 16)) {
                     return Optional.of(serverPlayer);
                 }
                 return Optional.empty();
