@@ -58,13 +58,13 @@ public class LoreTabletScreen extends Screen {
     }
 
     protected void createMenuControls() {
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 2 + 90, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)));
+        this.addRenderableWidget(new Button(this.width / 2 - 100, 196, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)));
     }
 
     protected void createPageControlButtons() {
         int i = (this.width - 192) / 2;
-        this.forwardButton = this.addRenderableWidget(new PageButton(i + 116, 240, true, button -> this.pageForward(), this.playTurnSound));
-        this.backButton = this.addRenderableWidget(new PageButton(i + 43, 240, false, button -> this.pageBack(), this.playTurnSound));
+        this.forwardButton = this.addRenderableWidget(new PageButton(i + 116, 159, true, button -> this.pageForward(), this.playTurnSound));
+        this.backButton = this.addRenderableWidget(new PageButton(i + 43, 159, false, button -> this.pageBack(), this.playTurnSound));
         this.updateButtonVisibility();
     }
 
@@ -94,8 +94,7 @@ public class LoreTabletScreen extends Screen {
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, BOOK_LOCATION);
         int k = (this.width - 192) / 2;
-        int h = (this.height - 220) / 2;
-        this.blit(poseStack, k, h, 0, 0, 192, 192);
+        this.blit(poseStack, k, 2, 0, 0, 192, 192);
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
             this.cachedPageComponents = this.font.split(formattedText, 114);
@@ -104,7 +103,7 @@ public class LoreTabletScreen extends Screen {
         int n = Math.min(148 / this.font.lineHeight, this.cachedPageComponents.size());
         for (int o = 0; o < n; ++o) {
             FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(o);
-            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(140 + o * this.font.lineHeight), 0);
+            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(16 + o * this.font.lineHeight), 0);
         }
         Style style = this.getClickedComponentStyleAt(i, j);
         if (style != null) {
