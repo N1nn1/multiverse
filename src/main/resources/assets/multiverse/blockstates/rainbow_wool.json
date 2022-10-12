@@ -1,0 +1,41 @@
+{
+  "variants": {
+    "facing=down": [
+      {
+        "model": "multiverse:block/rainbow_wool"
+      }
+    ],
+    "facing=up": [
+      {
+        "model": "multiverse:block/rainbow_wool",
+        "x": 180
+      }
+    ],
+    "facing=north": [
+      {
+        "model": "multiverse:block/rainbow_wool",
+        "x": -90
+      }
+    ],
+    "facing=south": [
+      {
+        "model": "multiverse:block/rainbow_wool",
+        "x": 90
+      }
+    ],
+    "facing=east": [
+      {
+        "model": "multiverse:block/rainbow_wool",
+        "x": -90,
+        "y": 90
+      }
+    ],
+    "facing=west": [
+      {
+        "model": "multiverse:block/rainbow_wool",
+        "x": 90,
+        "y": 90
+      }
+    ]
+  }
+}

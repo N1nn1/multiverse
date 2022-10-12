@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "multiverse:block/rainbow_carpet",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "multiverse:block/rainbow_carpet"
+    },
+    "facing=south": {
+      "model": "multiverse:block/rainbow_carpet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "multiverse:block/rainbow_carpet",
+      "y": 270
+    }
+  }
+}
