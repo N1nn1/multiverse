@@ -5,6 +5,7 @@ import com.ninni.multiverse.entities.ai.RainbowSheepHopAwayGoal;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.loot.MultiverseBuiltInLootTables;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -153,6 +154,11 @@ public class RainbowSheep extends Animal implements Shearable {
     public void aiStep() {
         if (this.level.isClientSide) {
             this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
+        }
+        if (this.random.nextInt(60) == 0) {
+            for (int i = 0; i < this.random.nextInt(1) + 1; ++i) {
+                this.level.addParticle(ParticleTypes.WAX_OFF, this.getRandomX(0.6), this.getRandomY() + 1, this.getRandomZ(0.6), 0.0, this.random.nextFloat() * 5, 0.0);
+            }
         }
         super.aiStep();
     }
