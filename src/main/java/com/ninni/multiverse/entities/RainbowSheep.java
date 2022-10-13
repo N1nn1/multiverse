@@ -6,7 +6,6 @@ import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.loot.MultiverseBuiltInLootTables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -82,10 +81,6 @@ public class RainbowSheep extends Animal implements Shearable {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        if (itemStack.is(MultiverseTags.RAINBOW_SHEEP_LOVED)) {
-            player.sendSystemMessage(Component.translatable("The rainbow sheep loves the item you're holding"));
-            return InteractionResult.SUCCESS;
-        }
         if (itemStack.is(Items.SHEARS) && this.isTrustedPlayer(player)) {
             if (!this.level.isClientSide && this.readyForShearing()) {
                 this.shear(SoundSource.PLAYERS);
