@@ -1,14 +1,10 @@
 package com.ninni.multiverse.entities.ai;
 
-import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Predicate;
 

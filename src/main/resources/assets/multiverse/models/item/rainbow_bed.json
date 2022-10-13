@@ -1,0 +1,6 @@
+{
+  "parent": "multiverse:block/rainbow_bed",
+  "textures": {
+    "particle": "multiverse:block/rainbow_wool"
+  }
+}

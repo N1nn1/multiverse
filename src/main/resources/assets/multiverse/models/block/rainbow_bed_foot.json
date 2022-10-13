@@ -1,0 +1,46 @@
+{
+	"ambientocclusion": "false",
+	"textures": {
+		"bed": "multiverse:entity/bed/rainbow",
+		"particle": "minecraft:block/oak_planks"
+	},
+	"elements": [
+		{
+			"from": [0, 3, 0],
+			"to": [16, 9, 16],
+			"faces": {
+				"north": {"uv": [5.5, 7, 9.5, 5.5], "texture": "#bed"},
+				"east": {"uv": [0, 7, 1.5, 11], "rotation": 270, "texture": "#bed"},
+				"south": {"uv": [1.5, 5.5, 5.5, 7], "texture": "#bed"},
+				"west": {"uv": [5.5, 7, 7, 11], "rotation": 90, "texture": "#bed"},
+				"up": {"uv": [5.5, 7, 1.5, 11], "texture": "#bed"},
+				"down": {"uv": [7, 7, 11, 11], "texture": "#bed"}
+			}
+		},
+		{
+			"from": [13, 0, 0],
+			"to": [16, 3, 3],
+			"faces": {
+				"north": {"uv": [13.25, 0.75, 14, 1.5], "texture": "#bed"},
+				"east": {"uv": [12.5, 0.75, 13.25, 1.5], "texture": "#bed"},
+				"south": {"uv": [14.75, 0.75, 15.5, 1.5], "texture": "#bed"},
+				"west": {"uv": [14, 0.75, 14.75, 1.5], "texture": "#bed"},
+				"up": {"uv": [13.25, 0, 14, 0.75], "texture": "#bed"},
+				"down": {"uv": [14, 0, 14.75, 0.75], "texture": "#bed"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [3, 3, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [14, 0.75, 13.25, 1.5], "texture": "#bed"},
+				"east": {"uv": [14.75, 0.75, 14, 1.5], "texture": "#bed"},
+				"south": {"uv": [15.5, 0.75, 14.75, 1.5], "texture": "#bed"},
+				"west": {"uv": [13.25, 0.75, 12.5, 1.5], "texture": "#bed"},
+				"up": {"uv": [14, 0, 13.25, 0.75], "texture": "#bed"},
+				"down": {"uv": [14.75, 0, 14, 0.75], "texture": "#bed"}
+			}
+		}
+	]
+}

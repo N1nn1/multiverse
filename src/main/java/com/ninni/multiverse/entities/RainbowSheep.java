@@ -53,7 +53,7 @@ import java.util.function.Predicate;
 
 public class RainbowSheep extends Animal implements Shearable {
     private static final EntityDataAccessor<Boolean> DATA_SHEARING_ID = SynchedEntityData.defineId(RainbowSheep.class, EntityDataSerializers.BOOLEAN);
-    private static final Predicate<Entity> AVOID_PLAYERS = entity -> !entity.isDiscrete() && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity);
+    private static final Predicate<Entity> AVOID_PLAYERS = EntitySelector.NO_CREATIVE_OR_SPECTATOR;
     private int eatAnimationTick;
     private EatBlockGoal eatBlockGoal;
 
@@ -112,7 +112,7 @@ public class RainbowSheep extends Animal implements Shearable {
     }
 
     public boolean isTrustedPlayer(Player player) {
-        return player.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED);
+        return player.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getItemBySlot(EquipmentSlot.HEAD).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || player.getItemBySlot(EquipmentSlot.CHEST).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || player.getItemBySlot(EquipmentSlot.LEGS).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || player.getItemBySlot(EquipmentSlot.FEET).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class RainbowSheep extends Animal implements Shearable {
         if (this.level.isClientSide) {
             this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         }
-        if (this.random.nextInt(60) == 0) {
+        if (this.readyForShearing() && this.random.nextInt(60) == 0) {
             for (int i = 0; i < this.random.nextInt(1) + 1; ++i) {
                 this.level.addParticle(ParticleTypes.WAX_OFF, this.getRandomX(0.6), this.getRandomY() + 1, this.getRandomZ(0.6), 0.0, this.random.nextFloat() * 5, 0.0);
             }

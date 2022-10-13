@@ -19,6 +19,7 @@ public class MultiverseBlocks {
 
     public static final Block RAINBOW_WOOL = register("rainbow_wool", new RainbowWoolBlock(FabricBlockSettings.copyOf(Blocks.RED_WOOL)));
     public static final Block RAINBOW_CARPET = register("rainbow_carpet", new RainbowCarpetBlock(FabricBlockSettings.copyOf(Blocks.RED_CARPET)));
+    public static final Block RAINBOW_BED = register("rainbow_bed", new RainbowBedBlock(FabricBlockSettings.copyOf(Blocks.RED_BED)));
 
     public static final Block STONE_TILES = register("stone_tiles", new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).sounds(MultiverseSoundTypes.STONE_TILES)));
     public static final Block STONE_TILE_STAIRS = register("stone_tile_stairs", new StairBlock(STONE_TILES.defaultBlockState(), FabricBlockSettings.copyOf(STONE_TILES)));
