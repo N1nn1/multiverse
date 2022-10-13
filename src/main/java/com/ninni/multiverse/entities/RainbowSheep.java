@@ -6,6 +6,7 @@ import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.loot.MultiverseBuiltInLootTables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -40,8 +41,6 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -66,7 +65,7 @@ public class RainbowSheep extends Animal implements Shearable {
     protected void registerGoals() {
         this.eatBlockGoal = new EatBlockGoal(this);
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RainbowSheepHopAwayGoal<>(this, Player.class, 16.0f, 1.6, 1.4, livingEntity -> AVOID_PLAYERS.test(livingEntity) && !(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.CHEST).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.LEGS).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.FEET).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.MAINHAND).is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getItemBySlot(EquipmentSlot.OFFHAND).is(MultiverseTags.RAINBOW_SHEEP_LOVED))));
+        this.goalSelector.addGoal(1, new RainbowSheepHopAwayGoal<>(this, Player.class, 16.0f, 1.6, 1.4, livingEntity -> AVOID_PLAYERS.test(livingEntity) && !(livingEntity.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.CHEST).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.LEGS).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.FEET).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES))));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(Items.WHEAT), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
@@ -83,6 +82,10 @@ public class RainbowSheep extends Animal implements Shearable {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
+        if (itemStack.is(MultiverseTags.RAINBOW_SHEEP_LOVED)) {
+            player.sendSystemMessage(Component.translatable("The rainbow sheep loves the item you're holding"));
+            return InteractionResult.SUCCESS;
+        }
         if (itemStack.is(Items.SHEARS) && this.isTrustedPlayer(player)) {
             if (!this.level.isClientSide && this.readyForShearing()) {
                 this.shear(SoundSource.PLAYERS);
@@ -108,7 +111,7 @@ public class RainbowSheep extends Animal implements Shearable {
     }
 
     public boolean isTrustedPlayer(Player player) {
-        return (player.getInventory().getArmor(1).getItem() instanceof ArmorItem armor && armor.getMaterial() == ArmorMaterials.GOLD) || player.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED);
+        return player.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED);
     }
 
     @Override
