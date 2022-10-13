@@ -79,6 +79,11 @@ public class RainbowSheep extends Animal implements Shearable {
     }
 
     @Override
+    public boolean isFood(ItemStack itemStack) {
+        return itemStack.is(Items.GOLDEN_APPLE);
+    }
+
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (itemStack.is(Items.SHEARS) && this.isTrustedPlayer(player)) {
