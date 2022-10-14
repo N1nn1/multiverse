@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:wool",
     "#minecraft:mineable/axe",
     "#minecraft:mineable/hoe",
     "#minecraft:mineable/pickaxe",
