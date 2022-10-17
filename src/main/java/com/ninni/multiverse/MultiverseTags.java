@@ -3,6 +3,7 @@ package com.ninni.multiverse;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -17,4 +18,7 @@ public class MultiverseTags {
     public static final TagKey<Block> STONE_TILES_BLOCK = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Multiverse.MOD_ID,"stone_tiles"));
     public static final TagKey<Block> LORE_TABLETS_BLOCK = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "lore_tablets"));
     public static final TagKey<Block> COBBLESTONE_GOLEM_BREAKABLES = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Multiverse.MOD_ID,"cobblestone_golem_breakables"));
+
+    public static final TagKey<PaintingVariant> COLORFUL_PLACEABLE = TagKey.create(Registry.PAINTING_VARIANT_REGISTRY, new ResourceLocation(Multiverse.MOD_ID, "colorful_placeable"));
+
 }

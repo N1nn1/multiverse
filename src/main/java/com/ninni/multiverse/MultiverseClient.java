@@ -6,6 +6,7 @@ import com.ninni.multiverse.client.models.ExhaustedCobblestoneGolemModel;
 import com.ninni.multiverse.client.models.MultiverseModelLayers;
 import com.ninni.multiverse.client.models.RainbowSheepModel;
 import com.ninni.multiverse.client.renderer.CobblestoneGolemRenderer;
+import com.ninni.multiverse.client.renderer.ColorfulPaintingRenderer;
 import com.ninni.multiverse.client.renderer.ExhaustedCobblestoneGolemRenderer;
 import com.ninni.multiverse.client.renderer.RainbowSheepRenderer;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
@@ -26,6 +27,7 @@ public class MultiverseClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(MultiverseModelLayers.EXHAUSTED_COBBLESTONE_GOLEM, ExhaustedCobblestoneGolemModel::getLayerDefinition);
 		EntityRendererRegistry.register(MultiverseEntityTypes.RAINBOW_SHEEP, RainbowSheepRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(MultiverseModelLayers.RAINBOW_SHEEP, RainbowSheepModel::getLayerDefinition);
+		EntityRendererRegistry.register(MultiverseEntityTypes.COLORFUL_PAINTING, ColorfulPaintingRenderer::new);
 
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
 				MultiverseBlocks.COBBLESTONE_GOLEM_LORE_TABLET,

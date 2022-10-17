@@ -8,6 +8,7 @@
   "entity.multiverse.grindstone_golem": "Grindstone Golem",
   "entity.multiverse.plank_golem": "Plank Golem",
   "entity.multiverse.rainbow_sheep": "Rainbow Sheep",
+  "entity.multiverse.colorful_painting": "Colorful Painting",
 
   "item.multiverse.exhausted_cobblestone_golem": "Exhausted Cobblestone Golem",
   "item.multiverse.exhausted_cobblestone_golem.low": "Chipped",
@@ -15,6 +16,7 @@
   "item.multiverse.exhausted_cobblestone_golem.high": "Shattered",
   "item.multiverse.lore_tablet": "Lore Tablet",
   "item.multiverse.rainbow_sheep_spawn_egg": "Rainbow Sheep Spawn Egg",
+  "item.multiverse.colorful_painting": "Colorful Painting",
 
   "block.multiverse.stone_tiles": "Stone Tiles",
   "block.multiverse.stone_tile_wall": "Stone Tile Wall",

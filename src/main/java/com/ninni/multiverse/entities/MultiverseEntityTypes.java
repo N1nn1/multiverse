@@ -48,6 +48,16 @@ public class MultiverseEntityTypes {
         new Tuple<>(0xFFFFFF, 0xFFFFFF)
     );
 
+    public static final EntityType<ColorfulPainting> COLORFUL_PAINTING = register(
+            "colorful_painting",
+            FabricEntityTypeBuilder.create()
+                    .<ColorfulPainting>entityFactory(ColorfulPainting::new)
+                    .spawnGroup(MobCategory.MISC)
+                    .dimensions(EntityDimensions.fixed(0.5F, 0.5F))
+                    .trackRangeChunks(10),
+            null
+    );
+
 
     @SuppressWarnings("unchecked")
     private static <T extends Entity> EntityType<T> registerMob(String id, FabricEntityTypeBuilder<T> entityType, Tuple<Integer, Integer> spawnEggColors) {

@@ -4,6 +4,7 @@ import com.google.common.reflect.Reflection;
 import com.ninni.multiverse.block.MultiverseBlocks;
 import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.entities.MultiversePaintingVariants;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.fabricmc.api.ModInitializer;
@@ -30,7 +31,8 @@ public class Multiverse implements ModInitializer {
 			MultiverseSoundEvents.class,
 			MultiverseEntityTypes.class,
 			MultiverseBlocks.class,
-			MultiverseItems.class
+			MultiverseItems.class,
+			MultiversePaintingVariants.class
 		);
 		DispenserBlock.registerBehavior(MultiverseItems.EXHAUSTED_COBBLESTONE_GOLEM, new DefaultDispenseItemBehavior(){
 			@Override

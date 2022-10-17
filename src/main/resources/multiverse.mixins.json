@@ -5,9 +5,12 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CarvedPumpkinBlockMixin",
+    "PaintingAccessor",
+    "PaintingRendererAccessor",
     "PoseMixin"
   ],
   "client": [
+    "PaintingTextureManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
