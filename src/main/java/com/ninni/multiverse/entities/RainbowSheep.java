@@ -87,7 +87,7 @@ public class RainbowSheep extends Animal implements Shearable {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        if (itemStack.is(Items.SHEARS) && this.isTrustedPlayer(player)) {
+        if (itemStack.is(Items.SHEARS)) {
             if (!this.level.isClientSide && this.readyForShearing()) {
                 this.shear(SoundSource.PLAYERS);
                 this.gameEvent(GameEvent.SHEAR, player);
@@ -109,10 +109,6 @@ public class RainbowSheep extends Animal implements Shearable {
             if (itemEntity == null) continue;
             itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1f, this.random.nextFloat() * 0.05f, (this.random.nextFloat() - this.random.nextFloat()) * 0.1f));
         }
-    }
-
-    public boolean isTrustedPlayer(Player player) {
-        return player.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || player.getItemBySlot(EquipmentSlot.HEAD).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || player.getItemBySlot(EquipmentSlot.CHEST).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || player.getItemBySlot(EquipmentSlot.LEGS).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || player.getItemBySlot(EquipmentSlot.FEET).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES);
     }
 
     @Override
