@@ -1,7 +1,9 @@
 package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.MultiverseTags;
+import com.ninni.multiverse.entities.ai.DrinkWaterGoal;
 import com.ninni.multiverse.entities.ai.RainbowSheepHopAwayGoal;
+import com.ninni.multiverse.entities.ai.RainbowSheepPanicGoal;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.loot.MultiverseBuiltInLootTables;
 import net.minecraft.core.BlockPos;
@@ -35,6 +37,7 @@ import net.minecraft.world.entity.ai.goal.EatBlockGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -56,6 +59,7 @@ public class RainbowSheep extends Animal implements Shearable {
     private static final Predicate<Entity> AVOID_PLAYERS = EntitySelector.NO_CREATIVE_OR_SPECTATOR;
     private int eatAnimationTick;
     private EatBlockGoal eatBlockGoal;
+    public boolean isHydrated;
 
     protected RainbowSheep(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -65,14 +69,16 @@ public class RainbowSheep extends Animal implements Shearable {
     protected void registerGoals() {
         this.eatBlockGoal = new EatBlockGoal(this);
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new RainbowSheepPanicGoal(this, 1.25));
         this.goalSelector.addGoal(1, new RainbowSheepHopAwayGoal<>(this, Player.class, 16.0f, 1.6, 1.4, livingEntity -> AVOID_PLAYERS.test(livingEntity) && !(livingEntity.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.CHEST).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.LEGS).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.FEET).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES))));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(Items.WHEAT), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
-        this.goalSelector.addGoal(5, this.eatBlockGoal);
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0));
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0f));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new DrinkWaterGoal(this));
+        this.goalSelector.addGoal(6, this.eatBlockGoal);
+        this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0f));
+        this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -91,6 +97,7 @@ public class RainbowSheep extends Animal implements Shearable {
             if (!this.level.isClientSide && this.readyForShearing()) {
                 this.shear(SoundSource.PLAYERS);
                 this.gameEvent(GameEvent.SHEAR, player);
+                this.setHydrated(false);
                 itemStack.hurtAndBreak(1, player, player2 -> player2.broadcastBreakEvent(interactionHand));
                 return InteractionResult.SUCCESS;
             }
@@ -133,13 +140,24 @@ public class RainbowSheep extends Animal implements Shearable {
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putBoolean("Sheared", this.isSheared());
+        compoundTag.putBoolean("Hydrated", this.isHydrated());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setSheared(compoundTag.getBoolean("Sheared"));
+        this.setHydrated(compoundTag.getBoolean("Hydrated"));
     }
+
+    public void setHydrated(boolean hydrated) {
+        this.isHydrated = hydrated;
+    }
+
+    public boolean isHydrated() {
+        return this.isHydrated;
+    }
+
     @Override
     protected void customServerAiStep() {
         this.eatAnimationTick = this.eatBlockGoal.getEatAnimationTick();
@@ -200,7 +218,9 @@ public class RainbowSheep extends Animal implements Shearable {
     @Override
     public void ate() {
         super.ate();
-        this.setSheared(false);
+        if (this.isHydrated()) {
+            this.setSheared(false);
+        }
         if (this.isBaby()) {
             this.ageUp(60);
         }
