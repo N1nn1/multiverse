@@ -2,6 +2,7 @@ package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.entities.MultiversePose;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 
 public class RainbowSheepPanicGoal extends PanicGoal {
@@ -14,5 +15,11 @@ public class RainbowSheepPanicGoal extends PanicGoal {
     public void start() {
         super.start();
         this.mob.setPose(MultiversePose.HOP.get());
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        this.mob.setPose(Pose.STANDING);
     }
 }

@@ -20,6 +20,7 @@ public class MultiverseItems {
     public static final Item RAINBOW_WOOL = register("rainbow_wool", new BlockItem(MultiverseBlocks.RAINBOW_WOOL, new FabricItemSettings().group(TAB)));
     public static final Item RAINBOW_CARPET = register("rainbow_carpet", new BlockItem(MultiverseBlocks.RAINBOW_CARPET, new FabricItemSettings().group(TAB)));
     public static final Item RAINBOW_BED = register("rainbow_bed", new BedItem(MultiverseBlocks.RAINBOW_BED, new FabricItemSettings().group(TAB)));
+    public static final Item COLORFUL_PAINTING = register("colorful_painting", new ColorfulPaintingItem(MultiverseEntityTypes.COLORFUL_PAINTING, new Item.Properties().tab(TAB)));
 
     public static final Item STONE_TILES = register("stone_tiles", new BlockItem(MultiverseBlocks.STONE_TILES, new FabricItemSettings().group(TAB)));
     public static final Item STONE_TILE_STAIRS = register("stone_tile_stairs", new BlockItem(MultiverseBlocks.STONE_TILE_STAIRS, new FabricItemSettings().group(TAB)));
@@ -41,7 +42,6 @@ public class MultiverseItems {
     public static final Item GRINDSTONE_GOLEM_LORE_TABLET = register("grindstone_golem_lore_tablet", new LoreTabletItem("grindstone_golem", MultiverseBlocks.GRINDSTONE_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).tab(TAB)));
     public static final Item PLANK_GOLEM_LORE_TABLET = register("plank_golem_lore_tablet", new LoreTabletItem("plank_golem", MultiverseBlocks.PLANK_GOLEM_LORE_TABLET, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).tab(TAB)));
 
-    public static final Item COLORFUL_PAINTING = register("colorful_painting", new ColorfulPaintingItem(MultiverseEntityTypes.COLORFUL_PAINTING, new Item.Properties().tab(TAB)));
 
     private static Item register(String id, Item item) {
         return Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, id), item);
