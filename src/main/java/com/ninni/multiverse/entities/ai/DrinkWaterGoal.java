@@ -68,7 +68,7 @@ public class DrinkWaterGoal extends Goal {
             this.rainbowSheep.setHydrated(true);
         }
         this.drinkingTicks = 60;
-        this.rainbowSheep.setDrinkingCooldown(UniformInt.of(10 * 20, 60 * 20).sample(this.rainbowSheep.getRandom()));
+        this.rainbowSheep.setDrinkingCooldown(UniformInt.of(200, 1200).sample(this.rainbowSheep.getRandom()));
     }
 
     public BlockPos findWaterPos() {
