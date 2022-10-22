@@ -1,6 +1,9 @@
 package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.Multiverse;
+import com.ninni.multiverse.MultiverseTags;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
@@ -12,8 +15,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 public class MultiverseEntityTypes {
 
@@ -42,6 +47,7 @@ public class MultiverseEntityTypes {
         FabricEntityTypeBuilder.createMob()
                                .entityFactory(RainbowSheep::new)
                                .defaultAttributes(RainbowSheep::createAttributes)
+                               .spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, RainbowSheep::checkRainbowSheepSpawnRules)
                                .spawnGroup(MobCategory.CREATURE)
                                .dimensions(EntityDimensions.fixed(0.9F, 1.3F))
                                .trackRangeChunks(10),
@@ -58,20 +64,11 @@ public class MultiverseEntityTypes {
             null
     );
 
-
-    @SuppressWarnings("unchecked")
-    private static <T extends Entity> EntityType<T> registerMob(String id, FabricEntityTypeBuilder<T> entityType, Tuple<Integer, Integer> spawnEggColors) {
+    private static <T extends Mob> EntityType<T> registerMob(String id, FabricEntityTypeBuilder<T> entityType, Tuple<Integer, Integer> spawnEggColors) {
         EntityType<T> builtEntityType = entityType.build();
 
         if (spawnEggColors != null) {
-            Registry.register(
-                Registry.ITEM, new ResourceLocation(Multiverse.MOD_ID, id + "_spawn_egg"),
-                new SpawnEggItem(
-                    (EntityType<? extends Mob>) builtEntityType,
-                    spawnEggColors.getA(), spawnEggColors.getB(),
-                    new FabricItemSettings().maxCount(64).group(Multiverse.TAB)
-                )
-            );
+            Registry.register(Registry.ITEM, new ResourceLocation(Multiverse.MOD_ID, id + "_spawn_egg"), new SpawnEggItem(builtEntityType, spawnEggColors.getA(), spawnEggColors.getB(), new FabricItemSettings().maxCount(64).group(Multiverse.TAB)));
         }
 
         return Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Multiverse.MOD_ID, id), builtEntityType);
@@ -87,6 +84,10 @@ public class MultiverseEntityTypes {
 
     private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> entityType, int[] spawnEggColors) {
         return register(id, entityType.build(), spawnEggColors);
+    }
+
+    static {
+        BiomeModifications.addSpawn(BiomeSelectors.tag(MultiverseTags.RAINBOW_SHEEP_SPAWNS), MobCategory.CREATURE, MultiverseEntityTypes.RAINBOW_SHEEP, 12, 1, 1);
     }
 
 }
