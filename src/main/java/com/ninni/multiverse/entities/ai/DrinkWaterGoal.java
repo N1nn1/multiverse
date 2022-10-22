@@ -1,6 +1,8 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.google.common.collect.Lists;
+import com.ninni.multiverse.Multiverse;
+import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,6 +58,7 @@ public class DrinkWaterGoal extends Goal {
                     this.rainbowSheep.playSound(SoundEvents.GENERIC_DRINK, 1.0F, 1.0F);
                 }
                 this.rainbowSheep.getNavigation().stop();
+                this.rainbowSheep.setPose(MultiversePose.DRINKING.get());
             }
             Vec3 lookVec = Vec3.atCenterOf(this.waterPos);
             this.rainbowSheep.getLookControl().setLookAt(lookVec.x, lookVec.y, lookVec.z);

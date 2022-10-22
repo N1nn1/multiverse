@@ -207,7 +207,11 @@ public class RainbowSheepModel<T extends RainbowSheep> extends QuadrupedModel<T>
             this.leftHindLeg.xRot = Mth.cos(limbAngle * 0.6f * hopSpeed + 0.7f + pi) * 3 * limbDistance * hopDegree + pi/6;
             this.leftHindLeg.y = Mth.cos(limbAngle * 0.6f * hopSpeed - pi/2 + 0.7f) * 1.5F * limbDistance * hopDegree + 11.5F;
             this.leftHindLeg.y += Mth.cos(limbAngle * 0.6f * hopSpeed + pi/2) * 3 * limbDistance * hopStrength - 1F;
-        } else {
+        }
+        else if (sheep.getPose().equals(MultiversePose.DRINKING.get())) {
+
+        }
+        else {
             this.body.xRot = pi/2;
             this.body.y = 5.0F;
             this.rightHindLeg.xRot = Mth.cos(limbAngle * 0.6662f) * 1.4f * limbDistance;
