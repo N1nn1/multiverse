@@ -2,7 +2,7 @@ package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.item.MultiverseItems;
-import com.ninni.multiverse.mixin.PaintingAccessor;
+import com.ninni.multiverse.mixin.accessors.PaintingAccessor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

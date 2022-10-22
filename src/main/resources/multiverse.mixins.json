@@ -5,8 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CarvedPumpkinBlockMixin",
-    "PaintingAccessor",
-    "PaintingRendererAccessor",
+    "accessors.PaintingAccessor",
+    "accessors.PaintingRendererAccessor",
     "PoseMixin"
   ],
   "client": [

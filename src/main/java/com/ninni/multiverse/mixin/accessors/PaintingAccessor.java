@@ -1,4 +1,4 @@
-package com.ninni.multiverse.mixin;
+package com.ninni.multiverse.mixin.accessors;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.decoration.Painting;

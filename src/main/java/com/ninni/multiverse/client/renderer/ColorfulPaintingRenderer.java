@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.ninni.multiverse.Multiverse;
-import com.ninni.multiverse.mixin.PaintingRendererAccessor;
+import com.ninni.multiverse.mixin.accessors.PaintingRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

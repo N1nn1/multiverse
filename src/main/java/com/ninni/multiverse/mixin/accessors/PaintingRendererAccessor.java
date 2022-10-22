@@ -1,4 +1,4 @@
-package com.ninni.multiverse.mixin;
+package com.ninni.multiverse.mixin.accessors;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
