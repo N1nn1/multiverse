@@ -3,9 +3,9 @@ package com.ninni.multiverse.entities;
 import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.entities.ai.DrinkWaterGoal;
 import com.ninni.multiverse.entities.ai.RainbowSheepHopAwayGoal;
-import com.ninni.multiverse.entities.ai.RainbowSheepPanicGoal;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.loot.MultiverseBuiltInLootTables;
+import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -35,14 +35,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.BreedGoal;
-import net.minecraft.world.entity.ai.goal.EatBlockGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.FollowParentGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.TemptGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -73,7 +66,7 @@ public class RainbowSheep extends Animal implements Shearable {
     protected void registerGoals() {
         this.eatBlockGoal = new EatBlockGoal(this);
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RainbowSheepPanicGoal(this, 1.25));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(1, new RainbowSheepHopAwayGoal<>(this, Player.class, 16.0f, 1.6, 1.4, livingEntity -> AVOID_PLAYERS.test(livingEntity) && !(livingEntity.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.CHEST).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.LEGS).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.FEET).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES))));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(Items.WHEAT), false));
@@ -279,17 +272,17 @@ public class RainbowSheep extends Animal implements Shearable {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SHEEP_AMBIENT;
+        return MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundEvents.SHEEP_HURT;
+        return MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.SHEEP_DEATH;
+        return MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_DEATH;
     }
 
     @Override

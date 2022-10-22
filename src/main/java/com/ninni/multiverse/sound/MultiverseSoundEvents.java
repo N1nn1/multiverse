@@ -12,6 +12,11 @@ public class MultiverseSoundEvents {
     public static final SoundEvent ENTITY_COBBLESTONE_GOLEM_DEATH = register("entity.cobblestone_golem.death");
     public static final SoundEvent ENTITY_COBBLESTONE_GOLEM_HURT = register("entity.cobblestone_golem.hurt");
 
+    public static final SoundEvent ENTITY_RAINBOW_SHEEP_AMBIENT = register("entity.rainbow_sheep.ambient");
+    public static final SoundEvent ENTITY_RAINBOW_SHEEP_SCARED = register("entity.rainbow_sheep.scared");
+    public static final SoundEvent ENTITY_RAINBOW_SHEEP_DEATH = register("entity.rainbow_sheep.death");
+    public static final SoundEvent ENTITY_RAINBOW_SHEEP_HURT = register("entity.rainbow_sheep.hurt");
+
     public static final SoundEvent BLOCK_STONE_TILES_BREAK = register("block.stone_tiles.break");
     public static final SoundEvent BLOCK_STONE_TILES_STEP  = register("block.stone_tiles.step");
     public static final SoundEvent BLOCK_STONE_TILES_PLACE = register("block.stone_tiles.place");

@@ -26,6 +26,37 @@
     ],
     "subtitle": "subtitles.entity.cobblestone_golem.death"
   },
+  "entity.rainbow_sheep.ambient": {
+    "sounds": [
+      "multiverse:entity/rainbow_sheep/say1",
+      "multiverse:entity/rainbow_sheep/say2",
+      "multiverse:entity/rainbow_sheep/say3"
+    ],
+    "subtitle": "subtitles.entity.rainbow_sheep.ambient"
+  },
+  "entity.rainbow_sheep.scared": {
+    "sounds": [
+      "multiverse:entity/rainbow_sheep/scared1",
+      "multiverse:entity/rainbow_sheep/scared2",
+      "multiverse:entity/rainbow_sheep/scared3",
+      "multiverse:entity/rainbow_sheep/scared4"
+    ],
+    "subtitle": "subtitles.entity.rainbow_sheep.scared"
+  },
+  "entity.rainbow_sheep.hurt": {
+    "sounds": [
+      "multiverse:entity/rainbow_sheep/hurt1",
+      "multiverse:entity/rainbow_sheep/hurt2",
+      "multiverse:entity/rainbow_sheep/hurt3"
+    ],
+    "subtitle": "subtitles.entity.rainbow_sheep.hurt"
+  },
+  "entity.rainbow_sheep.death": {
+    "sounds": [
+      "multiverse:entity/rainbow_sheep/death"
+    ],
+    "subtitle": "subtitles.entity.rainbow_sheep.death"
+  },
   "block.stone_tiles.break": {
     "sounds": [
       "multiverse:block/stone_tiles/heavy1",

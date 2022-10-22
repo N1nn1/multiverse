@@ -1,9 +1,8 @@
 package com.ninni.multiverse.entities.ai;
 
-import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
+import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 
 import java.util.function.Predicate;
@@ -20,13 +19,7 @@ public class RainbowSheepHopAwayGoal<T extends LivingEntity> extends AvoidEntity
 
     @Override
     public void start() {
-        this.sheep.setPose(MultiversePose.HOP.get());
+        if (!this.sheep.isSilent()) this.sheep.playSound(MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_SCARED);
         super.start();
-    }
-
-    @Override
-    public void stop() {
-        this.sheep.setPose(Pose.STANDING);
-        super.stop();
     }
 }
