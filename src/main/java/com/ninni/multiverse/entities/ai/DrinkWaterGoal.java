@@ -1,7 +1,6 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.google.common.collect.Lists;
-import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
 import net.minecraft.core.BlockPos;
