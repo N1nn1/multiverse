@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.feature.DripstoneUtils;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class FindTargettedBlockGoal extends Goal {
@@ -78,7 +79,7 @@ public class FindTargettedBlockGoal extends Goal {
         }
 
         if (!list.isEmpty()) {
-            list.sort(new DistanceComparator(this.golemEntity.blockPosition()));
+            list.sort(Comparator.comparingDouble(this.golemEntity.blockPosition()::distSqr));
             for (BlockPos blockPos : list) {
                 Vec3 vec3 = new Vec3(this.golemEntity.getX(), this.golemEntity.getEyeY(), this.golemEntity.getZ());
                 Vec3 vec31 = Vec3.atCenterOf(blockPos);

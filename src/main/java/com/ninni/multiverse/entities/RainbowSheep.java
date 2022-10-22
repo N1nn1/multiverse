@@ -37,7 +37,6 @@ import net.minecraft.world.entity.ai.goal.EatBlockGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -58,6 +57,7 @@ public class RainbowSheep extends Animal implements Shearable {
     private static final EntityDataAccessor<Boolean> DATA_SHEARING_ID = SynchedEntityData.defineId(RainbowSheep.class, EntityDataSerializers.BOOLEAN);
     private static final Predicate<Entity> AVOID_PLAYERS = EntitySelector.NO_CREATIVE_OR_SPECTATOR;
     private int eatAnimationTick;
+    private int drinkingCooldown;
     private EatBlockGoal eatBlockGoal;
     public boolean isHydrated;
 
@@ -141,6 +141,7 @@ public class RainbowSheep extends Animal implements Shearable {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putBoolean("Sheared", this.isSheared());
         compoundTag.putBoolean("Hydrated", this.isHydrated());
+        compoundTag.putInt("DrinkingCooldown", this.getDrinkingCooldown());
     }
 
     @Override
@@ -148,6 +149,15 @@ public class RainbowSheep extends Animal implements Shearable {
         super.readAdditionalSaveData(compoundTag);
         this.setSheared(compoundTag.getBoolean("Sheared"));
         this.setHydrated(compoundTag.getBoolean("Hydrated"));
+        this.setDrinkingCooldown(compoundTag.getInt("DrinkingCooldown"));
+    }
+
+    public void setDrinkingCooldown(int drinkingCooldown) {
+        this.drinkingCooldown = drinkingCooldown;
+    }
+
+    public int getDrinkingCooldown() {
+        return this.drinkingCooldown;
     }
 
     public void setHydrated(boolean hydrated) {
@@ -172,6 +182,11 @@ public class RainbowSheep extends Animal implements Shearable {
         if (this.readyForShearing() && this.random.nextInt(60) == 0) {
             for (int i = 0; i < this.random.nextInt(1) + 1; ++i) {
                 this.level.addParticle(ParticleTypes.WAX_OFF, this.getRandomX(0.6), this.getRandomY() + 1, this.getRandomZ(0.6), 0.0, this.random.nextFloat() * 5, 0.0);
+            }
+        }
+        if (!this.level.isClientSide) {
+            if (this.getDrinkingCooldown() > 0) {
+                this.setDrinkingCooldown(this.getDrinkingCooldown() - 1);
             }
         }
         super.aiStep();
