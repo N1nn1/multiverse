@@ -20,8 +20,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -35,7 +33,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Shearable;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
@@ -48,7 +45,6 @@ import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -106,7 +102,7 @@ public class RainbowSheep extends Animal implements Shearable {
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (itemStack.is(Items.SHEARS)) {
-            if (!this.level.isClientSide && this.readyForShearing()) {
+            if (!this.level.isClientSide && this.readyForShearing() && this.canPlayerShear(player)) {
                 this.shear(SoundSource.PLAYERS);
                 this.gameEvent(GameEvent.SHEAR, player);
                 this.setHydrated(false);
@@ -116,6 +112,19 @@ public class RainbowSheep extends Animal implements Shearable {
             return InteractionResult.CONSUME;
         }
         return super.mobInteract(player, interactionHand);
+    }
+
+    public boolean canPlayerShear(Player player) {
+        boolean flag = false;
+        for (ItemStack stack : player.getArmorSlots()) {
+            if (!stack.is(MultiverseTags.RAINBOW_SHEEP_BYPASSES)) continue;
+            flag = true;
+        }
+        for (InteractionHand interactionHand : InteractionHand.values()) {
+            if (!player.getItemInHand(interactionHand).is(MultiverseTags.RAINBOW_SHEEP_LOVED)) continue;
+            flag = true;
+        }
+        return flag;
     }
 
     @Override
@@ -134,6 +143,7 @@ public class RainbowSheep extends Animal implements Shearable {
     public boolean readyForShearing() {
         return this.isAlive() && !this.isSheared() && !this.isBaby();
     }
+
     @Override
     public ResourceLocation getDefaultLootTable() {
         if (this.isSheared()) {
