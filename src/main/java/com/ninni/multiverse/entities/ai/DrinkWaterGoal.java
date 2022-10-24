@@ -23,7 +23,7 @@ public class DrinkWaterGoal extends Goal {
 
     public DrinkWaterGoal(RainbowSheep rainbowSheep) {
         this.rainbowSheep = rainbowSheep;
-        this.setFlags(EnumSet.of(Flag.LOOK, Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
     @Override
@@ -49,7 +49,6 @@ public class DrinkWaterGoal extends Goal {
             double distance = this.rainbowSheep.distanceToSqr(Vec3.atCenterOf(this.waterPos));
             if (distance > 1.0D) {
                 this.rainbowSheep.getNavigation().moveTo(this.waterPos.getX(), this.waterPos.getY(), this.waterPos.getZ(), 1.0D);
-                this.rainbowSheep.getLookControl().setLookAt(this.waterPos.getX(), this.waterPos.getY(), this.waterPos.getZ());
             } else {
                 if (this.drinkingTicks > 0) {
                     this.drinkingTicks--;

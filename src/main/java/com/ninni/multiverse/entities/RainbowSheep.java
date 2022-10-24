@@ -252,12 +252,17 @@ public class RainbowSheep extends Animal implements Shearable {
     @Override
     public void ate() {
         super.ate();
-        if (this.isHydrated()) {
+        if (this.isHydrated() && this.getLevel().canSeeSky(this.blockPosition())) {
             this.setSheared(false);
         }
         if (this.isBaby()) {
             this.ageUp(60);
         }
+    }
+
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
     }
 
     @Nullable
