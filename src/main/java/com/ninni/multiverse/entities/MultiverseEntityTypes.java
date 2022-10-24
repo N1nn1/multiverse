@@ -26,7 +26,7 @@ public class MultiverseEntityTypes {
             "cobblestone_golem",
             FabricEntityTypeBuilder.createMob()
                     .entityFactory(CobblestoneGolem::new)
-                    .defaultAttributes(CobblestoneGolem::createCobblestoneGolemAttributes)
+                    .defaultAttributes(CobblestoneGolem::createAttributes)
                     .spawnGroup(MobCategory.MISC)
                     .dimensions(EntityDimensions.fixed(0.9F, 0.9F)),
             null

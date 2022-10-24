@@ -69,7 +69,7 @@ public class RainbowSheep extends Animal implements Shearable {
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(1, new RainbowSheepHopAwayGoal<>(this, Player.class, 16.0f, 1.6, 1.4, livingEntity -> AVOID_PLAYERS.test(livingEntity) && !(livingEntity.getMainHandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getOffhandItem().is(MultiverseTags.RAINBOW_SHEEP_LOVED) || livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.CHEST).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.LEGS).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES) || livingEntity.getItemBySlot(EquipmentSlot.FEET).is(MultiverseTags.RAINBOW_SHEEP_BYPASSES))));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(Items.WHEAT), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(MultiverseTags.RAINBOW_SHEEP_LOVED), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(5, new DrinkWaterGoal(this));
         this.goalSelector.addGoal(6, this.eatBlockGoal);
