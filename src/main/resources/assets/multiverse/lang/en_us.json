@@ -45,5 +45,7 @@
   "subtitles.entity.rainbow_sheep.scared": "Rainbow Sheep cries",
   "subtitles.entity.rainbow_sheep.drink": "Rainbow Sheep drinks",
   "subtitles.entity.rainbow_sheep.hurt": "Rainbow Sheep hurts",
-  "subtitles.entity.rainbow_sheep.death": "Rainbow Sheep dies"
+  "subtitles.entity.rainbow_sheep.death": "Rainbow Sheep dies",
+  "subtitles.block.colorful_painting.break": "Colorful Painting breaks",
+  "subtitles.block.colorful_painting.place": "Colorful Painting placed"
 }

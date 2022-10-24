@@ -18,6 +18,21 @@ public class MultiverseSoundEvents {
     public static final SoundEvent ENTITY_RAINBOW_SHEEP_DEATH = register("entity.rainbow_sheep.death");
     public static final SoundEvent ENTITY_RAINBOW_SHEEP_HURT = register("entity.rainbow_sheep.hurt");
 
+    public static final SoundEvent BLOCK_RAINBOW_WOOL_BREAK = register("block.rainbow_wool.break");
+    public static final SoundEvent BLOCK_RAINBOW_WOOL_STEP  = register("block.rainbow_wool.step");
+    public static final SoundEvent BLOCK_RAINBOW_WOOL_PLACE = register("block.rainbow_wool.place");
+    public static final SoundEvent BLOCK_RAINBOW_WOOL_HIT   = register("block.rainbow_wool.hit");
+    public static final SoundEvent BLOCK_RAINBOW_WOOL_FALL  = register("block.rainbow_wool.fall");
+
+    public static final SoundEvent BLOCK_RAINBOW_BED_BREAK = register("block.rainbow_bed.break");
+    public static final SoundEvent BLOCK_RAINBOW_BED_STEP  = register("block.rainbow_bed.step");
+    public static final SoundEvent BLOCK_RAINBOW_BED_PLACE = register("block.rainbow_bed.place");
+    public static final SoundEvent BLOCK_RAINBOW_BED_HIT   = register("block.rainbow_bed.hit");
+    public static final SoundEvent BLOCK_RAINBOW_BED_FALL  = register("block.rainbow_bed.fall");
+
+    public static final SoundEvent BLOCK_COLORFUL_PAINTING_BREAK = register("block.colorful_painting.break");
+    public static final SoundEvent BLOCK_COLORFUL_PAINTING_PLACE = register("block.colorful_painting.place");
+
     public static final SoundEvent BLOCK_STONE_TILES_BREAK = register("block.stone_tiles.break");
     public static final SoundEvent BLOCK_STONE_TILES_STEP  = register("block.stone_tiles.step");
     public static final SoundEvent BLOCK_STONE_TILES_PLACE = register("block.stone_tiles.place");

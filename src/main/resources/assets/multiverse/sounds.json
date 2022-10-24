@@ -67,6 +67,111 @@
     ],
     "subtitle": "subtitles.entity.rainbow_sheep.death"
   },
+  "block.rainbow_wool.break": {
+    "sounds": [
+      "multiverse:block/rainbow_wool/heavy1",
+      "multiverse:block/rainbow_wool/heavy2",
+      "multiverse:block/rainbow_wool/heavy3",
+      "multiverse:block/rainbow_wool/heavy4"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.rainbow_wool.step": {
+    "sounds": [
+      "multiverse:block/rainbow_wool/light1",
+      "multiverse:block/rainbow_wool/light2",
+      "multiverse:block/rainbow_wool/light3",
+      "multiverse:block/rainbow_wool/light4"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.rainbow_wool.hit": {
+    "sounds": [
+      {
+        "name": "multiverse:block.rainbow_wool.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.rainbow_wool.place": {
+    "sounds": [
+      {
+        "name": "multiverse:block.rainbow_wool.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.rainbow_wool.fall": {
+    "sounds": [
+      {
+        "name": "multiverse:block.rainbow_wool.break",
+        "type": "event"
+      }
+    ]
+  },
+  "block.rainbow_bed.break": {
+    "sounds": [
+      "multiverse:block/rainbow_bed/heavy1",
+      "multiverse:block/rainbow_bed/heavy2",
+      "multiverse:block/rainbow_bed/heavy3",
+      "multiverse:block/rainbow_bed/heavy4"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.rainbow_bed.step": {
+    "sounds": [
+      "multiverse:block/rainbow_bed/light1",
+      "multiverse:block/rainbow_bed/light2",
+      "multiverse:block/rainbow_bed/light3",
+      "multiverse:block/rainbow_bed/light4"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.rainbow_bed.hit": {
+    "sounds": [
+      {
+        "name": "multiverse:block.rainbow_bed.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.rainbow_bed.place": {
+    "sounds": [
+      {
+        "name": "multiverse:block.rainbow_bed.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.rainbow_bed.fall": {
+    "sounds": [
+      {
+        "name": "multiverse:block.rainbow_bed.break",
+        "type": "event"
+      }
+    ]
+  },
+  "block.colorful_painting.break": {
+    "sounds": [
+      "multiverse:block/colorful_painting/break1",
+      "multiverse:block/colorful_painting/break2",
+      "multiverse:block/colorful_painting/break3"
+    ],
+    "subtitle": "subtitles.block.colorful_painting.break"
+  },
+  "block.colorful_painting.place": {
+    "sounds": [
+      "multiverse:block/colorful_painting/place1",
+      "multiverse:block/colorful_painting/place2",
+      "multiverse:block/colorful_painting/place3",
+      "multiverse:block/colorful_painting/place4"
+    ],
+    "subtitle": "subtitles.block.colorful_painting.place"
+  },
   "block.stone_tiles.break": {
     "sounds": [
       "multiverse:block/stone_tiles/heavy1",

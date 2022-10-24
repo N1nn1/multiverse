@@ -3,12 +3,12 @@ package com.ninni.multiverse.entities;
 import com.ninni.multiverse.MultiverseTags;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.mixin.accessors.PaintingAccessor;
+import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.Painting;
@@ -68,13 +68,18 @@ public class ColorfulPainting extends Painting {
         if (!this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             return;
         }
-        this.playSound(SoundEvents.PAINTING_BREAK, 1.0f, 1.0f);
+        this.playSound(MultiverseSoundEvents.BLOCK_COLORFUL_PAINTING_BREAK, 1.0f, 1.0f);
         if (entity instanceof Player player) {
             if (player.getAbilities().instabuild) {
                 return;
             }
         }
         this.spawnAtLocation(MultiverseItems.COLORFUL_PAINTING);
+    }
+
+    @Override
+    public void playPlacementSound() {
+        this.playSound(MultiverseSoundEvents.BLOCK_COLORFUL_PAINTING_PLACE, 1.0F, 1.0F);
     }
 
     @Override
