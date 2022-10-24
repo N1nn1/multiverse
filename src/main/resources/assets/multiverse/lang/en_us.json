@@ -43,6 +43,7 @@
 
   "subtitles.entity.rainbow_sheep.ambient": "Rainbow Sheep baahs",
   "subtitles.entity.rainbow_sheep.scared": "Rainbow Sheep cries",
+  "subtitles.entity.rainbow_sheep.drink": "Rainbow Sheep drinks",
   "subtitles.entity.rainbow_sheep.hurt": "Rainbow Sheep hurts",
   "subtitles.entity.rainbow_sheep.death": "Rainbow Sheep dies"
 }

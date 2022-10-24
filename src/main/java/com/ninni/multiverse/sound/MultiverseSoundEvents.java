@@ -14,6 +14,7 @@ public class MultiverseSoundEvents {
 
     public static final SoundEvent ENTITY_RAINBOW_SHEEP_AMBIENT = register("entity.rainbow_sheep.ambient");
     public static final SoundEvent ENTITY_RAINBOW_SHEEP_SCARED = register("entity.rainbow_sheep.scared");
+    public static final SoundEvent ENTITY_RAINBOW_SHEEP_DRINK = register("entity.rainbow_sheep.drink");
     public static final SoundEvent ENTITY_RAINBOW_SHEEP_DEATH = register("entity.rainbow_sheep.death");
     public static final SoundEvent ENTITY_RAINBOW_SHEEP_HURT = register("entity.rainbow_sheep.hurt");
 

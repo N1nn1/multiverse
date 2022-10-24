@@ -3,9 +3,9 @@ package com.ninni.multiverse.entities.ai;
 import com.google.common.collect.Lists;
 import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
+import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Blocks;
@@ -23,7 +23,7 @@ public class DrinkWaterGoal extends Goal {
 
     public DrinkWaterGoal(RainbowSheep rainbowSheep) {
         this.rainbowSheep = rainbowSheep;
-        this.setFlags(EnumSet.of(Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class DrinkWaterGoal extends Goal {
                     this.drinkingTicks--;
                 }
                 if (this.drinkingTicks % 5 == 0) {
-                    this.rainbowSheep.playSound(SoundEvents.GENERIC_DRINK, 1.0F, 1.0F);
+                    this.rainbowSheep.playSound(MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_DRINK, 1.0F, 1.0F);
                 }
                 if (this.drinkingTicks == 59) {
                     this.rainbowSheep.level.broadcastEntityEvent(this.rainbowSheep, (byte) 10);

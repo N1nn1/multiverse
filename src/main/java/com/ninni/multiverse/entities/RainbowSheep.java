@@ -271,6 +271,11 @@ public class RainbowSheep extends Animal implements Shearable {
         return MultiverseEntityTypes.RAINBOW_SHEEP.create(serverLevel);
     }
 
+    @Override
+    public int getAmbientSoundInterval() {
+        return 240;
+    }
+
     public boolean isSheared() {
         return (this.entityData.get(DATA_SHEARING_ID));
     }

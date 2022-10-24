@@ -43,6 +43,16 @@
     ],
     "subtitle": "subtitles.entity.rainbow_sheep.scared"
   },
+  "entity.rainbow_sheep.drink": {
+    "sounds": [
+      "multiverse:entity/rainbow_sheep/drink1",
+      "multiverse:entity/rainbow_sheep/drink2",
+      "multiverse:entity/rainbow_sheep/drink3",
+      "multiverse:entity/rainbow_sheep/drink4",
+      "multiverse:entity/rainbow_sheep/drink5"
+    ],
+    "subtitle": "subtitles.entity.rainbow_sheep.drink"
+  },
   "entity.rainbow_sheep.hurt": {
     "sounds": [
       "multiverse:entity/rainbow_sheep/hurt1",
