@@ -4,7 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
-import static com.ninni.multiverse.Multiverse.*;
+import static com.ninni.multiverse.Multiverse.MOD_ID;
 
 public class MultiverseSoundEvents {
 

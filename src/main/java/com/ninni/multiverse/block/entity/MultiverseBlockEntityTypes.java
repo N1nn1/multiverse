@@ -6,7 +6,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import static com.ninni.multiverse.Multiverse.*;
+import static com.ninni.multiverse.Multiverse.MOD_ID;
 
 public class MultiverseBlockEntityTypes {
     public static final BlockEntityType<RainbowBedBlockEntity> RAINBOW_BED = Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation(MOD_ID, "rainbow_bed"), FabricBlockEntityTypeBuilder.create(RainbowBedBlockEntity::new, MultiverseBlocks.RAINBOW_BED).build(null));
