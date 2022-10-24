@@ -5,10 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MultiverseBuiltInLootTables {
 
-    public static final ResourceLocation RAINBOW_SHEEP_RAINBOW = MultiverseBuiltInLootTables.register("entities/rainbow_sheep/rainbow");
-
-    private static ResourceLocation register(String string) {
-        return new ResourceLocation(Multiverse.MOD_ID, string);
-    }
+    public static final ResourceLocation RAINBOW_SHEEP_RAINBOW = new ResourceLocation(Multiverse.MOD_ID, "entities/rainbow_sheep/rainbow");
 
 }
