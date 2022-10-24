@@ -39,5 +39,10 @@
 
   "subtitles.entity.cobblestone_golem.ambient": "Cobblestone Golem Grunts",
   "subtitles.entity.cobblestone_golem.hurt": "Cobblestone Golem Hurts",
-  "subtitles.entity.cobblestone_golem.death": "Cobblestone Golem Dies"
+  "subtitles.entity.cobblestone_golem.death": "Cobblestone Golem Dies",
+
+  "subtitles.entity.rainbow_sheep.ambient": "Rainbow Sheep baahs",
+  "subtitles.entity.rainbow_sheep.scared": "Rainbow Sheep cries",
+  "subtitles.entity.rainbow_sheep.hurt": "Rainbow Sheep hurts",
+  "subtitles.entity.rainbow_sheep.death": "Rainbow Sheep dies"
 }
