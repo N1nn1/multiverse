@@ -54,7 +54,7 @@ public class DrinkWaterGoal extends Goal {
                     this.drinkingTicks--;
                 }
                 if (this.drinkingTicks % 5 == 0) {
-                    this.rainbowSheep.playSound(MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_DRINK, 1.0F, 1.0F);
+                    this.rainbowSheep.playSound(MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_DRINK, 1.5F, this.rainbowSheep.getRandom().nextFloat() / 2 + 0.5f);
                 }
                 if (this.drinkingTicks == 59) {
                     this.rainbowSheep.level.broadcastEntityEvent(this.rainbowSheep, (byte) 10);
