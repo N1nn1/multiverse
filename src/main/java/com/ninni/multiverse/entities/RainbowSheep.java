@@ -211,7 +211,11 @@ public class RainbowSheep extends Animal implements Shearable {
     public void handleEntityEvent(byte b) {
         if (b == 10) {
             this.eatAnimationTick = 40;
-        } else {
+        }
+        else if (b == 11) {
+            this.eatAnimationTick = 36;
+        }
+        else {
             super.handleEntityEvent(b);
         }
     }

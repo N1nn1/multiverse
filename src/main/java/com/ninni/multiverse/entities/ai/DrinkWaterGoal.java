@@ -49,6 +49,7 @@ public class DrinkWaterGoal extends Goal {
             double distance = this.rainbowSheep.distanceToSqr(Vec3.atCenterOf(this.waterPos));
             if (distance > 1.0D) {
                 this.rainbowSheep.getNavigation().moveTo(this.waterPos.getX(), this.waterPos.getY(), this.waterPos.getZ(), 1.0D);
+                this.rainbowSheep.getLookControl().setLookAt(this.waterPos.getX(), this.waterPos.getY(), this.waterPos.getZ());
             } else {
                 if (this.drinkingTicks > 0) {
                     this.drinkingTicks--;
@@ -56,11 +57,15 @@ public class DrinkWaterGoal extends Goal {
                 if (this.drinkingTicks % 5 == 0) {
                     this.rainbowSheep.playSound(SoundEvents.GENERIC_DRINK, 1.0F, 1.0F);
                 }
+                if (this.drinkingTicks == 59) {
+                    this.rainbowSheep.level.broadcastEntityEvent(this.rainbowSheep, (byte) 10);
+                }
+                if (this.drinkingTicks > 5 && this.drinkingTicks < 54 && this.drinkingTicks % 10 == 0) {
+                    this.rainbowSheep.level.broadcastEntityEvent(this.rainbowSheep, (byte) 11);
+                }
                 this.rainbowSheep.getNavigation().stop();
                 this.rainbowSheep.setPose(MultiversePose.DRINKING.get());
             }
-            Vec3 lookVec = Vec3.atCenterOf(this.waterPos);
-            this.rainbowSheep.getLookControl().setLookAt(lookVec.x, lookVec.y, lookVec.z);
         }
     }
 
