@@ -3,7 +3,6 @@ package com.ninni.multiverse.entities;
 import com.ninni.multiverse.api.CrackableEntity;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.item.MultiverseItems;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.core.Rotations;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -292,7 +291,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
     public void handleEntityEvent(byte b) {
         if (b == 32) {
             if (this.level.isClientSide) {
-                this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), MultiverseSoundEvents.BLOCK_STONE_TILES_HIT, this.getSoundSource(), 0.3f, 1.0f, false);
+                this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.STONE_HIT, this.getSoundSource(), 1.5f, 1.0f, false);
                 this.lastHit = this.level.getGameTime();
             }
         } else {
@@ -354,7 +353,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
     }
 
     private void playBrokenSound() {
-        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), MultiverseSoundEvents.BLOCK_STONE_TILES_BREAK, this.getSoundSource(), 1.0f, 1.0f);
+        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.STONE_BREAK, this.getSoundSource(), 2.0f, 1.0f);
     }
 
     @Override
@@ -550,19 +549,19 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
 
     @Override
     public LivingEntity.Fallsounds getFallSounds() {
-        return new LivingEntity.Fallsounds(MultiverseSoundEvents.BLOCK_STONE_TILES_FALL, MultiverseSoundEvents.BLOCK_STONE_TILES_FALL);
+        return new LivingEntity.Fallsounds(SoundEvents.STONE_FALL, SoundEvents.STONE_FALL);
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return MultiverseSoundEvents.BLOCK_STONE_TILES_HIT;
+        return SoundEvents.STONE_HIT;
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return MultiverseSoundEvents.BLOCK_STONE_TILES_BREAK;
+        return SoundEvents.STONE_BREAK;
     }
 
     @Override

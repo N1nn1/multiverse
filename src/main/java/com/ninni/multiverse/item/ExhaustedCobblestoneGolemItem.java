@@ -11,6 +11,7 @@ import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -67,7 +68,7 @@ public class ExhaustedCobblestoneGolemItem extends Item {
                 golem.setCustomName(itemStack.getHoverName());
             }
             serverLevel.addFreshEntityWithPassengers(golem);
-            level.playSound(null, golem.getX(), golem.getY(), golem.getZ(), MultiverseSoundEvents.BLOCK_STONE_TILES_FALL, SoundSource.BLOCKS, 0.75f, 0.8f);
+            level.playSound(null, golem.getX(), golem.getY(), golem.getZ(), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1f, 0.8f);
             golem.gameEvent(GameEvent.ENTITY_PLACE, useOnContext.getPlayer());
         }
         itemStack.shrink(1);
