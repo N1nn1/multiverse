@@ -23,15 +23,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,6 +38,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -128,7 +127,7 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
         this.goalSelector.addGoal(0, new FindTargettedBlockGoal(this));
         this.goalSelector.addGoal(1, new MineTargettedBlockGoal(this));
         this.goalSelector.addGoal(2, new FollowLikedPlayerGoal(this));
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(3, new GolemRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
     }
@@ -327,5 +326,18 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
 
     public void setLikedPlayer(@Nullable UUID uUID) {
         this.entityData.set(LIKED_PLAYER, Optional.ofNullable(uUID));
+    }
+
+    public static class GolemRandomStrollGoal extends RandomStrollGoal {
+
+        public GolemRandomStrollGoal(PathfinderMob pathfinderMob, double d) {
+            super(pathfinderMob, d);
+        }
+
+        @Override
+        @Nullable
+        protected Vec3 getPosition() {
+            return DefaultRandomPos.getPos(this.mob, 4, 3);
+        }
     }
 }
