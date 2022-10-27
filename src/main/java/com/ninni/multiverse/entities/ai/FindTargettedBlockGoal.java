@@ -70,7 +70,7 @@ public class FindTargettedBlockGoal extends Goal {
         List<BlockPos> priorityList = Lists.newArrayList();
         List<BlockPos> unpreferredPositions = Lists.newArrayList();
         BlockPos mobPos = this.golemEntity.blockPosition();
-        int range = 4;
+        int range = 10;
         int yLevel = 1;
         for (BlockPos blockPos : BlockPos.betweenClosedStream(mobPos.offset(-range, -yLevel, -range), mobPos.offset(range, yLevel, range)).map(BlockPos::immutable).toList()) {
             if (this.golemEntity.getMiningBlock().isPresent() && this.golemEntity.level.getBlockState(blockPos).is(this.golemEntity.getMiningBlock().get().getBlock()) && this.isAirOrWater(blockPos)) {
