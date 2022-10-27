@@ -89,13 +89,11 @@ public class MineTargettedBlockGoal extends Goal {
             if (this.miningTicks == 0) {
                 this.golem.level.destroyBlock(this.pos, true);
                 this.golem.level.destroyBlockProgress(this.golem.getId(), this.pos, -1);
-
-                if (crackiness.getId() == 3) {
-                    if (golem.getRandom().nextInt(8) == 0) {
+                float bound = this.golem.getRandom().nextFloat();
+                if (this.golem.getMinedCount() > 0 && bound < this.golem.getMinedCount() / 100.0F) {
+                    if (crackiness.getId() == 3) {
                         this.golem.becomeExhausted(MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM);
-                    }
-                } else {
-                    if (golem.getRandom().nextInt(8) == 0) {
+                    } else {
                         this.golem.setCrackiness(crackiness.getId() + 1);
                     }
                 }
@@ -120,6 +118,7 @@ public class MineTargettedBlockGoal extends Goal {
     public void stop() {
         this.golem.setPose(Pose.STANDING);
         this.golem.setMinePos(null);
+        this.golem.setMinedCount(this.golem.getMinedCount() + 1);
         this.golem.setMiningCooldown(Mth.nextInt(this.golem.getRandom(), 100, 200));
         this.idlingTicks = 0;
     }

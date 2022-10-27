@@ -50,6 +50,7 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
     private static final EntityDataAccessor<Optional<UUID>> LIKED_PLAYER = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.OPTIONAL_UUID);
     @Nullable
     private BlockPos minePos;
+    private int minedCount;
     private int miningCooldown;
     public final AnimationState walkAnimationState = new AnimationState();
     public final AnimationState runAnimationState = new AnimationState();
@@ -96,6 +97,7 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
             this.setLikedPlayer(uUID);
         }
         this.miningCooldown = compoundTag.getInt("MiningCooldown");
+        this.setMinedCount(compoundTag.getInt("MinedCount"));
     }
 
     @Override
@@ -112,6 +114,17 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
         if (this.getLikedPlayer() != null) {
             compoundTag.putUUID("LikedPlayer", this.getLikedPlayer());
         }
+        if (this.getMinedCount() > 0) {
+            compoundTag.putInt("MinedCount", this.getMinedCount());
+        }
+    }
+
+    public int getMinedCount() {
+        return this.minedCount;
+    }
+
+    public void setMinedCount(int minedCount) {
+        this.minedCount = minedCount;
     }
 
     public void setMiningCooldown(int miningCooldown) {
