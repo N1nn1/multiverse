@@ -87,11 +87,6 @@ public class Gorb extends PathfinderMob {
         if (this.getTarget() != null && !Gorb.hasEnchantments(this.getTarget())) {
             this.setTarget(null);
         }
-        if (!this.level.isClientSide) {
-            for (Enchantment enchantment : this.storedEnchantments.keySet()) {
-                this.level.players().forEach(player -> player.sendSystemMessage(Component.translatable(enchantment.getDescriptionId() + " " + this.storedEnchantments.get(enchantment))));
-            }
-        }
     }
 
     private static boolean hasEnchantments(LivingEntity livingEntity) {
