@@ -59,7 +59,9 @@ public class GorbModel<T extends Gorb> extends EntityModel<T> {
 
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+        float pi = (float)Math.PI;
+        this.lowerJaw.xRot = headPitch * (pi / 180);
+        this.lowerJaw.yRot = netHeadYaw * (pi / 180);
     }
 
     @Override
