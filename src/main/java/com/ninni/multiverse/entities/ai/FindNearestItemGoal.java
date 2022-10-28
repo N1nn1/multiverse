@@ -1,6 +1,8 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.entities.Gorb;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -38,7 +40,11 @@ public class FindNearestItemGoal extends Goal {
                 EnchantmentHelper.getEnchantments(this.itemEntity.getItem());
                 for (Enchantment enchantment : EnchantmentHelper.getEnchantments(this.itemEntity.getItem()).keySet()) {
                     if (enchantment != null) {
-                        this.gorb.setEnchantment(enchantment);
+                        ListTag listTag = this.itemEntity.getItem().getEnchantmentTags();
+                        for (int i = 0; i < listTag.size(); ++i) {
+                            CompoundTag compoundTag = listTag.getCompound(i);
+                            this.gorb.setStoredEnchantments(enchantment, EnchantmentHelper.getEnchantmentLevel(compoundTag));
+                        }
                     }
                 }
                 this.itemEntity.discard();

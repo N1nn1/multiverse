@@ -1,11 +1,12 @@
 package com.ninni.multiverse.entities;
 
+import com.google.common.collect.Maps;
 import com.ninni.multiverse.entities.ai.FindNearestItemGoal;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,43 +22,48 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 
-import java.util.Objects;
+import java.util.Map;
 
 public class Gorb extends PathfinderMob {
-    private static final EntityDataAccessor<String> ENCHANTMENT = SynchedEntityData.defineId(Gorb.class, EntityDataSerializers.STRING);
+    private final Map<Enchantment, Integer> storedEnchantments = Maps.newHashMap();
 
     protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(ENCHANTMENT, "");
-    }
-
-    @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        if (this.getEnchantmentName() != null) {
-            this.entityData.set(ENCHANTMENT, compoundTag.getString("StoredEnchantment"));
+        if (compoundTag.contains("StoredEnchantments", 9)) {
+            ListTag listTag = compoundTag.getList("StoredEnchantments", 10);
+            for (int i = 0; i < listTag.size(); ++i) {
+                CompoundTag compoundTag2 = listTag.getCompound(i);
+                ResourceLocation enchantmentId = EnchantmentHelper.getEnchantmentId(compoundTag2);
+                this.storedEnchantments.put(Registry.ENCHANTMENT.get(enchantmentId), EnchantmentHelper.getEnchantmentLevel(compoundTag2));
+            }
         }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
-        compoundTag.putString("StoredEnchantment", this.getEnchantmentName());
+        if (!this.storedEnchantments.isEmpty()) {
+            ListTag listTag = new ListTag();
+            for (Map.Entry<Enchantment, Integer> entry : this.storedEnchantments.entrySet()) {
+                Enchantment enchantment = entry.getKey();
+                if (enchantment == null) continue;
+                int i = entry.getValue();
+                listTag.add(EnchantmentHelper.storeEnchantment(EnchantmentHelper.getEnchantmentId(enchantment), i));
+            }
+            compoundTag.put("StoredEnchantments", listTag);
+        }
     }
 
-    public String getEnchantmentName() {
-        return this.entityData.get(ENCHANTMENT);
-    }
-
-    public void setEnchantment(Enchantment enchantment) {
-        this.entityData.set(ENCHANTMENT, Objects.requireNonNull(Registry.ENCHANTMENT.getKey(enchantment)).toString());
+    public void setStoredEnchantments(Enchantment enchantment, int level) {
+        this.storedEnchantments.put(enchantment, level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -80,6 +86,11 @@ public class Gorb extends PathfinderMob {
         super.aiStep();
         if (this.getTarget() != null && !Gorb.hasEnchantments(this.getTarget())) {
             this.setTarget(null);
+        }
+        if (!this.level.isClientSide) {
+            for (Enchantment enchantment : this.storedEnchantments.keySet()) {
+                this.level.players().forEach(player -> player.sendSystemMessage(Component.translatable(enchantment.getDescriptionId() + " " + this.storedEnchantments.get(enchantment))));
+            }
         }
     }
 
