@@ -182,7 +182,7 @@ public class RainbowSheepModel<T extends RainbowSheep> extends QuadrupedModel<T>
     public void setupAnim(T sheep, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         float pi = (float)Math.PI;
         this.head.xRot = this.headXRot;
-        this.head.yRot = headPitch * ((float)Math.PI / 180);
+        this.head.yRot = headPitch * (pi / 180);
 
         this.rightHindLeg.xRot = Mth.cos(limbAngle * 0.6662f) * 1.4f * limbDistance;
         this.leftHindLeg.xRot = Mth.cos(limbAngle * 0.6662f + pi) * 1.4f * limbDistance;
