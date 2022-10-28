@@ -64,6 +64,17 @@ public class MultiverseEntityTypes {
             null
     );
 
+    public static final EntityType<Gorb> GORB = register(
+            "gorb",
+            FabricEntityTypeBuilder.createMob()
+                    .entityFactory(Gorb::new)
+                    .defaultAttributes(Gorb::createAttributes)
+                    .spawnGroup(MobCategory.CREATURE)
+                    .dimensions(EntityDimensions.fixed(0.9F, 0.9F))
+                    .trackRangeChunks(10),
+            new int[]{0xFFFFFFFF, 0xFFFFFFFF}
+    );
+
     private static <T extends Mob> EntityType<T> registerMob(String id, FabricEntityTypeBuilder<T> entityType, Tuple<Integer, Integer> spawnEggColors) {
         EntityType<T> builtEntityType = entityType.build();
 

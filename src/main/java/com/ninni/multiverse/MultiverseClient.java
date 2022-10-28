@@ -3,11 +3,13 @@ package com.ninni.multiverse;
 import com.ninni.multiverse.block.MultiverseBlocks;
 import com.ninni.multiverse.client.models.CobblestoneGolemModel;
 import com.ninni.multiverse.client.models.ExhaustedCobblestoneGolemModel;
+import com.ninni.multiverse.client.models.GorbModel;
 import com.ninni.multiverse.client.models.MultiverseModelLayers;
 import com.ninni.multiverse.client.models.RainbowSheepModel;
 import com.ninni.multiverse.client.renderer.CobblestoneGolemRenderer;
 import com.ninni.multiverse.client.renderer.ColorfulPaintingRenderer;
 import com.ninni.multiverse.client.renderer.ExhaustedCobblestoneGolemRenderer;
+import com.ninni.multiverse.client.renderer.GorbRenderer;
 import com.ninni.multiverse.client.renderer.RainbowSheepRenderer;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
 import com.ninni.multiverse.network.MultiverseNetwork;
@@ -28,6 +30,8 @@ public class MultiverseClient implements ClientModInitializer {
 		EntityRendererRegistry.register(MultiverseEntityTypes.RAINBOW_SHEEP, RainbowSheepRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(MultiverseModelLayers.RAINBOW_SHEEP, RainbowSheepModel::getLayerDefinition);
 		EntityRendererRegistry.register(MultiverseEntityTypes.COLORFUL_PAINTING, ColorfulPaintingRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(MultiverseModelLayers.GORB, GorbModel::getLayerDefinition);
+		EntityRendererRegistry.register(MultiverseEntityTypes.GORB, GorbRenderer::new);
 
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
 				MultiverseBlocks.COBBLESTONE_GOLEM_LORE_TABLET,
