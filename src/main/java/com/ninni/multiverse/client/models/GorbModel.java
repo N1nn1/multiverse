@@ -2,8 +2,9 @@ package com.ninni.multiverse.client.models;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.ninni.multiverse.client.animation.GorbAnimations;
 import com.ninni.multiverse.entities.Gorb;
-import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -16,7 +17,7 @@ import static net.minecraft.client.model.geom.PartNames.*;
 import static net.minecraft.util.Mth.clamp;
 
 @SuppressWarnings("FieldCanBeLocal, unused")
-public class GorbModel<T extends Gorb> extends EntityModel<T> {
+public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
     public static final String LOWER_JAW = "lower_jaw";
     public static final String UPPER_JAW = "upper_jaw";
     public static final String CROP = "crop";
@@ -133,6 +134,7 @@ public class GorbModel<T extends Gorb> extends EntityModel<T> {
 
     @Override
     public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        this.root().getAllParts().forEach(ModelPart::resetPose);
         limbDistance = clamp(limbDistance, -0.45F, 0.45F);
 
         float pi = (float)Math.PI;
@@ -157,11 +159,17 @@ public class GorbModel<T extends Gorb> extends EntityModel<T> {
 
         //this doesn't work
         this.crop.visible = !entity.storedEnchantments.isEmpty();
+        this.animate(entity.digAnimationState, GorbAnimations.DIG, animationProgress);
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public ModelPart root() {
+        return this.root;
     }
 
 }

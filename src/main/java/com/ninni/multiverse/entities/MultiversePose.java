@@ -7,7 +7,8 @@ public enum MultiversePose {
     MINING_FORWARDS,
     MINING_UPWARDS,
     MINING_DOWNWARDS,
-    DRINKING;
+    DRINKING,
+    HIDDEN;
 
     public Pose get() {
         return Pose.valueOf(this.name());

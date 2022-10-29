@@ -1,14 +1,29 @@
 package com.ninni.multiverse.entities;
 
 import com.google.common.collect.Maps;
+import com.ninni.multiverse.entities.ai.DigGoal;
 import com.ninni.multiverse.entities.ai.FindNearestItemGoal;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.*;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -19,14 +34,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
 
 public class Gorb extends PathfinderMob {
+    public final AnimationState digAnimationState = new AnimationState();
     public final Map<Enchantment, Integer> storedEnchantments = Maps.newHashMap();
 
     protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        this.lookControl = new GorbLookControl(this, 20);
     }
 
     @Override
@@ -37,7 +57,68 @@ public class Gorb extends PathfinderMob {
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new DigGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, Gorb::hasEnchantments));
+    }
+
+    @Override
+    public boolean isPushable() {
+        return !this.isDigging() && super.isPushable();
+    }
+
+    private void clientDiggingParticles(AnimationState animationState) {
+        if ((float)animationState.getAccumulatedTime() < 4500.0f) {
+            RandomSource randomSource = this.getRandom();
+            BlockState blockState = this.getBlockStateOn();
+            if (blockState.getRenderShape() != RenderShape.INVISIBLE) {
+                for (int i = 0; i < 30; ++i) {
+                    double d = this.getX() + (double) Mth.randomBetween(randomSource, -0.7f, 0.7f);
+                    double e = this.getY();
+                    double f = this.getZ() + (double)Mth.randomBetween(randomSource, -0.7f, 0.7f);
+                    this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.level.isClientSide) {
+            if (this.getPose() == Pose.DIGGING) {
+                this.clientDiggingParticles(this.digAnimationState);
+            }
+        }
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
+        if (DATA_POSE.equals(entityDataAccessor)) {
+            if (this.getPose() == Pose.DIGGING) {
+                this.digAnimationState.start(this.tickCount);
+            }
+        }
+        super.onSyncedDataUpdated(entityDataAccessor);
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        if (this.isDigging() && !damageSource.isBypassInvul()) {
+            return true;
+        }
+        return super.isInvulnerableTo(damageSource);
+    }
+
+    @Override
+    public void travel(Vec3 vec3) {
+        if (this.isDigging() || this.getPose() == MultiversePose.HIDDEN.get()) {
+            return;
+        }
+        super.travel(vec3);
+    }
+
+    private boolean isDigging() {
+        return this.hasPose(Pose.DIGGING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -96,6 +177,20 @@ public class Gorb extends PathfinderMob {
             flag = true;
         }
         return flag;
+    }
+
+    public class GorbLookControl extends SmoothSwimmingLookControl {
+
+        public GorbLookControl(Gorb gorb, int i) {
+            super(gorb, i);
+        }
+
+        @Override
+        public void tick() {
+            if (Gorb.this.getPose() == MultiversePose.HIDDEN.get()) {
+                super.tick();
+            }
+        }
     }
 
 }
