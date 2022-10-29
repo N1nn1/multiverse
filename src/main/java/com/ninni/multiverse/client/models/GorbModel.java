@@ -146,6 +146,8 @@ public class GorbModel<T extends Gorb> extends EntityModel<T> {
         this.leftLeg.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree  * limbDistance;
         this.rightArm.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree  * limbDistance;
         this.leftArm.xRot = Mth.cos(limbAngle * 0.7f * speed) * 1.4f * degree  * limbDistance;
+        this.tail.yRot = Mth.cos(limbAngle * 0.7f * speed + pi/2) * 1.4f * degree  * limbDistance;
+        this.lowerJaw.zRot = Mth.cos(limbAngle * 0.35f * speed - pi/2) * 0.5f * degree  * limbDistance;
 
         if (entity.isAggressive()) {
             this.upperJaw.xRot = Mth.cos(animationProgress * speed * 0.4F) * degree * -1.6F * 0.25F - 0.4F;
