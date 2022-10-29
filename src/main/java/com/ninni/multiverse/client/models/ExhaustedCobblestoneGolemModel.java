@@ -11,7 +11,10 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
+import static net.minecraft.client.model.geom.PartNames.*;
+
 @Environment(EnvType.CLIENT)
+@SuppressWarnings("FieldCanBeLocal, unused")
 public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedCobblestoneGolem> {
     private final ModelPart root;
     private final ModelPart body;
@@ -22,11 +25,11 @@ public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedC
 
     public ExhaustedCobblestoneGolemModel(ModelPart root) {
         this.root = root;
-        this.body = root.getChild("getBody");
-        this.leftArm = this.body.getChild("leftArm");
-        this.rightArm = this.body.getChild("rightArm");
-        this.leftLeg = this.body.getChild("leftLeg");
-        this.rightLeg = this.body.getChild("rightLeg");
+        this.body = root.getChild(BODY);
+        this.leftArm = this.body.getChild(LEFT_ARM);
+        this.rightArm = this.body.getChild(RIGHT_ARM);
+        this.leftLeg = this.body.getChild(LEFT_LEG);
+        this.rightLeg = this.body.getChild(RIGHT_LEG);
     }
 
     public static LayerDefinition getLayerDefinition() {
@@ -34,7 +37,7 @@ public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedC
         PartDefinition root = data.getRoot();
 
         PartDefinition body = root.addOrReplaceChild(
-                "getBody",
+                BODY,
                 CubeListBuilder.create()
                         .texOffs(0, 0)
                         .addBox(-7.5F, -13.0F, -7.5F, 15.0F, 15.0F, 15.0F)
@@ -44,7 +47,7 @@ public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedC
         );
 
         PartDefinition rightArm = body.addOrReplaceChild(
-                "rightArm",
+                RIGHT_ARM,
                 CubeListBuilder.create()
                         .texOffs(0, 30)
                         .mirror(true)
@@ -56,7 +59,7 @@ public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedC
         );
 
         PartDefinition leftArm = body.addOrReplaceChild(
-                "leftArm",
+                LEFT_ARM,
                 CubeListBuilder.create()
                         .texOffs(0, 30)
                         .addBox(0.0F, -2.5F, -4.0F, 5.0F, 13.0F, 8.0F)
@@ -66,7 +69,7 @@ public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedC
         );
 
         PartDefinition leftLeg = body.addOrReplaceChild(
-                "leftLeg",
+                LEFT_LEG,
                 CubeListBuilder.create()
                         .texOffs(27, 34)
                         .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 4.0F, 4.0F),
@@ -74,7 +77,7 @@ public class ExhaustedCobblestoneGolemModel extends HierarchicalModel<ExhaustedC
         );
 
         PartDefinition rightLeg = body.addOrReplaceChild(
-                "rightLeg",
+                RIGHT_LEG,
                 CubeListBuilder.create()
                         .texOffs(27, 34)
                         .mirror(true)

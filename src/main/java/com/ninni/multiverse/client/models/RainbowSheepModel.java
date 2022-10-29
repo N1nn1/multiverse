@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 
+@SuppressWarnings("FieldCanBeLocal, unused")
 public class RainbowSheepModel<T extends RainbowSheep> extends QuadrupedModel<T> {
     private float headXRot;
     
