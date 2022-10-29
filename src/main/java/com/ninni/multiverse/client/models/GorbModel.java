@@ -10,8 +10,10 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
 import static net.minecraft.client.model.geom.PartNames.*;
+import static net.minecraft.util.Mth.clamp;
 
 @SuppressWarnings("FieldCanBeLocal, unused")
 public class GorbModel<T extends Gorb> extends EntityModel<T> {
@@ -130,10 +132,29 @@ public class GorbModel<T extends Gorb> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        limbDistance = clamp(limbDistance, -0.45F, 0.45F);
+
         float pi = (float)Math.PI;
+        float speed = 1.5f;
+        float degree = 1.0f;
+
         this.lowerJaw.xRot = headPitch * (pi / 180);
-        this.lowerJaw.yRot = netHeadYaw * (pi / 180);
+        this.lowerJaw.yRot = headYaw * (pi / 180);
+
+        this.rightLeg.xRot = Mth.cos(limbAngle * 0.7f * speed) * 1.4f * degree * limbDistance;
+        this.leftLeg.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree  * limbDistance;
+        this.rightArm.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree  * limbDistance;
+        this.leftArm.xRot = Mth.cos(limbAngle * 0.7f * speed) * 1.4f * degree  * limbDistance;
+
+        if (entity.isAggressive()) {
+            this.upperJaw.xRot = Mth.cos(animationProgress * speed * 0.4F) * degree * -1.6F * 0.25F - 0.4F;
+        } else{
+            this.upperJaw.xRot = 0;
+        }
+
+        //this doesn't work
+        this.crop.visible = !entity.storedEnchantments.isEmpty();
     }
 
     @Override

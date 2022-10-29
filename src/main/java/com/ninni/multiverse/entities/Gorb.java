@@ -5,7 +5,6 @@ import com.ninni.multiverse.entities.ai.FindNearestItemGoal;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,7 +27,7 @@ import net.minecraft.world.level.Level;
 import java.util.Map;
 
 public class Gorb extends PathfinderMob {
-    private final Map<Enchantment, Integer> storedEnchantments = Maps.newHashMap();
+    public final Map<Enchantment, Integer> storedEnchantments = Maps.newHashMap();
 
     protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -67,7 +66,7 @@ public class Gorb extends PathfinderMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 30.0).add(Attributes.MOVEMENT_SPEED, 0.2).add(Attributes.KNOCKBACK_RESISTANCE, 1.0).add(Attributes.ATTACK_DAMAGE, 2.0D);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 30.0).add(Attributes.MOVEMENT_SPEED, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.5).add(Attributes.ATTACK_DAMAGE, 4.0D);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class Gorb extends PathfinderMob {
         }
     }
 
-    private static boolean hasEnchantments(LivingEntity livingEntity) {
+    public static boolean hasEnchantments(LivingEntity livingEntity) {
         boolean flag = false;
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if (!livingEntity.getItemBySlot(equipmentSlot).isEnchanted()) continue;
