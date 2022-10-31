@@ -12,7 +12,7 @@ public class GorbRenderer extends MobRenderer<Gorb, GorbModel<Gorb>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Multiverse.MOD_ID, "textures/entity/gorb/gorb.png");
 
     public GorbRenderer(EntityRendererProvider.Context context) {
-        super(context, new GorbModel<>(context.bakeLayer(MultiverseModelLayers.GORB)), 0.5F);
+        super(context, new GorbModel<>(context.bakeLayer(MultiverseModelLayers.GORB)),0.0F);
     }
 
     @Override

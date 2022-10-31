@@ -22,8 +22,10 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
     public static final String LOWER_JAW = "lower_jaw";
     public static final String UPPER_JAW = "upper_jaw";
     public static final String CROP = "crop";
+    public static final String ALL = "all";
 
     private final ModelPart root;
+    private final ModelPart all;
 
     private final ModelPart body;
     private final ModelPart lowerJaw;
@@ -38,12 +40,14 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
     public GorbModel(ModelPart root) {
         this.root = root;
 
-        this.body = root.getChild(BODY);
-        this.lowerJaw = root.getChild(LOWER_JAW);
-        this.leftArm = root.getChild(LEFT_ARM);
-        this.leftLeg = root.getChild(LEFT_LEG);
-        this.rightLeg = root.getChild(RIGHT_LEG);
-        this.rightArm = root.getChild(RIGHT_ARM);
+        this.all = root.getChild(ALL);
+
+        this.body = all.getChild(BODY);
+        this.lowerJaw = all.getChild(LOWER_JAW);
+        this.leftArm = all.getChild(LEFT_ARM);
+        this.leftLeg = all.getChild(LEFT_LEG);
+        this.rightLeg = all.getChild(RIGHT_LEG);
+        this.rightArm = all.getChild(RIGHT_ARM);
 
         this.tail = body.getChild(TAIL);
 
@@ -56,7 +60,13 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition body = partdefinition.addOrReplaceChild(
+        PartDefinition all = partdefinition.addOrReplaceChild(
+                ALL,
+                CubeListBuilder.create(),
+                PartPose.offset(0.0F, 0.0F, 0.0F)
+        );
+
+        PartDefinition body = all.addOrReplaceChild(
                 BODY,
                 CubeListBuilder.create()
                         .texOffs(0, 40)
@@ -71,7 +81,7 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
                 PartPose.offsetAndRotation(0.0F, -3.5F, 6.0F, -0.7854F, 0.0F, 0.0F)
         );
 
-        PartDefinition lowerJaw = partdefinition.addOrReplaceChild(
+        PartDefinition lowerJaw = all.addOrReplaceChild(
                 LOWER_JAW, CubeListBuilder.create()
                         .texOffs(0, 20)
                         .addBox(-6.0F, -2.5F, -15.0F, 12.0F, 5.0F, 15.0F)
@@ -98,21 +108,21 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
                 PartPose.offset(0.0F, 0.0F, 0.0F)
         );
 
-        PartDefinition leftArm = partdefinition.addOrReplaceChild(
+        PartDefinition leftArm = all.addOrReplaceChild(
                 LEFT_ARM, CubeListBuilder.create()
                         .texOffs(32, 40)
                         .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 4.0F, 4.0F),
                 PartPose.offset(3.0F, 20.0F, -4.0F)
         );
 
-        PartDefinition leftLeg = partdefinition.addOrReplaceChild(
+        PartDefinition leftLeg = all.addOrReplaceChild(
                 LEFT_LEG, CubeListBuilder.create()
                         .texOffs(44, 44)
                         .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 4.0F, 4.0F),
                 PartPose.offset(3.0F, 20.0F, 4.0F)
         );
 
-        PartDefinition rightLeg = partdefinition.addOrReplaceChild(
+        PartDefinition rightLeg = all.addOrReplaceChild(
                 RIGHT_LEG, CubeListBuilder.create()
                         .texOffs(32, 40)
                         .mirror()
@@ -121,7 +131,7 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
                 PartPose.offset(-3.0F, 20.0F, 4.0F)
         );
 
-        PartDefinition rightArm = partdefinition.addOrReplaceChild(
+        PartDefinition rightArm = all.addOrReplaceChild(
                 RIGHT_ARM, CubeListBuilder.create()
                         .texOffs(44, 44)
                         .mirror()
@@ -162,6 +172,7 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
 
         //this doesn't work
         this.crop.visible = !entity.getMainHandItem().isEmpty();
+
         this.animate(entity.digAnimationState, GorbAnimations.DIG, animationProgress);
         this.animate(entity.hopAnimationState, GorbAnimations.JUMP, animationProgress);
     }
