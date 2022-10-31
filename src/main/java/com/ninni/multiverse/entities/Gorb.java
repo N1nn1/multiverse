@@ -54,7 +54,7 @@ public class Gorb extends PathfinderMob {
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new DigGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, Gorb::hasEnchantments));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, Gorb::validTarget));
     }
 
     @Override
@@ -149,6 +149,10 @@ public class Gorb extends PathfinderMob {
         }
     }
 
+    public static boolean validTarget(LivingEntity livingEntity) {
+        return livingEntity.getType() == MultiverseEntityTypes.GORB && Gorb.hasEnchantments(livingEntity);
+    }
+
     public static boolean hasEnchantments(LivingEntity livingEntity) {
         boolean flag = false;
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
@@ -172,7 +176,6 @@ public class Gorb extends PathfinderMob {
         }
 
     }
-
 
     public class GorbAttackGoal extends MeleeAttackGoal {
 
