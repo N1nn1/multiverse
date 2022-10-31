@@ -2,6 +2,7 @@ package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.entities.ai.DigGoal;
 import com.ninni.multiverse.entities.ai.FindNearestItemGoal;
+import com.ninni.multiverse.entities.ai.HopOutOfGroundGoal;
 import com.ninni.multiverse.entities.ai.MergeBookGoal;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class Gorb extends PathfinderMob {
     public final AnimationState digAnimationState = new AnimationState();
+    public final AnimationState hopAnimationState = new AnimationState();
 
     protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -46,6 +48,7 @@ public class Gorb extends PathfinderMob {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new FindNearestItemGoal(this));
         this.goalSelector.addGoal(1, new MergeBookGoal(this));
+        this.goalSelector.addGoal(2, new HopOutOfGroundGoal(this));
         this.goalSelector.addGoal(2, new GorbAttackGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
@@ -95,8 +98,15 @@ public class Gorb extends PathfinderMob {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         if (DATA_POSE.equals(entityDataAccessor)) {
-            if (this.getPose() == Pose.DIGGING) {
+            if (this.getPose() == Pose.DIGGING || this.getPose() == MultiversePose.HIDDEN.get()) {
                 this.digAnimationState.start(this.tickCount);
+            }  else {
+                this.digAnimationState.stop();
+            }
+            if (this.getPose() == Pose.LONG_JUMPING) {
+                this.hopAnimationState.start(this.tickCount);
+            } else {
+                this.hopAnimationState.stop();
             }
         }
         super.onSyncedDataUpdated(entityDataAccessor);

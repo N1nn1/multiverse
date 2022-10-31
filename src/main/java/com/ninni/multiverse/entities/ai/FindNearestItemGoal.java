@@ -1,14 +1,10 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.entities.Gorb;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.Comparator;
 import java.util.List;
@@ -38,16 +34,6 @@ public class FindNearestItemGoal extends Goal {
             this.gorb.getLookControl().setLookAt(this.itemEntity);
             if (this.gorb.distanceToSqr(this.itemEntity) <= 2) {
                 this.gorb.playSound(SoundEvents.PLAYER_BURP, 1.0F, 1.0F);
-//                EnchantmentHelper.getEnchantments(this.itemEntity.getItem());
-//                for (Enchantment enchantment : EnchantmentHelper.getEnchantments(this.itemEntity.getItem()).keySet()) {
-//                    if (enchantment != null) {
-//                        ListTag listTag = this.itemEntity.getItem().getEnchantmentTags();
-//                        for (int i = 0; i < listTag.size(); ++i) {
-//                            CompoundTag compoundTag = listTag.getCompound(i);
-////                            this.gorb.setStoredEnchantments(enchantment, EnchantmentHelper.getEnchantmentLevel(compoundTag));
-//                        }
-//                    }
-//                }
                 this.gorb.setItemInHand(InteractionHand.MAIN_HAND, this.itemEntity.getItem());
                 this.itemEntity.discard();
             }

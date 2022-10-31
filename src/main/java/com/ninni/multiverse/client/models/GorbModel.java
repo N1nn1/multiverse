@@ -136,31 +136,34 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
     @Override
     public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        limbDistance = clamp(limbDistance, -0.45F, 0.45F);
+        if (entity.getPose() != MultiversePose.HIDDEN.get()) {
+            limbDistance = clamp(limbDistance, -0.45F, 0.45F);
 
-        float pi = (float)Math.PI;
-        float speed = 1.5f;
-        float degree = 1.0f;
+            float pi = (float) Math.PI;
+            float speed = 1.5f;
+            float degree = 1.0f;
 
-        this.lowerJaw.xRot = headPitch * (pi / 180);
-        this.lowerJaw.yRot = headYaw * (pi / 180);
+            this.lowerJaw.xRot = headPitch * (pi / 180);
+            this.lowerJaw.yRot = headYaw * (pi / 180);
 
-        this.rightLeg.xRot = Mth.cos(limbAngle * 0.7f * speed) * 1.4f * degree * limbDistance;
-        this.leftLeg.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree  * limbDistance;
-        this.rightArm.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree  * limbDistance;
-        this.leftArm.xRot = Mth.cos(limbAngle * 0.7f * speed) * 1.4f * degree  * limbDistance;
-        this.tail.yRot = Mth.cos(limbAngle * 0.7f * speed + pi/2) * 1.4f * degree  * limbDistance;
-        this.lowerJaw.zRot = Mth.cos(limbAngle * 0.35f * speed - pi/2) * 0.5f * degree  * limbDistance;
+            this.rightLeg.xRot = Mth.cos(limbAngle * 0.7f * speed) * 1.4f * degree * limbDistance;
+            this.leftLeg.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree * limbDistance;
+            this.rightArm.xRot = Mth.cos(limbAngle * 0.7f * speed + pi) * 1.4f * degree * limbDistance;
+            this.leftArm.xRot = Mth.cos(limbAngle * 0.7f * speed) * 1.4f * degree * limbDistance;
+            this.tail.yRot = Mth.cos(limbAngle * 0.7f * speed + pi / 2) * 1.4f * degree * limbDistance;
+            this.lowerJaw.zRot = Mth.cos(limbAngle * 0.35f * speed - pi / 2) * 0.5f * degree * limbDistance;
 
-        if (entity.isAggressive() && entity.getPose() != MultiversePose.HIDDEN.get()) {
-            this.upperJaw.xRot = Mth.cos(animationProgress * speed * 0.4F) * degree * -1.6F * 0.25F - 0.4F;
-        } else{
-            this.upperJaw.xRot = 0;
+            if (entity.isAggressive() && entity.getPose() != MultiversePose.HIDDEN.get()) {
+                this.upperJaw.xRot = Mth.cos(animationProgress * speed * 0.4F) * degree * -1.6F * 0.25F - 0.4F;
+            } else {
+                this.upperJaw.xRot = 0;
+            }
         }
 
         //this doesn't work
         this.crop.visible = !entity.getMainHandItem().isEmpty();
         this.animate(entity.digAnimationState, GorbAnimations.DIG, animationProgress);
+        this.animate(entity.hopAnimationState, GorbAnimations.JUMP, animationProgress);
     }
 
     @Override
