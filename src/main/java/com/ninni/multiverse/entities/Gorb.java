@@ -64,6 +64,18 @@ public class Gorb extends PathfinderMob {
     }
 
     @Override
+    public boolean isInvulnerable() {
+        if (this.getPose() == MultiversePose.HIDDEN.get()) return true;
+        return super.isInvulnerable();
+    }
+
+    @Override
+    public boolean isCustomNameVisible() {
+        if (this.getPose() == MultiversePose.HIDDEN.get()) return false;
+        return super.isCustomNameVisible();
+    }
+
+    @Override
     public boolean isPushable() {
         return !this.isDigging() && super.isPushable();
     }
