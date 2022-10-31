@@ -5,6 +5,9 @@ import com.ninni.multiverse.entities.MultiversePose;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+
+import java.util.Optional;
 
 public class DigGoal extends Goal {
     private final Gorb gorb;
@@ -15,7 +18,7 @@ public class DigGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.gorb.getRandom().nextInt(25) == 0 && this.gorb.getPose() != MultiversePose.HIDDEN.get() && this.gorb.getPose() == Pose.STANDING && this.gorb.isOnGround();
+        return this.gorb.getRandom().nextInt(100) == 0 && this.gorb.getTarget() == null && this.getNearestPlayer().isEmpty() && this.gorb.getPose() != MultiversePose.HIDDEN.get() && this.gorb.getPose() == Pose.STANDING && this.gorb.isOnGround();
     }
 
     @Override
@@ -28,4 +31,10 @@ public class DigGoal extends Goal {
     public void stop() {
         this.gorb.setPose(MultiversePose.HIDDEN.get());
     }
+
+    public Optional<Player> getNearestPlayer() {
+        return this.gorb.level.getEntitiesOfClass(Player.class, this.gorb.getBoundingBox().inflate(8.0D)).stream().filter(Gorb::hasEnchantments).toList().stream().findAny();
+    }
+
+
 }

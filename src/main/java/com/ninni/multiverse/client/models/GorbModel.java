@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.ninni.multiverse.client.animation.GorbAnimations;
 import com.ninni.multiverse.entities.Gorb;
+import com.ninni.multiverse.entities.MultiversePose;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -151,7 +152,7 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
         this.tail.yRot = Mth.cos(limbAngle * 0.7f * speed + pi/2) * 1.4f * degree  * limbDistance;
         this.lowerJaw.zRot = Mth.cos(limbAngle * 0.35f * speed - pi/2) * 0.5f * degree  * limbDistance;
 
-        if (entity.isAggressive()) {
+        if (entity.isAggressive() && entity.getPose() != MultiversePose.HIDDEN.get()) {
             this.upperJaw.xRot = Mth.cos(animationProgress * speed * 0.4F) * degree * -1.6F * 0.25F - 0.4F;
         } else{
             this.upperJaw.xRot = 0;

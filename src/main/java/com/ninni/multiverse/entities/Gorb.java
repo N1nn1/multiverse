@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -64,6 +65,14 @@ public class Gorb extends PathfinderMob {
     @Override
     public boolean isPushable() {
         return !this.isDigging() && super.isPushable();
+    }
+
+    @Override
+    protected void doPush(Entity entity) {
+        if (this.getPose() == MultiversePose.HIDDEN.get()) {
+            return;
+        }
+        super.doPush(entity);
     }
 
     private void clientDiggingParticles(AnimationState animationState) {
@@ -187,7 +196,7 @@ public class Gorb extends PathfinderMob {
 
         @Override
         public void tick() {
-            if (Gorb.this.getPose() == MultiversePose.HIDDEN.get()) {
+            if (Gorb.this.getPose() != MultiversePose.HIDDEN.get()) {
                 super.tick();
             }
         }
