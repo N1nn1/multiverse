@@ -52,8 +52,8 @@ public class Gorb extends PathfinderMob {
         this.goalSelector.addGoal(2, new HopOutOfGroundGoal(this));
         this.goalSelector.addGoal(2, new GorbAttackGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(4, new GorbLookAtPlayerGoal(this, Player.class, 6.0f));
+        this.goalSelector.addGoal(5, new GorbRandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new DigGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, Gorb::validTarget));
     }
@@ -194,6 +194,31 @@ public class Gorb extends PathfinderMob {
             return Gorb.this.getPose() != MultiversePose.HIDDEN.get() && super.canUse();
         }
 
+    }
+
+    public class GorbLookAtPlayerGoal extends LookAtPlayerGoal {
+
+        public GorbLookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> class_, float f) {
+            super(mob, class_, f);
+        }
+
+        @Override
+        public boolean canUse() {
+            return Gorb.this.getPose() != MultiversePose.HIDDEN.get() && super.canUse();
+        }
+
+    }
+
+    public class GorbRandomLookAroundGoal extends RandomLookAroundGoal {
+
+        public GorbRandomLookAroundGoal(Mob mob) {
+            super(mob);
+        }
+
+        @Override
+        public boolean canUse() {
+            return Gorb.this.getPose() != MultiversePose.HIDDEN.get() && super.canUse();
+        }
     }
 
 }
