@@ -54,7 +54,7 @@ public class Gorb extends PathfinderMob {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new FindNearestItemGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, false));
+        this.goalSelector.addGoal(2, new GorbAttackGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -200,6 +200,21 @@ public class Gorb extends PathfinderMob {
                 super.tick();
             }
         }
+
+    }
+
+
+    public class GorbAttackGoal extends MeleeAttackGoal {
+
+        public GorbAttackGoal(PathfinderMob pathfinderMob) {
+            super(pathfinderMob, 1.25, false);
+        }
+
+        @Override
+        public boolean canUse() {
+            return Gorb.this.getPose() != MultiversePose.HIDDEN.get() && super.canUse();
+        }
+
     }
 
 }
