@@ -37,6 +37,7 @@ import net.minecraft.world.phys.Vec3;
 public class Gorb extends PathfinderMob {
     public final AnimationState digAnimationState = new AnimationState();
     public final AnimationState hopAnimationState = new AnimationState();
+    private static final EntityDimensions HIDDEN_DIMENSIONS = EntityDimensions.scalable(1.2F, 0.4F);
 
     protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -55,6 +56,11 @@ public class Gorb extends PathfinderMob {
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new DigGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, Gorb::validTarget));
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        return this.getPose() == MultiversePose.HIDDEN.get() ? HIDDEN_DIMENSIONS : super.getDimensions(pose);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class MultiverseEntityTypes {
                     .entityFactory(Gorb::new)
                     .defaultAttributes(Gorb::createAttributes)
                     .spawnGroup(MobCategory.CREATURE)
-                    .dimensions(EntityDimensions.fixed(1.2F, 1.5F))
+                    .dimensions(EntityDimensions.scalable(1.2F, 1.0F))
                     .trackRangeChunks(10)
     );
 
