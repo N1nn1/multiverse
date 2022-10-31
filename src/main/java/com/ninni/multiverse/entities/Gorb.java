@@ -150,7 +150,7 @@ public class Gorb extends PathfinderMob {
     }
 
     public static boolean validTarget(LivingEntity livingEntity) {
-        return livingEntity.getType() == MultiverseEntityTypes.GORB && Gorb.hasEnchantments(livingEntity);
+        return livingEntity.getType() != MultiverseEntityTypes.GORB && Gorb.hasEnchantments(livingEntity);
     }
 
     public static boolean hasEnchantments(LivingEntity livingEntity) {
