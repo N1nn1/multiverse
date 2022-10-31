@@ -1,15 +1,11 @@
 package com.ninni.multiverse.entities;
 
-import com.google.common.collect.Maps;
 import com.ninni.multiverse.entities.ai.DigGoal;
 import com.ninni.multiverse.entities.ai.FindNearestItemGoal;
-import net.minecraft.core.Registry;
+import com.ninni.multiverse.entities.ai.MergeBookGoal;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -32,18 +28,13 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Map;
-
 public class Gorb extends PathfinderMob {
     public final AnimationState digAnimationState = new AnimationState();
-    public final Map<Enchantment, Integer> storedEnchantments = Maps.newHashMap();
 
     protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -54,6 +45,7 @@ public class Gorb extends PathfinderMob {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new FindNearestItemGoal(this));
+        this.goalSelector.addGoal(1, new MergeBookGoal(this));
         this.goalSelector.addGoal(2, new GorbAttackGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
@@ -132,38 +124,6 @@ public class Gorb extends PathfinderMob {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 35.0).add(Attributes.MOVEMENT_SPEED, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.5).add(Attributes.ATTACK_DAMAGE, 5.0D);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        super.readAdditionalSaveData(compoundTag);
-        if (compoundTag.contains("StoredEnchantments", 9)) {
-            ListTag listTag = compoundTag.getList("StoredEnchantments", 10);
-            for (int i = 0; i < listTag.size(); ++i) {
-                CompoundTag compoundTag2 = listTag.getCompound(i);
-                ResourceLocation enchantmentId = EnchantmentHelper.getEnchantmentId(compoundTag2);
-                this.storedEnchantments.put(Registry.ENCHANTMENT.get(enchantmentId), EnchantmentHelper.getEnchantmentLevel(compoundTag2));
-            }
-        }
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        super.addAdditionalSaveData(compoundTag);
-        if (!this.storedEnchantments.isEmpty()) {
-            ListTag listTag = new ListTag();
-            for (Map.Entry<Enchantment, Integer> entry : this.storedEnchantments.entrySet()) {
-                Enchantment enchantment = entry.getKey();
-                if (enchantment == null) continue;
-                int i = entry.getValue();
-                listTag.add(EnchantmentHelper.storeEnchantment(EnchantmentHelper.getEnchantmentId(enchantment), i));
-            }
-            compoundTag.put("StoredEnchantments", listTag);
-        }
-    }
-
-    public void setStoredEnchantments(Enchantment enchantment, int level) {
-        this.storedEnchantments.put(enchantment, level);
     }
 
     @Override

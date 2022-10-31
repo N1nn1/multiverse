@@ -18,7 +18,7 @@ public class DigGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.gorb.getRandom().nextInt(100) == 0 && this.gorb.getTarget() == null && this.getNearestPlayer().isEmpty() && this.gorb.getPose() != MultiversePose.HIDDEN.get() && this.gorb.getPose() == Pose.STANDING && this.gorb.isOnGround();
+        return this.gorb.getRandom().nextInt(100) == 0 && this.gorb.getMainHandItem().isEmpty() && this.gorb.getTarget() == null && this.getNearestPlayer().isEmpty() && this.gorb.getPose() != MultiversePose.HIDDEN.get() && this.gorb.getPose() == Pose.STANDING && this.gorb.isOnGround();
     }
 
     @Override

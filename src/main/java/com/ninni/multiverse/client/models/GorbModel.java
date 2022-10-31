@@ -159,7 +159,7 @@ public class GorbModel<T extends Gorb> extends HierarchicalModel<T> {
         }
 
         //this doesn't work
-        this.crop.visible = !entity.storedEnchantments.isEmpty();
+        this.crop.visible = !entity.getMainHandItem().isEmpty();
         this.animate(entity.digAnimationState, GorbAnimations.DIG, animationProgress);
     }
 
