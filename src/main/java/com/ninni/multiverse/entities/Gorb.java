@@ -6,9 +6,13 @@ import com.ninni.multiverse.entities.ai.HopOutOfGroundGoal;
 import com.ninni.multiverse.entities.ai.MergeBookGoal;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +33,8 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,6 +43,7 @@ import net.minecraft.world.phys.Vec3;
 public class Gorb extends PathfinderMob {
     public final AnimationState digAnimationState = new AnimationState();
     public final AnimationState hopAnimationState = new AnimationState();
+    private boolean canBreakCurse;
     private static final EntityDimensions HIDDEN_DIMENSIONS = EntityDimensions.scalable(1.2F, 0.4F);
 
     protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
@@ -56,6 +63,40 @@ public class Gorb extends PathfinderMob {
         this.goalSelector.addGoal(5, new GorbRandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new DigGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, this::validTarget));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        compoundTag.putBoolean("canBreakCurse", this.canBreakCurse());
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        this.setBreakCurse(compoundTag.getBoolean("canBreakCurse"));
+    }
+
+    public boolean canBreakCurse() {
+        return this.canBreakCurse;
+    }
+
+    public void setBreakCurse(boolean canBreakCurse) {
+        this.canBreakCurse = canBreakCurse;
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
+        ItemStack stack = player.getItemInHand(interactionHand);
+        if (stack.is(Items.LAPIS_LAZULI) && !this.canBreakCurse()) {
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
+            this.playSound(SoundEvents.ENCHANTMENT_TABLE_USE);
+            this.setBreakCurse(true);
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
+        }
+        return super.mobInteract(player, interactionHand);
     }
 
     @Override

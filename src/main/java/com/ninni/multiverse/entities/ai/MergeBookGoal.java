@@ -46,7 +46,7 @@ public class MergeBookGoal extends Goal {
                 ItemStack spitStack = new ItemStack(Items.ENCHANTED_BOOK);
                 for (Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(gorbStack).entrySet()) {
                     Enchantment enchantment = entry.getKey();
-                    if (EnchantmentHelper.getItemEnchantmentLevel(enchantment, spitStack) != 0) continue;
+                    if ((this.gorb.canBreakCurse() && entry.getKey().isCurse()) || EnchantmentHelper.getItemEnchantmentLevel(enchantment, spitStack) != 0) continue;
                     EnchantedBookItem.addEnchantment(spitStack, new EnchantmentInstance(enchantment, entry.getValue()));
                 }
                 this.gorb.spawnAtLocation(spitStack);
@@ -59,6 +59,9 @@ public class MergeBookGoal extends Goal {
     public void stop() {
         this.gorb.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         this.gorb.setTarget(null);
+        if (this.gorb.canBreakCurse()) {
+            this.gorb.setBreakCurse(false);
+        }
     }
 
     public Optional<ItemEntity> getNearestItem() {
