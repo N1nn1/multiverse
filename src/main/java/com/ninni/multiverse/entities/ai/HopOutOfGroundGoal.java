@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.List;
 import java.util.Optional;
 
 public class HopOutOfGroundGoal extends Goal {
@@ -21,11 +22,15 @@ public class HopOutOfGroundGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (this.getNearestPlayer().isPresent()) {
-            this.target = this.getNearestPlayer().get();
-            return this.gorb.getPose() == MultiversePose.HIDDEN.get() && this.target != null;
+        Optional<ServerPlayer> nearestPlayer = this.getNearestPlayer();
+        LivingEntity lastHurtByMob = this.gorb.getLastHurtByMob();
+        if (nearestPlayer.isPresent()) {
+            this.target = nearestPlayer.get();
         }
-        return false;
+        else if (lastHurtByMob != null) {
+            this.target = lastHurtByMob;
+        }
+        return this.gorb.getPose() == MultiversePose.HIDDEN.get() && (this.target != null && (this.target.isAlive() || (this.target instanceof Player player && !player.getAbilities().instabuild)));
     }
 
     @Override
@@ -35,15 +40,18 @@ public class HopOutOfGroundGoal extends Goal {
 
     @Override
     public void start() {
-        this.hopTicks = 50;
+        this.hopTicks = this.gorb.getLastDamageSource() != null ? 1 : 5;
     }
 
     @Override
     public void tick() {
         if (this.hopTicks > 0) {
+            if (this.target != null && this.target instanceof Player player && player.getAbilities().instabuild) {
+                return;
+            }
             this.hopTicks--;
             this.gorb.getNavigation().stop();
-            if (this.hopTicks == 20) {
+            if (this.hopTicks == 1) {
                 this.gorb.setPose(Pose.LONG_JUMPING);
             }
         }
@@ -53,10 +61,16 @@ public class HopOutOfGroundGoal extends Goal {
     public void stop() {
         this.gorb.setPose(Pose.STANDING);
         this.gorb.setTarget(this.target);
+        this.target = null;
+        this.hopTicks = 0;
     }
 
     public Optional<ServerPlayer> getNearestPlayer() {
-        return this.gorb.level.getEntitiesOfClass(Player.class, this.gorb.getBoundingBox().inflate(8.0D)).stream().filter(Gorb::hasEnchantments).filter(ServerPlayer.class::isInstance).map(ServerPlayer.class::cast).filter(serverPlayer -> serverPlayer.gameMode.isSurvival()).toList().stream().findAny();
+        for (ServerPlayer player : this.gorb.level.getEntitiesOfClass(ServerPlayer.class, this.gorb.getBoundingBox().inflate(8.0D)).stream().filter(serverPlayer -> serverPlayer.gameMode.isSurvival()).toList()) {
+            List<ServerPlayer> entitiesOfClass = this.gorb.level.getEntitiesOfClass(ServerPlayer.class, this.gorb.getBoundingBox().inflate(0.5D, 1.0D, 0.5D));
+            return !entitiesOfClass.isEmpty() ? entitiesOfClass.stream().findFirst() : (Gorb.hasEnchantments(player) ? Optional.of(player) : Optional.empty());
+        }
+        return Optional.empty();
     }
 
 }

@@ -29,7 +29,8 @@ public class MergeBookGoal extends Goal {
     public boolean canUse() {
         if (this.getNearestItem().isPresent()) {
             this.itemEntity = this.getNearestItem().get();
-            return !this.gorb.getMainHandItem().isEmpty() && this.itemEntity.isAlive();
+            boolean b = !this.gorb.getMainHandItem().isEmpty();
+            return b && this.itemEntity.isAlive();
         }
         return false;
     }
@@ -39,7 +40,7 @@ public class MergeBookGoal extends Goal {
         if (this.itemEntity != null) {
             this.gorb.getNavigation().moveTo(this.itemEntity.getX(), this.itemEntity.getY(), this.itemEntity.getZ(), 1.0D);
             this.gorb.getLookControl().setLookAt(this.itemEntity);
-            if (this.gorb.distanceToSqr(this.itemEntity) <= 2) {
+            if (this.gorb.distanceToSqr(this.itemEntity) <= 3) {
                 this.gorb.playSound(SoundEvents.PLAYER_BURP, 1.0F, 1.0F);
                 ItemStack gorbStack = this.gorb.getMainHandItem();
                 ItemStack spitStack = new ItemStack(Items.ENCHANTED_BOOK);
@@ -57,6 +58,7 @@ public class MergeBookGoal extends Goal {
     @Override
     public void stop() {
         this.gorb.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+        this.gorb.setTarget(null);
     }
 
     public Optional<ItemEntity> getNearestItem() {

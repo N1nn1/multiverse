@@ -32,12 +32,19 @@ public class FindNearestItemGoal extends Goal {
         if (this.itemEntity != null) {
             this.gorb.getNavigation().moveTo(this.itemEntity.getX(), this.itemEntity.getY(), this.itemEntity.getZ(), 1.0D);
             this.gorb.getLookControl().setLookAt(this.itemEntity);
-            if (this.gorb.distanceToSqr(this.itemEntity) <= 2) {
+            if (this.gorb.distanceToSqr(this.itemEntity) <= 3) {
                 this.gorb.playSound(SoundEvents.PLAYER_BURP, 1.0F, 1.0F);
                 this.gorb.setItemInHand(InteractionHand.MAIN_HAND, this.itemEntity.getItem());
-                this.itemEntity.discard();
+                if (!this.gorb.getMainHandItem().isEmpty()) {
+                    this.itemEntity.discard();
+                }
             }
         }
+    }
+
+    @Override
+    public void stop() {
+        this.gorb.setTarget(null);
     }
 
     public Optional<ItemEntity> getNearestItem() {

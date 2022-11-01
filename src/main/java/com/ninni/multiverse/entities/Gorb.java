@@ -7,6 +7,7 @@ import com.ninni.multiverse.entities.ai.MergeBookGoal;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,6 +28,8 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -55,7 +58,7 @@ public class Gorb extends PathfinderMob {
         this.goalSelector.addGoal(4, new GorbLookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(5, new GorbRandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new DigGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, Gorb::validTarget));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 16, false, true, this::validTarget));
     }
 
     @Override
@@ -162,19 +165,19 @@ public class Gorb extends PathfinderMob {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.getTarget() != null && !Gorb.hasEnchantments(this.getTarget())) {
+        if (!this.level.isClientSide() && this.getTarget() != null && this.getTarget() instanceof Player player && player.getAbilities().instabuild) {
             this.setTarget(null);
         }
     }
 
-    public static boolean validTarget(LivingEntity livingEntity) {
-        return livingEntity.getType() != MultiverseEntityTypes.GORB && Gorb.hasEnchantments(livingEntity);
+    public boolean validTarget(LivingEntity livingEntity) {
+        return livingEntity.getType() != MultiverseEntityTypes.GORB && (this.getTarget() == livingEntity || Gorb.hasEnchantments(livingEntity));
     }
 
     public static boolean hasEnchantments(LivingEntity livingEntity) {
         boolean flag = false;
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-            if (!livingEntity.getItemBySlot(equipmentSlot).isEnchanted()) continue;
+            if (!livingEntity.getItemBySlot(equipmentSlot).isEnchanted() || livingEntity.getItemBySlot(equipmentSlot).isEmpty()) continue;
             flag = true;
         }
         return flag;
