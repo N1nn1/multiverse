@@ -1,0 +1,53 @@
+{
+  "mod.multiverse.contact.discord": "Discord",
+  "itemGroup.multiverse.multiverse": "Multiverse",
+
+  "entity.multiverse.cobblestone_golem": "Ґолем з кругляку",
+  "entity.multiverse.exhausted_cobblestone_golem": "Виснажений ґолем з кругляку",
+  "entity.multiverse.sprinkler": "Спринклер",
+  "entity.multiverse.grindstone_golem": "Точильний ґолем",
+  "entity.multiverse.plank_golem": "Голем із дощок",
+  "entity.multiverse.rainbow_sheep": "Веселкова вівця",
+  "entity.multiverse.colorful_painting": "Барвиста картина",
+  "entity.multiverse.gorb": "Ґорб",
+
+  "item.multiverse.exhausted_cobblestone_golem": "Виснажений ґолем з кругляку",
+  "item.multiverse.exhausted_cobblestone_golem.low": "Щербатий",
+  "item.multiverse.exhausted_cobblestone_golem.medium": "Пошкоджений",
+  "item.multiverse.exhausted_cobblestone_golem.high": "Розбитий",
+  "item.multiverse.lore_tablet": "Історична дошка",
+  "item.multiverse.rainbow_sheep_spawn_egg": "Яйце виклику веселкової вівці",
+  "item.multiverse.colorful_painting": "Барвиста картина",
+  "item.multiverse.gorb_spawn_egg": "Яйце виклику ґорба",
+
+  "block.multiverse.stone_tiles": "Кам'яна плитка",
+  "block.multiverse.stone_tile_wall": "Стіна з кам'яної плитки",
+  "block.multiverse.stone_tile_slab": "Плита з кам'яної плитки",
+  "block.multiverse.stone_tile_stairs": "Сходи з кам'яної плитки",
+  "block.multiverse.dirty_stone_tiles": "Брудна кам'яна плитка",
+  "block.multiverse.dirty_stone_tile_slab": "Плита з брудної кам'яної плитки",
+  "block.multiverse.dirty_stone_tile_stairs": "Сходи з брудної кам'яної плитки",
+  "block.multiverse.sandy_stone_tiles": "Піщана кам'яна плитка",
+  "block.multiverse.sandy_stone_tile_slab": "Плита з піщаної кам'яної плитки",
+  "block.multiverse.sandy_stone_tile_stairs": "Сходи з піщаної кам'яної плитки",
+  "block.multiverse.rainbow_wool": "Веселкова вовна",
+  "block.multiverse.rainbow_carpet": "Веселковий килим",
+  "block.multiverse.rainbow_bed": "Веселкове ліжко",
+
+  "lore_tablet.message.cobblestone_golem": "Старі казки стверджують, що кам’яна істота допомогла великому герою в битві проти ℸ ̣ ⍑ᒷ ⚍リ↸ᒷ∷∴o∷ꖎ↸... Після того, як вороги були обмежені у своєму власному вимірі, колись войовничий ⊣oꖎᒷᒲ почав спрямовувати свою енергію на навколишній світ, завдаючи ударів по блоках і розчищаючи шлях до ⍑ᒷꖎ!¡ ℸ ̣ ⍑oᓭᒷ ╎リ リᒷᒷ↸.",
+  "lore_tablet.message.grindstone_golem": "Скоро...",
+  "lore_tablet.message.plank_golem": "Скоро...",
+  "lore_tablet.message.sprinkler": "Скоро...",
+
+  "subtitles.entity.cobblestone_golem.ambient": "Ґолем з кругляку бурчить",
+  "subtitles.entity.cobblestone_golem.hurt": "Ґолему з кругляку поранено",
+  "subtitles.entity.cobblestone_golem.death": "Ґолем з кругляку гине",
+
+  "subtitles.entity.rainbow_sheep.ambient": "Веселкова вівця мекає",
+  "subtitles.entity.rainbow_sheep.scared": "Веселкова вівця плаче",
+  "subtitles.entity.rainbow_sheep.drink": "Веселкова вівця п'є",
+  "subtitles.entity.rainbow_sheep.hurt": "Веселкову вівцю поранено",
+  "subtitles.entity.rainbow_sheep.death": "Веселкова вівця гине",
+  "subtitles.block.colorful_painting.break": "Барвиста картина ламається",
+  "subtitles.block.colorful_painting.place": "Барвисту картину розміщено"
+}
