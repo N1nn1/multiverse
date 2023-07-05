@@ -1,5 +1,6 @@
-package com.ninni.multiverse;
+package com.ninni.multiverse.init;
 
+import com.ninni.multiverse.Multiverse;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;

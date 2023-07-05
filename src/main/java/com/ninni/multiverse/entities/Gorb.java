@@ -4,6 +4,7 @@ import com.ninni.multiverse.entities.ai.DigGoal;
 import com.ninni.multiverse.entities.ai.FindNearestItemGoal;
 import com.ninni.multiverse.entities.ai.HopOutOfGroundGoal;
 import com.ninni.multiverse.entities.ai.MergeBookGoal;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -47,7 +48,7 @@ public class Gorb extends PathfinderMob {
     private boolean canBreakCurse;
     private static final EntityDimensions HIDDEN_DIMENSIONS = EntityDimensions.scalable(1.2F, 0.4F);
 
-    protected Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
+    public Gorb(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         this.lookControl = new GorbLookControl(this, 20);
     }

@@ -1,11 +1,12 @@
 package com.ninni.multiverse.entities;
 
-import com.ninni.multiverse.MultiverseTags;
+import com.ninni.multiverse.init.MultiverseTags;
 import com.ninni.multiverse.entities.ai.DrinkWaterGoal;
 import com.ninni.multiverse.entities.ai.RainbowSheepHopAwayGoal;
-import com.ninni.multiverse.item.MultiverseItems;
-import com.ninni.multiverse.loot.MultiverseBuiltInLootTables;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseItems;
+import com.ninni.multiverse.init.MultiverseBuiltInLootTables;
+import com.ninni.multiverse.init.MultiverseSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -66,7 +67,7 @@ public class RainbowSheep extends Animal implements Shearable {
     private EatBlockGoal eatBlockGoal;
     public boolean isHydrated;
 
-    protected RainbowSheep(EntityType<? extends Animal> entityType, Level level) {
+    public RainbowSheep(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
 

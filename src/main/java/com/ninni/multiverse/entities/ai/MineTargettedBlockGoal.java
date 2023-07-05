@@ -2,7 +2,7 @@ package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.CobblestoneGolem;
-import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
 import com.ninni.multiverse.entities.MultiversePose;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;

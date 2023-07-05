@@ -1,7 +1,7 @@
 package com.ninni.multiverse.mixin;
 
 import com.ninni.multiverse.entities.CobblestoneGolem;
-import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

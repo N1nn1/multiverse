@@ -1,4 +1,4 @@
-package com.ninni.multiverse.loot;
+package com.ninni.multiverse.init;
 
 import com.ninni.multiverse.Multiverse;
 import net.minecraft.resources.ResourceLocation;

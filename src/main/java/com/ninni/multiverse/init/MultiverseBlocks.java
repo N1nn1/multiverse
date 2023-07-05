@@ -1,6 +1,9 @@
-package com.ninni.multiverse.block;
+package com.ninni.multiverse.init;
 
-import com.ninni.multiverse.sound.MultiverseSoundTypes;
+import com.ninni.multiverse.block.LoreTabletBlock;
+import com.ninni.multiverse.block.RainbowBedBlock;
+import com.ninni.multiverse.block.RainbowCarpetBlock;
+import com.ninni.multiverse.block.RainbowWoolBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;

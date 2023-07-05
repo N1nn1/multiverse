@@ -1,8 +1,9 @@
-package com.ninni.multiverse.item;
+package com.ninni.multiverse.init;
 
 
-import com.ninni.multiverse.block.MultiverseBlocks;
-import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.item.ColorfulPaintingItem;
+import com.ninni.multiverse.item.ExhaustedCobblestoneGolemItem;
+import com.ninni.multiverse.item.LoreTabletItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +18,9 @@ import static com.ninni.multiverse.Multiverse.MOD_ID;
 @SuppressWarnings("unused")
 public class MultiverseItems {
 
-    public static final Item RAINBOW_SHEEP_SPAWN_EGG = register("rainbow_sheep_spawn_egg", new SpawnEggItem(MultiverseEntityTypes.RAINBOW_SHEEP, 0xFFFFFF, 0xFFFFFF, new Item.Properties().stacksTo(64)));
+    public static final Item COBBLESTONE_GOLEM_SPAWN_EGG = register("cobblestone_golem_spawn_egg", new SpawnEggItem(MultiverseEntityTypes.COBBLESTONE_GOLEM, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
+
+    public static final Item RAINBOW_SHEEP_SPAWN_EGG = register("rainbow_sheep_spawn_egg", new SpawnEggItem(MultiverseEntityTypes.RAINBOW_SHEEP, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
     public static final Item RAINBOW_WOOL = register("rainbow_wool", new BlockItem(MultiverseBlocks.RAINBOW_WOOL, new Item.Properties()));
     public static final Item RAINBOW_CARPET = register("rainbow_carpet", new BlockItem(MultiverseBlocks.RAINBOW_CARPET, new Item.Properties()));
     public static final Item RAINBOW_BED = register("rainbow_bed", new BedItem(MultiverseBlocks.RAINBOW_BED, new Item.Properties()));

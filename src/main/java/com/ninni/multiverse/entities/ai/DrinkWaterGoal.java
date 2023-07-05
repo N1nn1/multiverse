@@ -3,7 +3,7 @@ package com.ninni.multiverse.entities.ai;
 import com.google.common.collect.Lists;
 import com.ninni.multiverse.entities.MultiversePose;
 import com.ninni.multiverse.entities.RainbowSheep;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import com.ninni.multiverse.init.MultiverseSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.valueproviders.UniformInt;

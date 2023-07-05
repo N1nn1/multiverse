@@ -1,4 +1,4 @@
-package com.ninni.multiverse.entities;
+package com.ninni.multiverse.init;
 
 import com.ninni.multiverse.Multiverse;
 import net.minecraft.core.Registry;

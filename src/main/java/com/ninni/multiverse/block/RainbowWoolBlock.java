@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 public class RainbowWoolBlock extends DirectionalBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
-    protected RainbowWoolBlock(Properties properties) {
+    public RainbowWoolBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(((this.stateDefinition.any()).setValue(FACING, Direction.NORTH)));
     }

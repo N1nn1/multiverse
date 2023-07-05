@@ -1,16 +1,15 @@
 package com.ninni.multiverse.entities;
 
-import com.ninni.multiverse.MultiverseTags;
+import com.ninni.multiverse.init.MultiverseTags;
 import com.ninni.multiverse.api.CrackableEntity;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.ai.FindTargettedBlockGoal;
 import com.ninni.multiverse.entities.ai.FollowLikedPlayerGoal;
 import com.ninni.multiverse.entities.ai.MineTargettedBlockGoal;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import com.ninni.multiverse.init.MultiverseSoundEvents;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;

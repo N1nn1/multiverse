@@ -1,7 +1,7 @@
 package com.ninni.multiverse.item;
 
 import com.ninni.multiverse.entities.ColorfulPainting;
-import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

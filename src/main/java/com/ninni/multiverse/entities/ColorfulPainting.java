@@ -1,14 +1,14 @@
 package com.ninni.multiverse.entities;
 
-import com.ninni.multiverse.MultiverseTags;
-import com.ninni.multiverse.item.MultiverseItems;
+import com.ninni.multiverse.init.MultiverseTags;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseItems;
 import com.ninni.multiverse.mixin.accessors.PaintingAccessor;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import com.ninni.multiverse.init.MultiverseSoundEvents;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

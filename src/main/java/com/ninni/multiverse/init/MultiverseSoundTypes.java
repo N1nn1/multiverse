@@ -1,5 +1,6 @@
-package com.ninni.multiverse.sound;
+package com.ninni.multiverse.init;
 
+import com.ninni.multiverse.init.MultiverseSoundEvents;
 import net.minecraft.world.level.block.SoundType;
 
 public interface MultiverseSoundTypes {

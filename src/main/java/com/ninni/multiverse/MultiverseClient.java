@@ -1,6 +1,6 @@
 package com.ninni.multiverse;
 
-import com.ninni.multiverse.block.MultiverseBlocks;
+import com.ninni.multiverse.init.MultiverseBlocks;
 import com.ninni.multiverse.client.models.CobblestoneGolemModel;
 import com.ninni.multiverse.client.models.ExhaustedCobblestoneGolemModel;
 import com.ninni.multiverse.client.models.GorbModel;
@@ -11,7 +11,7 @@ import com.ninni.multiverse.client.renderer.ColorfulPaintingRenderer;
 import com.ninni.multiverse.client.renderer.ExhaustedCobblestoneGolemRenderer;
 import com.ninni.multiverse.client.renderer.GorbRenderer;
 import com.ninni.multiverse.client.renderer.RainbowSheepRenderer;
-import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
 import com.ninni.multiverse.network.MultiverseNetwork;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;

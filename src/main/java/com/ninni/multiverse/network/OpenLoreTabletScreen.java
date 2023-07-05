@@ -1,6 +1,6 @@
 package com.ninni.multiverse.network;
 
-import com.ninni.multiverse.MultiverseTags;
+import com.ninni.multiverse.init.MultiverseTags;
 import com.ninni.multiverse.client.gui.LoreTabletScreen;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;

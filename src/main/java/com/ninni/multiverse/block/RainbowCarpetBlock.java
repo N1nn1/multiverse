@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 public class RainbowCarpetBlock extends CarpetBlock {
     public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    protected RainbowCarpetBlock(Properties properties) {
+    public RainbowCarpetBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(((this.stateDefinition.any()).setValue(HORIZONTAL_FACING, Direction.NORTH)));
     }

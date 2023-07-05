@@ -1,6 +1,10 @@
-package com.ninni.multiverse.entities;
+package com.ninni.multiverse.init;
 
-import com.ninni.multiverse.MultiverseTags;
+import com.ninni.multiverse.entities.CobblestoneGolem;
+import com.ninni.multiverse.entities.ColorfulPainting;
+import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
+import com.ninni.multiverse.entities.Gorb;
+import com.ninni.multiverse.entities.RainbowSheep;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;

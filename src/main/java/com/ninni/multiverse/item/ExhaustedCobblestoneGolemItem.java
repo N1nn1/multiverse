@@ -2,7 +2,7 @@ package com.ninni.multiverse.item;
 
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
-import com.ninni.multiverse.entities.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

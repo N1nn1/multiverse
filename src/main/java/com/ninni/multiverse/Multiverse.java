@@ -1,12 +1,13 @@
 package com.ninni.multiverse;
 
 import com.google.common.reflect.Reflection;
-import com.ninni.multiverse.block.MultiverseBlocks;
+import com.ninni.multiverse.init.MultiverseBlocks;
 import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
-import com.ninni.multiverse.entities.MultiverseEntityTypes;
-import com.ninni.multiverse.entities.MultiversePaintingVariants;
-import com.ninni.multiverse.item.MultiverseItems;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import com.ninni.multiverse.init.MultiverseCreativeModeTabs;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiversePaintingVariants;
+import com.ninni.multiverse.init.MultiverseItems;
+import com.ninni.multiverse.init.MultiverseSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -29,6 +30,7 @@ public class Multiverse implements ModInitializer {
 			MultiverseEntityTypes.class,
 			MultiverseBlocks.class,
 			MultiverseItems.class,
+			MultiverseCreativeModeTabs.class,
 			MultiversePaintingVariants.class
 		);
 		DispenserBlock.registerBehavior(MultiverseItems.EXHAUSTED_COBBLESTONE_GOLEM, new DefaultDispenseItemBehavior(){

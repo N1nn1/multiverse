@@ -1,7 +1,7 @@
 package com.ninni.multiverse.entities.ai;
 
 import com.ninni.multiverse.entities.RainbowSheep;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
+import com.ninni.multiverse.init.MultiverseSoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 

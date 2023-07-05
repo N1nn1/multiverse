@@ -1,4 +1,4 @@
-package com.ninni.multiverse.sound;
+package com.ninni.multiverse.init;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;

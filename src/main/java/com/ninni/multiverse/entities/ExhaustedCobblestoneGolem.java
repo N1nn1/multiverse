@@ -2,7 +2,8 @@ package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.api.CrackableEntity;
 import com.ninni.multiverse.api.Crackiness;
-import com.ninni.multiverse.item.MultiverseItems;
+import com.ninni.multiverse.init.MultiverseEntityTypes;
+import com.ninni.multiverse.init.MultiverseItems;
 import net.minecraft.core.Rotations;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
