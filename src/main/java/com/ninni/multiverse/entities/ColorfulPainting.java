@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.Painting;
@@ -40,7 +41,7 @@ public class ColorfulPainting extends Painting {
     public static Optional<Painting> create(Level level, BlockPos blockPos, Direction direction) {
         ColorfulPainting painting = new ColorfulPainting(level, blockPos);
         ArrayList<Holder<PaintingVariant>> list = new ArrayList<>();
-        Registry.PAINTING_VARIANT.getTagOrEmpty(MultiverseTags.COLORFUL_PLACEABLE).forEach(list::add);
+        BuiltInRegistries.PAINTING_VARIANT.getTagOrEmpty(MultiverseTags.COLORFUL_PLACEABLE).forEach(list::add);
         if (list.isEmpty()) {
             return Optional.empty();
         }
@@ -65,7 +66,7 @@ public class ColorfulPainting extends Painting {
 
     @Override
     public void dropItem(@Nullable Entity entity) {
-        if (!this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+        if (!this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             return;
         }
         this.playSound(MultiverseSoundEvents.BLOCK_COLORFUL_PAINTING_BREAK, 1.0f, 1.0f);

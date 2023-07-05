@@ -2,7 +2,7 @@ package com.ninni.multiverse.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.mixin.accessors.PaintingRendererAccessor;
 import net.minecraft.client.Minecraft;
@@ -25,7 +25,7 @@ public class ColorfulPaintingRenderer extends PaintingRenderer {
     @Override
     public void render(Painting painting, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
         poseStack.pushPose();
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0f - f));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - f));
         poseStack.scale(0.0625f, 0.0625f, 0.0625f);
         PaintingVariant paintingVariant = painting.getVariant().value();
         VertexConsumer vertexConsumer = multiBufferSource.getBuffer(RenderType.entitySolid(this.getTextureLocation(painting)));

@@ -48,7 +48,7 @@ public class FindNearestItemGoal extends Goal {
     }
 
     public Optional<ItemEntity> getNearestItem() {
-        List<ItemEntity> list = this.gorb.level.getEntitiesOfClass(ItemEntity.class, this.gorb.getBoundingBox().inflate(32.0D, 16.0D, 32.0D), itemEntity -> itemEntity.getItem().isEnchanted());
+        List<ItemEntity> list = this.gorb.level().getEntitiesOfClass(ItemEntity.class, this.gorb.getBoundingBox().inflate(32.0D, 16.0D, 32.0D), itemEntity -> itemEntity.getItem().isEnchanted());
         list.sort(Comparator.comparingDouble(this.gorb::distanceToSqr));
         return list.stream().filter(this.gorb::hasLineOfSight).filter(itemEntity -> itemEntity.closerThan(this.gorb, 32.0D)).findFirst();
     }

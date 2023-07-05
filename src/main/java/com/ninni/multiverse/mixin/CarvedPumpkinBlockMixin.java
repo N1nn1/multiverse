@@ -14,9 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
-import net.minecraft.world.level.block.state.predicate.BlockMaterialPredicate;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -76,14 +74,14 @@ public class CarvedPumpkinBlockMixin {
 
     private BlockPattern getOrCobblestoneGolemBase() {
         if (this.cobblestoneGolemBase == null) {
-            this.cobblestoneGolemBase = BlockPatternBuilder.start().aisle("~ ~", "C#C").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE))).where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE_WALL))).where('~', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR))).build();
+            this.cobblestoneGolemBase = BlockPatternBuilder.start().aisle("~ ~", "C#C").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE))).where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE_WALL))).where('~', blockInWorld -> blockInWorld.getState().isAir()).build();
         }
         return this.cobblestoneGolemBase;
     }
 
     private BlockPattern getOrCreateCobblestoneGolemFull() {
         if (this.cobblestoneGolemFull == null) {
-            this.cobblestoneGolemFull = BlockPatternBuilder.start().aisle("~^~", "C#C").where('^', BlockInWorld.hasState(PUMPKINS_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE))).where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE_WALL))).where('~', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR))).build();
+            this.cobblestoneGolemFull = BlockPatternBuilder.start().aisle("~^~", "C#C").where('^', BlockInWorld.hasState(PUMPKINS_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE))).where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.COBBLESTONE_WALL))).where('~', blockInWorld -> blockInWorld.getState().isAir()).build();
         }
         return this.cobblestoneGolemFull;
     }

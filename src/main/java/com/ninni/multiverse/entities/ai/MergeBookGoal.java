@@ -65,7 +65,7 @@ public class MergeBookGoal extends Goal {
     }
 
     public Optional<ItemEntity> getNearestItem() {
-        List<ItemEntity> list = this.gorb.level.getEntitiesOfClass(ItemEntity.class, this.gorb.getBoundingBox().inflate(32.0D, 16.0D, 32.0D), itemEntity -> itemEntity.getItem().is(Items.BOOK));
+        List<ItemEntity> list = this.gorb.level().getEntitiesOfClass(ItemEntity.class, this.gorb.getBoundingBox().inflate(32.0D, 16.0D, 32.0D), itemEntity -> itemEntity.getItem().is(Items.BOOK));
         list.sort(Comparator.comparingDouble(this.gorb::distanceToSqr));
         return list.stream().filter(this.gorb::hasLineOfSight).filter(itemEntity -> itemEntity.closerThan(this.gorb, 32.0D)).findFirst();
     }

@@ -1,7 +1,7 @@
 package com.ninni.multiverse.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.ninni.multiverse.Multiverse;
 import com.ninni.multiverse.client.models.ExhaustedCobblestoneGolemModel;
 import com.ninni.multiverse.client.models.MultiverseModelLayers;
@@ -30,10 +30,10 @@ public class ExhaustedCobblestoneGolemRenderer extends LivingEntityRenderer<Exha
 
     @Override
     protected void setupRotations(ExhaustedCobblestoneGolem entity, PoseStack poseStack, float f, float g, float h) {
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0f - g));
-        float i = (float)(entity.level.getGameTime() - entity.lastHit) + h;
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - g));
+        float i = (float)(entity.level().getGameTime() - entity.lastHit) + h;
         if (i < 5.0f) {
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(i / 1.5f * (float)Math.PI) * 3.0f));
+            poseStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(i / 1.5f * (float)Math.PI) * 3.0f));
         }
     }
 

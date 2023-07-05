@@ -10,7 +10,6 @@
     "accessors.PaintingRendererAccessor"
   ],
   "client": [
-    "PaintingTextureManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

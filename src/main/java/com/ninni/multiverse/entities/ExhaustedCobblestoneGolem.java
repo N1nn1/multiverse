@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -73,7 +74,11 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
 
     public ExhaustedCobblestoneGolem(EntityType<? extends ExhaustedCobblestoneGolem> entityType, Level level) {
         super(entityType, level);
-        this.maxUpStep = 0.0f;
+    }
+
+    @Override
+    public float maxUpStep() {
+        return 0.0F;
     }
 
     public ExhaustedCobblestoneGolem(Level level, double d, double e, double f) {
@@ -199,7 +204,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
             this.setCrackiness(crackiness - 1);
             this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0f, 1.0f + (this.random.nextFloat() - this.random.nextFloat()) * 0.2f);
             if (!player.getAbilities().instabuild) itemStack.shrink(1);
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         return super.interact(player, interactionHand);
     }
@@ -215,7 +220,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
 
     @Override
     protected void pushEntities() {
-        List<Entity> list = this.level.getEntities(this, this.getBoundingBox(), RIDABLE_MINECARTS);
+        List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), RIDABLE_MINECARTS);
         for (Entity entity : list) {
             if (!(this.distanceToSqr(entity) <= 0.2)) continue;
             entity.push(this);
@@ -228,22 +233,22 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
 
     @Override
     public boolean hurt(DamageSource damageSource, float f) {
-        if (this.level.isClientSide || this.isRemoved()) {
+        if (this.level().isClientSide || this.isRemoved()) {
             return false;
         }
-        if (DamageSource.OUT_OF_WORLD.equals(damageSource)) {
+        if (damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             this.kill();
             return false;
         }
         if (this.isInvulnerableTo(damageSource) || this.invisible || this.isMarker()) {
             return false;
         }
-        if (damageSource.isExplosion()) {
+        if (damageSource.is(DamageTypeTags.IS_EXPLOSION)) {
             this.brokenByAnything(damageSource);
             this.kill();
             return false;
         }
-        if (DamageSource.IN_FIRE.equals(damageSource)) {
+        if (damageSource.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
             if (this.isOnFire()) {
                 this.causeDamage(damageSource, 0.15f);
             } else {
@@ -251,7 +256,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
             }
             return false;
         }
-        if (DamageSource.ON_FIRE.equals(damageSource) && this.getHealth() > 0.5f) {
+        if (damageSource.is(DamageTypeTags.BURNS_ARMOR_STANDS) && this.getHealth() > 0.5f) {
             this.causeDamage(damageSource, 4.0f);
             return false;
         }
@@ -270,7 +275,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
             this.kill();
             return bl2;
         }
-        long l = this.level.getGameTime();
+        long l = this.level().getGameTime();
 
             if (l - this.lastHit <= 5L || bl) {
                 if (damageSource.getEntity() instanceof Player player && player.getMainHandItem().getItem() instanceof PickaxeItem) {
@@ -279,7 +284,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
                     this.kill();
                 }
             } else {
-                this.level.broadcastEntityEvent(this, (byte) 32);
+                this.level().broadcastEntityEvent(this, (byte) 32);
                 this.gameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getEntity());
                 this.lastHit = l;
             }
@@ -290,9 +295,9 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
     @Override
     public void handleEntityEvent(byte b) {
         if (b == 32) {
-            if (this.level.isClientSide) {
-                this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.STONE_HIT, this.getSoundSource(), 1.5f, 1.0f, false);
-                this.lastHit = this.level.getGameTime();
+            if (this.level().isClientSide) {
+                this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.STONE_HIT, this.getSoundSource(), 1.5f, 1.0f, false);
+                this.lastHit = this.level().getGameTime();
             }
         } else {
             super.handleEntityEvent(b);
@@ -323,8 +328,8 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
     }
 
     private void showBreakingParticles() {
-        if (this.level instanceof ServerLevel) {
-            ((ServerLevel)this.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.COBBLESTONE.defaultBlockState()), this.getX(), this.getY(0.6666666666666666), this.getZ(), 10, this.getBbWidth() / 4.0f, this.getBbHeight() / 4.0f, this.getBbWidth() / 4.0f, 0.05);
+        if (this.level() instanceof ServerLevel) {
+            ((ServerLevel)this.level()).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.COBBLESTONE.defaultBlockState()), this.getX(), this.getY(0.6666666666666666), this.getZ(), 10, this.getBbWidth() / 4.0f, this.getBbHeight() / 4.0f, this.getBbWidth() / 4.0f, 0.05);
         }
     }
 
@@ -343,7 +348,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
         ItemStack itemStack = new ItemStack(MultiverseItems.EXHAUSTED_COBBLESTONE_GOLEM);
         itemStack.getOrCreateTag().putInt("crackiness", this.getCrackiness().getId());
         itemStack.setHoverName(this.getCustomName());
-        Block.popResource(this.level, this.blockPosition(), itemStack);
+        Block.popResource(this.level(), this.blockPosition(), itemStack);
         this.brokenByAnything(damageSource);
     }
 
@@ -353,7 +358,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
     }
 
     private void playBrokenSound() {
-        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.STONE_BREAK, this.getSoundSource(), 2.0f, 1.0f);
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.STONE_BREAK, this.getSoundSource(), 2.0f, 1.0f);
     }
 
     @Override
@@ -539,7 +544,7 @@ public class ExhaustedCobblestoneGolem extends LivingEntity implements Crackable
 
     @Override
     public boolean skipAttackInteraction(Entity entity) {
-        return entity instanceof Player && !this.level.mayInteract((Player)entity, this.blockPosition());
+        return entity instanceof Player && !this.level().mayInteract((Player)entity, this.blockPosition());
     }
 
     @Override

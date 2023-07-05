@@ -9,6 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
@@ -58,7 +59,7 @@ public class LoreTabletScreen extends Screen {
     }
 
     protected void createMenuControls() {
-        this.addRenderableWidget(new Button(this.width / 2 - 100, 196, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)));
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(null)).bounds(this.width / 2 - 100, 196, 200, 20).build());
     }
 
     protected void createPageControlButtons() {
@@ -88,13 +89,10 @@ public class LoreTabletScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int i, int j, float f) {
+    public void render(GuiGraphics poseStack, int i, int j, float f) {
         this.renderBackground(poseStack);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        RenderSystem.setShaderTexture(0, BOOK_LOCATION);
         int k = (this.width - 192) / 2;
-        this.blit(poseStack, k, 2, 0, 0, 192, 192);
+        poseStack.blit(BOOK_LOCATION, k, 2, 0, 0, 192, 192);
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
             this.cachedPageComponents = this.font.split(formattedText, 114);
@@ -103,11 +101,11 @@ public class LoreTabletScreen extends Screen {
         int n = Math.min(148 / this.font.lineHeight, this.cachedPageComponents.size());
         for (int o = 0; o < n; ++o) {
             FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(o);
-            this.font.draw(poseStack, formattedCharSequence, (float)(k + 36), (float)(16 + o * this.font.lineHeight), 0);
+            poseStack.drawString(this.font, formattedCharSequence, (k + 36), (16 + o * this.font.lineHeight), 0, false);
         }
         Style style = this.getClickedComponentStyleAt(i, j);
         if (style != null) {
-            this.renderComponentHoverEffect(poseStack, style, i, j);
+            poseStack.renderComponentHoverEffect(this.font, style, i, j);
         }
         super.render(poseStack, i, j, f);
     }

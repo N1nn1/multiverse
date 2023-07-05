@@ -3,7 +3,6 @@ package com.ninni.multiverse.item;
 import com.ninni.multiverse.api.Crackiness;
 import com.ninni.multiverse.entities.ExhaustedCobblestoneGolem;
 import com.ninni.multiverse.entities.MultiverseEntityTypes;
-import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ExhaustedCobblestoneGolemItem extends Item {
 
@@ -54,7 +55,8 @@ public class ExhaustedCobblestoneGolemItem extends Item {
             return InteractionResult.FAIL;
         }
         if (level instanceof ServerLevel serverLevel) {
-            ExhaustedCobblestoneGolem golem = MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM.create(serverLevel, itemStack.getTag(), null, useOnContext.getPlayer(), blockPos, MobSpawnType.SPAWN_EGG, true, true);
+            Consumer<ExhaustedCobblestoneGolem> consumer = EntityType.createDefaultStackConfig(serverLevel, itemStack, useOnContext.getPlayer());
+            ExhaustedCobblestoneGolem golem = MultiverseEntityTypes.EXHAUSTED_COBBLESTONE_GOLEM.create(serverLevel, itemStack.getTag(), consumer, blockPos, MobSpawnType.SPAWN_EGG, true, true);
             if (golem == null) {
                 return InteractionResult.FAIL;
             }

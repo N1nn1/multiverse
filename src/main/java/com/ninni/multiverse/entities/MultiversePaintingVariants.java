@@ -2,6 +2,7 @@ package com.ninni.multiverse.entities;
 
 import com.ninni.multiverse.Multiverse;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.decoration.PaintingVariant;
 
@@ -18,7 +19,7 @@ public class MultiversePaintingVariants {
     public static final PaintingVariant WAVES = register("waves", new PaintingVariant(32, 16));
 
     private static PaintingVariant register(String name, PaintingVariant paintingVariant) {
-        return Registry.register(Registry.PAINTING_VARIANT, new ResourceLocation(Multiverse.MOD_ID, name), paintingVariant);
+        return Registry.register(BuiltInRegistries.PAINTING_VARIANT, new ResourceLocation(Multiverse.MOD_ID, name), paintingVariant);
     }
 
 }

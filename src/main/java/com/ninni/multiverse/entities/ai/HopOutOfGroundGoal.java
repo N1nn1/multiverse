@@ -66,8 +66,8 @@ public class HopOutOfGroundGoal extends Goal {
     }
 
     public Optional<ServerPlayer> getNearestPlayer() {
-        for (ServerPlayer player : this.gorb.level.getEntitiesOfClass(ServerPlayer.class, this.gorb.getBoundingBox().inflate(8.0D)).stream().filter(serverPlayer -> serverPlayer.gameMode.isSurvival()).toList()) {
-            List<ServerPlayer> entitiesOfClass = this.gorb.level.getEntitiesOfClass(ServerPlayer.class, this.gorb.getBoundingBox().inflate(0.5D, 1.0D, 0.5D));
+        for (ServerPlayer player : this.gorb.level().getEntitiesOfClass(ServerPlayer.class, this.gorb.getBoundingBox().inflate(8.0D)).stream().filter(serverPlayer -> serverPlayer.gameMode.isSurvival()).toList()) {
+            List<ServerPlayer> entitiesOfClass = this.gorb.level().getEntitiesOfClass(ServerPlayer.class, this.gorb.getBoundingBox().inflate(0.5D, 1.0D, 0.5D));
             return !entitiesOfClass.isEmpty() ? entitiesOfClass.stream().findFirst() : (Gorb.hasEnchantments(player) ? Optional.of(player) : Optional.empty());
         }
         return Optional.empty();

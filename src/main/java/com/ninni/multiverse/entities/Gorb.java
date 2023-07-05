@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -94,7 +95,7 @@ public class Gorb extends PathfinderMob {
             }
             this.playSound(SoundEvents.ENCHANTMENT_TABLE_USE);
             this.setBreakCurse(true);
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         return super.mobInteract(player, interactionHand);
     }
@@ -138,7 +139,7 @@ public class Gorb extends PathfinderMob {
                     double d = this.getX() + (double) Mth.randomBetween(randomSource, -0.7f, 0.7f);
                     double e = this.getY();
                     double f = this.getZ() + (double)Mth.randomBetween(randomSource, -0.7f, 0.7f);
-                    this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+                    this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
                 }
             }
         }
@@ -147,7 +148,7 @@ public class Gorb extends PathfinderMob {
     @Override
     public void tick() {
         super.tick();
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             if (this.getPose() == Pose.DIGGING) {
                 this.clientDiggingParticles(this.digAnimationState);
             }
@@ -173,7 +174,7 @@ public class Gorb extends PathfinderMob {
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (this.isDigging() && !damageSource.isBypassInvul()) {
+        if (this.isDigging() && !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return true;
         }
         return super.isInvulnerableTo(damageSource);
@@ -203,7 +204,7 @@ public class Gorb extends PathfinderMob {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!this.level.isClientSide() && this.getTarget() != null && this.getTarget() instanceof Player player && player.getAbilities().instabuild) {
+        if (!this.level().isClientSide() && this.getTarget() != null && this.getTarget() instanceof Player player && player.getAbilities().instabuild) {
             this.setTarget(null);
         }
     }

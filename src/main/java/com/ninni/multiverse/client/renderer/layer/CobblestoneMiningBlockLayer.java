@@ -1,7 +1,7 @@
 package com.ninni.multiverse.client.renderer.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.ninni.multiverse.client.models.CobblestoneGolemModel;
 import com.ninni.multiverse.entities.CobblestoneGolem;
 import net.fabricmc.api.EnvType;
@@ -9,9 +9,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -30,12 +30,12 @@ public class CobblestoneMiningBlockLayer<T extends CobblestoneGolem, M extends E
             poseStack.pushPose();
             poseStack.translate(((CobblestoneGolemModel) this.getParentModel()).getBody().x / 16f, ((CobblestoneGolemModel) this.getParentModel()).getBody().y / 16f, ((CobblestoneGolemModel) this.getParentModel()).getBody().z / 16f);
             poseStack.scale(1.5f, 1.5f, 1.5f);
-            poseStack.mulPose(Vector3f.ZP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().zRot));
-            poseStack.mulPose(Vector3f.XP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().xRot));
-            poseStack.mulPose(Vector3f.YP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().yRot));
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
+            poseStack.mulPose(Axis.ZP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().zRot));
+            poseStack.mulPose(Axis.XP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().xRot));
+            poseStack.mulPose(Axis.YP.rotation(((CobblestoneGolemModel) this.getParentModel()).getBody().yRot));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(180.0f));
             poseStack.translate(0f, 0.125f, 0.3f);
-            this.itemRenderer.renderItem(golem, stack, ItemTransforms.TransformType.GROUND, false, poseStack, multiBufferSource, i);
+            this.itemRenderer.renderItem(golem, stack, ItemDisplayContext.GROUND, false, poseStack, multiBufferSource, i);
             poseStack.popPose();
         });
     }

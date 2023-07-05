@@ -103,7 +103,7 @@ public class RainbowSheep extends Animal implements Shearable {
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (itemStack.is(Items.SHEARS)) {
-            if (!this.level.isClientSide && this.readyForShearing() && this.canPlayerShear(player)) {
+            if (!this.level().isClientSide && this.readyForShearing() && this.canPlayerShear(player)) {
                 this.shear(SoundSource.PLAYERS);
                 this.gameEvent(GameEvent.SHEAR, player);
                 this.setHydrated(false);
@@ -130,7 +130,7 @@ public class RainbowSheep extends Animal implements Shearable {
 
     @Override
     public void shear(SoundSource soundSource) {
-        this.level.playSound(null, this, SoundEvents.SHEEP_SHEAR, soundSource, 1.0f, 1.0f);
+        this.level().playSound(null, this, SoundEvents.SHEEP_SHEAR, soundSource, 1.0f, 1.0f);
         this.setSheared(true);
         int i = 1 + this.random.nextInt(3);
         for (int j = 0; j < i; ++j) {
@@ -199,15 +199,15 @@ public class RainbowSheep extends Animal implements Shearable {
 
     @Override
     public void aiStep() {
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         }
         if (this.readyForShearing() && this.random.nextInt(60) == 0) {
             for (int i = 0; i < this.random.nextInt(1) + 1; ++i) {
-                this.level.addParticle(ParticleTypes.WAX_OFF, this.getRandomX(0.6), this.getRandomY() + 1, this.getRandomZ(0.6), 0.0, this.random.nextFloat() * 5, 0.0);
+                this.level().addParticle(ParticleTypes.WAX_OFF, this.getRandomX(0.6), this.getRandomY() + 1, this.getRandomZ(0.6), 0.0, this.random.nextFloat() * 5, 0.0);
             }
         }
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             if (this.getDrinkingCooldown() > 0) {
                 this.setDrinkingCooldown(this.getDrinkingCooldown() - 1);
             }
@@ -260,7 +260,7 @@ public class RainbowSheep extends Animal implements Shearable {
     @Override
     public void ate() {
         super.ate();
-        if (this.isHydrated() && this.getLevel().canSeeSky(this.blockPosition())) {
+        if (this.isHydrated() && this.level().canSeeSky(this.blockPosition())) {
             this.setSheared(false);
         }
         if (this.isBaby()) {

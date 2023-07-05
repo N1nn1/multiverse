@@ -73,7 +73,7 @@ public class FindTargettedBlockGoal extends Goal {
         int range = 10;
         int yLevel = 1;
         for (BlockPos blockPos : BlockPos.betweenClosedStream(mobPos.offset(-range, -yLevel, -range), mobPos.offset(range, yLevel, range)).map(BlockPos::immutable).toList()) {
-            if (this.golemEntity.getMiningBlock().isPresent() && this.golemEntity.level.getBlockState(blockPos).is(this.golemEntity.getMiningBlock().get().getBlock()) && this.isAirOrWater(blockPos)) {
+            if (this.golemEntity.getMiningBlock().isPresent() && this.golemEntity.level().getBlockState(blockPos).is(this.golemEntity.getMiningBlock().get().getBlock()) && this.isAirOrWater(blockPos)) {
                 list.add(blockPos);
             }
         }
@@ -83,7 +83,7 @@ public class FindTargettedBlockGoal extends Goal {
             for (BlockPos blockPos : list) {
                 Vec3 vec3 = new Vec3(this.golemEntity.getX(), this.golemEntity.getEyeY(), this.golemEntity.getZ());
                 Vec3 vec31 = Vec3.atCenterOf(blockPos);
-                BlockHitResult blockHitResult = this.golemEntity.level.clip(new ClipContext(vec3, vec31, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this.golemEntity));
+                BlockHitResult blockHitResult = this.golemEntity.level().clip(new ClipContext(vec3, vec31, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this.golemEntity));
                 if (!blockHitResult.getBlockPos().equals(blockPos)) continue;
                 if (this.golemEntity.getY() > blockHitResult.getBlockPos().getY()) {
                     unpreferredPositions.add(blockPos);
@@ -108,7 +108,7 @@ public class FindTargettedBlockGoal extends Goal {
 
     public boolean isAirOrWater(BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
-            if (this.golemEntity.level.isStateAtPosition(blockPos.relative(direction), DripstoneUtils::isEmptyOrWater)) {
+            if (this.golemEntity.level().isStateAtPosition(blockPos.relative(direction), DripstoneUtils::isEmptyOrWater)) {
                 return true;
             }
         }

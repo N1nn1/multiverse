@@ -11,6 +11,8 @@ import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -46,7 +48,7 @@ import java.util.UUID;
 
 public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
     public static final EntityDataAccessor<Integer> CRACKINESS = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Optional<BlockState>> MINING_STATE = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.BLOCK_STATE);
+    private static final EntityDataAccessor<Optional<BlockState>> MINING_STATE = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.OPTIONAL_BLOCK_STATE);
     private static final EntityDataAccessor<Optional<UUID>> LIKED_PLAYER = SynchedEntityData.defineId(CobblestoneGolem.class, EntityDataSerializers.OPTIONAL_UUID);
     @Nullable
     private BlockPos minePos;
@@ -81,7 +83,7 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
         super.readAdditionalSaveData(compoundTag);
         this.setCrackiness(compoundTag.getInt("crackiness"));
         if (compoundTag.contains("miningState")) {
-            this.setMiningBlock(NbtUtils.readBlockState(compoundTag.getCompound("miningState")));
+            this.setMiningBlock(NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), compoundTag.getCompound("miningState")));
         }
         if (compoundTag.contains("minePos")) {
             this.setMinePos(NbtUtils.readBlockPos(compoundTag.getCompound("minePos")));
@@ -174,7 +176,7 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
 
     @Override
     public void tick() {
-        if (this.level.isClientSide()) {
+        if (this.level().isClientSide()) {
             if (this.isMovingOnLand()) {
                 this.walkAnimationState.startIfStopped(this.tickCount);
             } else {
@@ -185,17 +187,17 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
     }
 
     private boolean isMovingOnLand() {
-        return this.onGround && this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && !this.isInWaterOrBubble();
+        return this.onGround() && this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && !this.isInWaterOrBubble();
     }
 
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             if (this.getMiningCooldown() > 0) {
                 this.setMiningCooldown(this.getMiningCooldown() - 1);
             }
-            Optional.ofNullable(this.getMinePos()).flatMap(blockPos -> this.getMiningBlock().map(BlockBehaviour.BlockStateBase::getBlock).filter(block -> !this.level.getBlockState(blockPos).is(block))).ifPresent(block -> this.setMinePos(null));
+            Optional.ofNullable(this.getMinePos()).flatMap(blockPos -> this.getMiningBlock().map(BlockBehaviour.BlockStateBase::getBlock).filter(block -> !this.level().getBlockState(blockPos).is(block))).ifPresent(block -> this.setMinePos(null));
         }
     }
 
@@ -244,9 +246,9 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
             this.setCrackiness(crackiness - 1);
             this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0f, 1.0f + (this.random.nextFloat() - this.random.nextFloat()) * 0.2f);
             if (!player.getAbilities().instabuild) itemStack.shrink(1);
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else if (this.getMiningBlock().isEmpty() && !itemStack.isEmpty()) {
-            for (Holder<Block> holder : Registry.BLOCK.getTagOrEmpty(MultiverseTags.COBBLESTONE_GOLEM_BREAKABLES)) {
+            for (Holder<Block> holder : BuiltInRegistries.BLOCK.getTagOrEmpty(MultiverseTags.COBBLESTONE_GOLEM_BREAKABLES)) {
                 boolean flag = !itemStack.is(holder.value().asItem());
                 boolean flag1 = holder.is(BlockTags.NEEDS_IRON_TOOL) || holder.is(BlockTags.NEEDS_DIAMOND_TOOL);
                 if (flag) continue;
@@ -270,7 +272,7 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
 
     public <T extends ExhaustedCobblestoneGolem> void becomeExhausted(EntityType<T> entityType) {
         if (!this.isRemoved()) {
-            T exhaustedGolem = entityType.create(this.level);
+            T exhaustedGolem = entityType.create(this.level());
             assert exhaustedGolem != null;
             exhaustedGolem.copyPosition(this);
             exhaustedGolem.lookAt(EntityAnchorArgument.Anchor.EYES, this.getLookAngle());
@@ -282,7 +284,7 @@ public class CobblestoneGolem extends AbstractGolem implements CrackableEntity {
             this.getMiningBlock().ifPresent(state -> this.spawnAtLocation(state.getBlock().asItem().getDefaultInstance(), 0.5F));
 
             if (this.hasCustomName()) exhaustedGolem.setCustomName(this.getCustomName());
-            this.level.addFreshEntity(exhaustedGolem);
+            this.level().addFreshEntity(exhaustedGolem);
             if (this.isPassenger()) {
                 Entity entity = this.getVehicle();
                 this.stopRiding();

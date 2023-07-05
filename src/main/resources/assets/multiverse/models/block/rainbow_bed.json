@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"0": "multiverse:entity/bed/rainbow",
-		"particle": "multiverse:entity/bed/rainbow"
+		"0": "multiverse:block/rainbow",
+		"particle": "multiverse:block/rainbow"
 	},
 	"elements": [
 		{

@@ -38,7 +38,7 @@ public class FollowLikedPlayerGoal extends Goal {
 
     @Override
     public void tick() {
-        this.golem.getOptionalUUID().map(this.golem.level::getPlayerByUUID).ifPresent(this::followPlayer);
+        this.golem.getOptionalUUID().map(this.golem.level()::getPlayerByUUID).ifPresent(this::followPlayer);
     }
 
     @Override
@@ -53,11 +53,11 @@ public class FollowLikedPlayerGoal extends Goal {
     }
 
     public Optional<ServerPlayer> getLikedPlayer() {
-        Level level = this.golem.getLevel();
+        Level level = this.golem.level();
         if (!level.isClientSide() && level instanceof ServerLevel) {
             Optional<UUID> optional = this.golem.getOptionalUUID();
             if (optional.isPresent()) {
-                Player player = this.golem.level.getPlayerByUUID(optional.get());
+                Player player = this.golem.level().getPlayerByUUID(optional.get());
                 if (player instanceof ServerPlayer serverPlayer && (serverPlayer.gameMode.isSurvival() || serverPlayer.gameMode.isCreative()) && serverPlayer.closerThan(this.golem, 16)) {
                     return Optional.of(serverPlayer);
                 }

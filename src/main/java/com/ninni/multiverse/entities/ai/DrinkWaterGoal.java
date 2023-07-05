@@ -57,10 +57,10 @@ public class DrinkWaterGoal extends Goal {
                     this.rainbowSheep.playSound(MultiverseSoundEvents.ENTITY_RAINBOW_SHEEP_DRINK, 1.5F, this.rainbowSheep.getRandom().nextFloat() / 2 + 0.5f);
                 }
                 if (this.drinkingTicks == 59) {
-                    this.rainbowSheep.level.broadcastEntityEvent(this.rainbowSheep, (byte) 10);
+                    this.rainbowSheep.level().broadcastEntityEvent(this.rainbowSheep, (byte) 10);
                 }
                 if (this.drinkingTicks > 5 && this.drinkingTicks < 54 && this.drinkingTicks % 10 == 0) {
-                    this.rainbowSheep.level.broadcastEntityEvent(this.rainbowSheep, (byte) 11);
+                    this.rainbowSheep.level().broadcastEntityEvent(this.rainbowSheep, (byte) 11);
                 }
                 this.rainbowSheep.getNavigation().stop();
                 this.rainbowSheep.setPose(MultiversePose.DRINKING.get());
@@ -85,7 +85,7 @@ public class DrinkWaterGoal extends Goal {
             for (int z = -range; z <= range; z++) {
                 for (int y = -range; y <= range; y++) {
                     BlockPos pos = new BlockPos(blockPos.getX() + x, blockPos.getY() + y, blockPos.getZ() + z);
-                    if (!(this.isConnected(pos) && this.rainbowSheep.level.getBlockState(pos).is(Blocks.WATER) && this.rainbowSheep.level.getBlockState(pos.above()).isAir())) continue;
+                    if (!(this.isConnected(pos) && this.rainbowSheep.level().getBlockState(pos).is(Blocks.WATER) && this.rainbowSheep.level().getBlockState(pos.above()).isAir())) continue;
                     poses.add(pos);
                 }
             }
@@ -102,7 +102,7 @@ public class DrinkWaterGoal extends Goal {
     public boolean isConnected(BlockPos blockPos) {
         for (Direction direction : DIRECTIONS) {
             BlockPos relative = blockPos.relative(direction);
-            if (this.rainbowSheep.level.getFluidState(relative).isEmpty() && this.rainbowSheep.level.getFluidState(relative.above()).isEmpty()) {
+            if (this.rainbowSheep.level().getFluidState(relative).isEmpty() && this.rainbowSheep.level().getFluidState(relative.above()).isEmpty()) {
                 return true;
             }
         }

@@ -30,7 +30,7 @@ public class MineTargettedBlockGoal extends Goal {
     @Override
     public boolean canUse() {
         this.pos = this.golem.getMinePos();
-        return this.golem.getMiningBlock().isPresent() && this.golem.getMiningCooldown() == 0 && this.pos != null && !this.golem.level.getBlockState(this.pos).isAir();
+        return this.golem.getMiningBlock().isPresent() && this.golem.getMiningCooldown() == 0 && this.pos != null && !this.golem.level().getBlockState(this.pos).isAir();
     }
 
     @Override
@@ -41,11 +41,11 @@ public class MineTargettedBlockGoal extends Goal {
         if (this.idlingTicks > 80) {
             return false;
         }
-        if (this.golem.getMiningBlock().isPresent() && this.golem.level.getBlockState(this.pos).getBlock() != this.golem.getMiningBlock().get().getBlock()) {
+        if (this.golem.getMiningBlock().isPresent() && this.golem.level().getBlockState(this.pos).getBlock() != this.golem.getMiningBlock().get().getBlock()) {
             return false;
         }
-        if (this.golem.getMiningBlock().isPresent() && this.golem.getMinePos() != null && this.golem.level.getBlockState(this.pos).is(this.golem.getMiningBlock().get().getBlock())) {
-            this.golem.level.destroyBlockProgress(this.golem.getId(), this.pos, -1);
+        if (this.golem.getMiningBlock().isPresent() && this.golem.getMinePos() != null && this.golem.level().getBlockState(this.pos).is(this.golem.getMiningBlock().get().getBlock())) {
+            this.golem.level().destroyBlockProgress(this.golem.getId(), this.pos, -1);
         }
         return super.canContinueToUse();
     }
@@ -54,7 +54,7 @@ public class MineTargettedBlockGoal extends Goal {
     public void start() {
         this.soundDelayTicks = 5;
         if (this.pos != null) {
-            float speed = this.golem.level.getBlockState(this.pos).getDestroySpeed(this.golem.level, this.pos);
+            float speed = this.golem.level().getBlockState(this.pos).getDestroySpeed(this.golem.level(), this.pos);
             float adjustedValue = speed < 1 ? 1 : speed;
             this.miningTicks = (int) adjustedValue * 10;
         }
@@ -79,7 +79,7 @@ public class MineTargettedBlockGoal extends Goal {
             this.miningTicks--;
             if (this.miningTicks >= 1) {
                 int var4 = Math.min(30 / this.miningTicks, 9);
-                this.golem.level.destroyBlockProgress(this.golem.getId(), this.pos, var4);
+                this.golem.level().destroyBlockProgress(this.golem.getId(), this.pos, var4);
                 this.soundDelayTicks--;
                 if (this.soundDelayTicks == 0) {
                     this.golem.playSound(this.golem.getMiningBlock().get().getSoundType().getHitSound());
@@ -87,8 +87,8 @@ public class MineTargettedBlockGoal extends Goal {
                 }
             }
             if (this.miningTicks == 0) {
-                this.golem.level.destroyBlock(this.pos, true);
-                this.golem.level.destroyBlockProgress(this.golem.getId(), this.pos, -1);
+                this.golem.level().destroyBlock(this.pos, true);
+                this.golem.level().destroyBlockProgress(this.golem.getId(), this.pos, -1);
                 float bound = this.golem.getRandom().nextFloat();
                 if (this.golem.getMinedCount() > 0 && bound < this.golem.getMinedCount() / 100.0F) {
                     if (crackiness.getId() == 3) {
@@ -100,8 +100,8 @@ public class MineTargettedBlockGoal extends Goal {
             }
         } else {
             this.golem.setPose(Pose.STANDING);
-            BlockHitResult result = this.golem.level.clip(new ClipContext(this.golem.position(), vec3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this.golem));
-            BlockPos walkPos = new BlockPos(vec3.relative(result.getDirection(), 0.51F));
+            BlockHitResult result = this.golem.level().clip(new ClipContext(this.golem.position(), vec3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this.golem));
+            BlockPos walkPos = BlockPos.containing(vec3.relative(result.getDirection(), 0.51F));
             vec3 = new Vec3(walkPos.getX(), walkPos.getY(), walkPos.getZ());
             Path path = this.golem.getNavigation().createPath(walkPos, 0);
             if (path != null && path.canReach()) {

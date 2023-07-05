@@ -19,7 +19,7 @@ public class DigGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.gorb.getRandom().nextInt(200) == 0 && this.gorb.getMainHandItem().isEmpty() && this.gorb.getTarget() == null && this.getNearestPlayer().isEmpty() && this.gorb.getPose() != MultiversePose.HIDDEN.get() && this.gorb.getPose() == Pose.STANDING && this.gorb.isOnGround();
+        return this.gorb.getRandom().nextInt(200) == 0 && this.gorb.getMainHandItem().isEmpty() && this.gorb.getTarget() == null && this.getNearestPlayer().isEmpty() && this.gorb.getPose() != MultiversePose.HIDDEN.get() && this.gorb.getPose() == Pose.STANDING && this.gorb.onGround();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DigGoal extends Goal {
     }
 
     public Optional<ServerPlayer> getNearestPlayer() {
-        return this.gorb.level.getEntitiesOfClass(Player.class, this.gorb.getBoundingBox().inflate(8.0D)).stream().filter(Gorb::hasEnchantments).filter(ServerPlayer.class::isInstance).map(ServerPlayer.class::cast).filter(serverPlayer -> serverPlayer.gameMode.isSurvival()).toList().stream().findAny();
+        return this.gorb.level().getEntitiesOfClass(Player.class, this.gorb.getBoundingBox().inflate(8.0D)).stream().filter(Gorb::hasEnchantments).filter(ServerPlayer.class::isInstance).map(ServerPlayer.class::cast).filter(serverPlayer -> serverPlayer.gameMode.isSurvival()).toList().stream().findAny();
     }
 
 

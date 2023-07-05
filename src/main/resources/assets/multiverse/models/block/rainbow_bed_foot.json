@@ -1,7 +1,7 @@
 {
 	"ambientocclusion": "false",
 	"textures": {
-		"bed": "multiverse:entity/bed/rainbow",
+		"bed": "multiverse:block/rainbow",
 		"particle": "minecraft:block/oak_planks"
 	},
 	"elements": [

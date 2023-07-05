@@ -8,21 +8,18 @@ import com.ninni.multiverse.entities.MultiversePaintingVariants;
 import com.ninni.multiverse.item.MultiverseItems;
 import com.ninni.multiverse.sound.MultiverseSoundEvents;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.DispenserBlock;
 
 public class Multiverse implements ModInitializer {
 	public static final String MOD_ID = "multiverse";
-	public static final CreativeModeTab TAB = FabricItemGroupBuilder.create(new ResourceLocation(MOD_ID, MOD_ID)).icon(() -> new ItemStack(MultiverseItems.STONE_TILES)).build();
+//	public static final CreativeModeTab TAB = FabricItemGroupBuilder.create(new ResourceLocation(MOD_ID, MOD_ID)).icon(() -> new ItemStack(MultiverseItems.STONE_TILES)).build();
 
 	@SuppressWarnings("UnstableApiUsage")
 	@Override
